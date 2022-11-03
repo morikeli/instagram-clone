@@ -1,0 +1,18 @@
+{% for message in messages %}
+<div class="alert alert-{{message.tags}} text-center">
+    <small>
+        <strong>
+            {% if message.tags == 'danger' %}
+			    <i class="bi bi-x-circle-fill"></i>
+			{% elif message.tags == 'warning' %}
+			    <i class="bi bi-exclamation-triangle-fill"></i>
+			{% elif message.tags == 'success' %}
+			    <i class="bi bi-check-circle-fill"></i>
+			{% elif message.tags == 'info' %}
+			    <i class="bi bi-info-circle-fill"></i>
+			{% endif %}
+            {{message}}
+        </strong>
+    </small>
+</div>
+{% endfor %}
