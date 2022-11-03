@@ -123,7 +123,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/css'),
 ]
 
-MEDIA_URL= 'MediaFiles'
+MEDIA_URL= 'MediaFiles/'
 MEDIA_ROOT = os.path.join(BASE_DIR/'mediaFolder/')
 
 
