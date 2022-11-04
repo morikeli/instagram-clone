@@ -54,3 +54,9 @@
 	font-size: 25px;
 	margin-right: 10px;
 }
+.login-form form {
+	padding: 30px;
+}
+/* .login-form form .hr1, .hr2 {
+
+} */

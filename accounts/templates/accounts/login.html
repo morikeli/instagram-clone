@@ -14,8 +14,8 @@
             <div class="col-md-6">
 
             </div>
-            <div class="col-md-4">
-                <form action="" method="post">
+            <div class="col-md-4 login-form">
+                <form action="" method="post" class="card card-body">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-12">
@@ -25,7 +25,13 @@
                     <div class="d-grid gap-2 mt-2">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
+                    <div>
+                        <p><hr class="hr1 w-25">OR<hr class="hr2 w-25"></p>
+                    </div>
                 </form>
+                <div class="card card-body">
+                    <h6 class="text-center">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></h6>
+                </div>
             </div>
         </div>
     </div>
