@@ -38,7 +38,7 @@
 .sidebar-nav .nav-link {
 	display: flex;
 	align-items: center;
-	font-size: 15px;
+	font-size: 20px;
 	font-weight: 600;
 	color: black;
 	transition: 0.3;
@@ -47,6 +47,6 @@
     margin-bottom: 10px;
 }
 .sidebar-nav .nav-link i {
-	font-size: 18px;
+	font-size: 25px;
 	margin-right: 10px;
 }
