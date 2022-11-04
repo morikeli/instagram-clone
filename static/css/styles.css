@@ -1,3 +1,7 @@
+.container {
+	margin-top: 10px;
+	margin-bottom: 3px;
+}
 .sidebar {
 	position: fixed;
 	top: 0;

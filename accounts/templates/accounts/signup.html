@@ -11,9 +11,11 @@
     {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4 offset-sm-3">
-                <form action="" method="post">
+            <div class="col-md-4 offset-sm-4">
+                <form action="" method="post" class="card card-body">
                     {% csrf_token %}
+                    <h2 class="text-center">Instagram</h2>
+                    <h6 class="text-center text-muted fw-bold">Sign up to see photos and videos from your friends</h5>
                     <div class="row">
                         <div class="col-md-12">
                             {{SignUpForm|crispy}}
