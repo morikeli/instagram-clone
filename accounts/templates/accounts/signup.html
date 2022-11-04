@@ -1,4 +1,5 @@
 {% extends 'navbar.html' %}{% block title %}Create account{% endblock %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,7 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-12">
-                            {{SignUpForm}}
+                            {{SignUpForm|crispy}}
                         </div>
                     </div>
                     <div class="d-grid gap-2 mt-2">
