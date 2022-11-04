@@ -10,7 +10,7 @@ def generate_user_id(sender, instance, **kwargs):
         instance.id = str(uuid.uuid4()).replace('-', '')[:15]
 
 
-@receiver(post_save, sender=UserProfile)
+@receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(name=instance)
