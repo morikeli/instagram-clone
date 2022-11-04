@@ -8,7 +8,26 @@
 </head>
 <body>
     {% block content %}
-    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-4">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{form}}
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 mt-2">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     {% endblock %}
 </body>
 </html>
