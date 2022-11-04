@@ -9,13 +9,13 @@ class UserLoginForm(AuthenticationForm):
         self.error_messages['invalid_login'] = 'INVALID CREDENTIALS!!! Username and password maybe case-sensitive'
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
-    email = forms.CharField(required=True)
-
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Full Name', 'class': 'mb-2'}), label='', required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2'}), label='', required=True)
+    email = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Email', 'class': 'mb-2'}), label='', required=True)
+    
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
+        fields = ['email', 'first_name', 'username', 'password1', 'password2']
 
 class EditProfileForm(forms.ModelForm):
     gender = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}), disabled=True)
