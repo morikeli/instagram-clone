@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="{% static 'styles.css' %}">
 <title>Instagram clone | {% block title %}{% endblock %}</title>
-{% if user.is_authenticated %}
+
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
@@ -37,6 +37,6 @@
         </li>
     </ul>
 </aside>
-{% endif %}
+
 {% block content %}
 {% endblock %}
