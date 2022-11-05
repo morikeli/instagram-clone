@@ -22,7 +22,7 @@ def signup_view(request):
 
 @login_required(login_url='user_login')
 @user_passes_test(lambda user: user.is_staff is False)
-def user_profile_view(request):
+def edit_user_profile_view(request):
     form = EditProfileForm(instance=request.user.userprofile)
     if request.method == 'POST':
         form = EditProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
@@ -30,9 +30,17 @@ def user_profile_view(request):
             form.save()
             messages.info(request, 'Profile picture updated successfully!')
             return redirect('homepage')
-    print('User: ', request.user)
+
     context = {'edit_form': form}
+    return render(request, 'accounts/edit-profile.html', context)
+
+@login_required(login_url='user_login')
+@user_passes_test(lambda user: user.is_staff is False)
+def user_profile_view(request, name):
+
+    context = {}
     return render(request, 'accounts/profile.html', context)
+
 
 class LogoutUser(LogoutView):
     template_name = 'accounts/logout.html'
