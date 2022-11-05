@@ -54,6 +54,65 @@
 	font-size: 25px;
 	margin-right: 10px;
 }
+.sidebar-nav .nav-link img {
+	height: 35px;
+	width: 35px;
+	margin-right: 10px;
+	margin-top: -3%;
+	margin-left: -3%;
+}
 .login-form form {
 	padding: 30px;
 }
+
+/* Profile page */
+.profile-container {
+	margin-left: 30%;
+	margin-top: 2%;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.profile-container .profile-img {
+	height: 120px;
+	width: 120px;
+}
+#edit-profile-row {
+	display: inline-flex;
+	align-items: center;
+	margin-bottom: 7%;
+	
+}
+#edit-profile-row h3, #edit-profile-row a{
+	margin-right: 15px;
+}
+#edit-profile-row h6 {
+	margin-right: 22px;
+}
+
+/* Bordered tabs in profile page */
+.tabs-container {
+	margin-top: 7%;
+}
+.nav-tabs-bordered {
+	border-top: 2px solid #ebeef4;
+	border-bottom: none;
+
+}
+.nav-tabs-bordered .nav-link {
+	padding-top: 15px;
+	margin-bottom: -2px;
+	border: none;
+	color: #8891a1;
+	font-weight: 600;
+}
+.nav-tabs-bordered .nav-link:hover, .nav-tabs-bordered .nav-link:focus {
+	color: #21252c;
+}
+.nav-tabs-bordered .nav-link.active {
+	background-color: #fff;
+	color: black;
+	border-top: 2px solid #353c47;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+  
