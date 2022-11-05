@@ -30,7 +30,7 @@ def user_profile_view(request):
             form.save()
             messages.info(request, 'Profile picture updated successfully!')
             return redirect('homepage')
-
+    print('User: ', request.user)
     context = {'edit_form': form}
     return render(request, 'accounts/profile.html', context)
 

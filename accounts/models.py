@@ -14,7 +14,11 @@ class UserProfile(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name_plural = 'Users Profile'
+        verbose_name_plural = 'Profiles'
 
     def __str__(self):
         return f'{self.name.username}'
+
+    def save(self, *args, **kwargs):
+        super(UserProfile, self).save(*args, **kwargs)
+
