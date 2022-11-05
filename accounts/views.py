@@ -35,4 +35,4 @@ def user_profile_view(request):
     return render(request, 'accounts/profile.html', context)
 
 class LogoutUser(LogoutView):
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/logout.html'
