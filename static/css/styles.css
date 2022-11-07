@@ -1,3 +1,13 @@
+* {
+	box-sizing: border-box;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background-color: rgba(235, 235, 250, 0.6);
+}
 .container {
 	margin-top: 10px;
 	margin-bottom: 3px;
@@ -54,6 +64,9 @@
 .sidebar-nav .nav-link i {
 	font-size: 25px;
 	margin-right: 10px;
+}
+.sidebar-nav .nav-link i:active {
+	color: black;
 }
 .sidebar-nav .nav-link span {
 	color: #353c47;
@@ -146,4 +159,56 @@
 }
 .edit-profile-form #id_profile_pic {
 	margin-bottom: 5%;
+}
+
+/* Homepage */
+.homepage-container {
+	margin-left: 27%;
+	margin-top: 4%;
+}
+.homepage-container #dp {
+	height: 70px;
+	width: 70px;
+	margin-right: 5%;
+}
+.homepage-container .posts-card {
+	margin-bottom: 3%;
+}
+.homepage-container .posts-card img {
+	height: 50px;
+	width: 50px;
+
+}
+.homepage-container .posts-card .posts-title {
+	margin-left: 2%;
+}
+.homepage-container .posts-card .filter {
+	position: absolute;
+	right: 0px;
+	top: 15px;
+}
+.homepage-container .posts-card .filter .icon {
+	color: #21252c;
+	padding-right: 20px;
+	padding-bottom: 5px;
+	transition: 0.3s;
+	font-size: 16px;
+}
+.homepage-container .posts-card .filter .icon:hover, .homepage-container .posts-card .filter .icon:focus {
+  	color: #4154f1;
+}
+.homepage-container .posts-card .filter .dropdown-header {
+  	padding: 8px 15px;
+}
+.homepage-container .posts-card .filter .dropdown-header h6 {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: 1px;
+	color: #aab7cf;
+	margin-bottom: 0;
+	padding: 0;
+}
+.homepage-container .posts-card .filter .dropdown-item {
+  	padding: 8px 15px;
 }
