@@ -33,7 +33,7 @@
                 <i class="bi bi-plus-square"></i><span>Create</span>
             </a>
             <a href="{% url 'user_profile' %}" class="nav-link">
-                <img src="{{ request.user.userprofile.profile_pic.url }}" alt="your-photo"><span>Profile</span>
+                <img src="{{ request.user.userprofile.profile_pic.url }}" class="rounded-circle" alt="your-photo"><span>Profile</span>
             </a>
             <a href="" class="nav-link">
                 <i class="bi bi-list toggle-sidebar-btn"></i><span>More</span>

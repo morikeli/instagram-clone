@@ -18,10 +18,11 @@ class SignUpForm(UserCreationForm):
         fields = ['email', 'first_name', 'username', 'password1', 'password2']
 
 class EditProfileForm(forms.ModelForm):
+    bio = forms.CharField(widget=forms.Textarea(attrs={'type': 'text'}))
     gender = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}),)
     country = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}))
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
-    profile_pic = forms.ImageField(label='')
+    profile_pic = forms.ImageField(widget=forms.FileInput(attrs={'type':  'file', 'class': 'mb-3'}), label='')
 
     class Meta:
         model = UserProfile
