@@ -144,3 +144,6 @@
 .edit-profile-form {
 	margin-left: 10%;
 }
+.edit-profile-form #id_profile_pic {
+	margin-bottom: 5%;
+}

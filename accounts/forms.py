@@ -22,8 +22,7 @@ class EditProfileForm(forms.ModelForm):
     gender = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}),)
     country = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}))
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
-    profile_pic = forms.ImageField(widget=forms.FileInput(attrs={'type':  'file', 'class': 'mb-3'}), label='')
 
     class Meta:
         model = UserProfile
-        fields = ['profile_pic', 'bio', 'phone_no', 'gender']
+        fields = ['profile_pic', 'bio', 'phone_no', 'gender', 'country']
