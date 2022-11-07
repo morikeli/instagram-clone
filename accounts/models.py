@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
 class UserProfile(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
@@ -22,3 +23,9 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         super(UserProfile, self).save(*args, **kwargs)
 
+        dp = Image.open(self.profile_pic.path)
+        
+        if dp.height > 400 and dp.width > 400:
+            output_size = (400, 400)
+            dp.thumbnail(output_size)
+            dp.save(self.profile_pic.path)
