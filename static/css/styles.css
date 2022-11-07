@@ -115,4 +115,28 @@
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-  
+.nav-pills {
+	border-right: 1px solid black;
+	margin-left: -2%;
+	
+}
+.nav-pills .nav-link {
+	margin-left: -2%;
+	margin-right: 7px;
+	color: black;
+
+}.nav-pills .nav-link {
+	/* margin-left: -5%; */
+	text-align: left;
+	/* margin: 0 0 5px 0; */
+}
+.nav-pills .nav-link.active {
+	border-left: 2px solid #353c47;
+	color: black;
+	background-color: #fff;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+.edit-profile-form {
+	margin-left: 10%;
+}
