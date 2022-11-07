@@ -1,5 +1,7 @@
 from django.db import models
 from accounts.models import UserProfile
+from PIL import Image
+
 
 class Posts(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
@@ -16,6 +18,17 @@ class Posts(models.Model):
     class Meta:
         verbose_name_plural = 'Posts'
         ordering = ['user']
+
+    def save(self, *args, **kwargs):
+        super(Posts, self).save(*args, **kwargs)
+
+        posted_img = Image.open(self.image.path)
+
+        if posted_img.height > 500 and posted_img.width > 500:
+            output_size = (500, 500)
+            posted_img.thumbnail(output_size)
+            posted_img.save(self.image.path)
+
 
 class LikedPost(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
