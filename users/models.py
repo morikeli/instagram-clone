@@ -5,7 +5,7 @@ from PIL import Image
 
 class Posts(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=False)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=True)
     image = models.ImageField(upload_to='UserPosts/', null=False)
     caption = models.TextField(blank=True)
     total_likes = models.PositiveIntegerField(default=0, editable=False)

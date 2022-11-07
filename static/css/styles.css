@@ -174,10 +174,18 @@ body {
 .homepage-container .posts-card {
 	margin-bottom: 3%;
 }
-.homepage-container .posts-card img {
+.homepage-container .posts-card #post-dp {
 	height: 50px;
 	width: 50px;
 
+}
+.homepage-container .posts-card .posts-img-container {
+	padding: 0;
+}
+.homepage-container .posts-card .posts-img-container .posts-img {
+	width: 526px;
+	height: auto;
+	margin-left: -1%;
 }
 .homepage-container .posts-card .posts-title {
 	margin-left: 2%;
