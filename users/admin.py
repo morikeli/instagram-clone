@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import Posts, LikedPost
 
-# Register your models here.
+@admin.register(Posts)
+class UsersPostsTable(admin.ModelAdmin):
+    list_display = ['user', 'total_likes', 'posted']
+
+@admin.register(LikedPost)
+class LikedPostsTable(admin.ModelAdmin):
+    list_display = ['username', 'liked']
