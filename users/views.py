@@ -7,13 +7,14 @@ from .models import Posts, LikedPost
 def homepage_view(request):
     posted_posts = Posts.objects.all()
     
+    
     context = {'posted': posted_posts}
     return render(request, 'users/homepage.html', context)
 
 
 def like_posts_view(request):
     get_postId = request.GET.get('id')
-    print(f'Post id: {get_postId}')
+    
     homepage_post = Posts.objects.get(id=get_postId)
     liked_post = LikedPost.objects.filter(id=get_postId, username=request.user.username).first()
 

@@ -243,7 +243,7 @@ body {
 }
 .homepage-container .posts-card .posts-img-container .comment-container {
 	margin-left: 15px;
-	margin-bottom: -5%;
+	margin-bottom: -4%;
 }
 .homepage-container .posts-card .posts-img-container .comment-container a {
 	font-size: 25px;
@@ -251,7 +251,8 @@ body {
 	margin-top: -3%;
 	color: black;
 }
-.homepage-container .posts-card .posts-img-container .comment-container input {
+.homepage-container .posts-card .posts-img-container .comment-container input[type="text"] {
 	width: 400px;
 	border: none;
+	margin-left: 2%;
 }
