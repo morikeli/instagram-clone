@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Posts, LikedPost, Comments
 from .forms import CreatePostsForm
 
+global get_user_response
+
 
 @login_required(login_url='user_login')
 def homepage_view(request):
@@ -13,8 +15,9 @@ def homepage_view(request):
 
     if request.method == 'POST':
         upload_post = CreatePostsForm(request.POST, request.FILES)
-        get_post_id = request.POST['posted_id']
-        get_comment_id = request.POST['comment']
+        get_post_id = request.POST.get('posted_id')
+        get_comment_id = request.POST.get('comment')
+        get_user_response = request.POST.get('response')
 
         if upload_post.is_valid():
             form = upload_post.save(commit=False)
@@ -22,15 +25,23 @@ def homepage_view(request):
             form.save()
             messages.success(request, 'Your post was uploaded successfully!')
             return redirect('homepage')
-        
+
+        elif get_user_response == 'Yes':
+            return delete_view(request)
+
         else:
-            post_obj = Posts.objects.get(id=get_post_id)
-            new_comment = Comments.objects.create(name=post_obj, comment=get_comment_id)
-            new_comment.save()
-            return redirect('homepage')
-    
+            try:
+                post_obj = Posts.objects.get(id=get_post_id)
+                new_comment = Comments.objects.create(name=post_obj, comment=get_comment_id)
+                new_comment.save()
+                return redirect('homepage')
+            except Posts.DoesNotExist:
+                return redirect('homepage')
+
+
     context = {'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(),}
     return render(request, 'users/homepage.html', context)
+
 
 
 def like_posts_view(request):
@@ -54,20 +65,17 @@ def like_posts_view(request):
 
 
 def delete_view(request):
-    get_postId = request.GET['id']
+    get_postObj = request.GET.get('id')
+    print('Object: ', get_postObj)
+    posted_img = Posts.objects.get(id=get_postObj)
 
-    posted_img = Posts.objects.get(id=get_postId)
-
-    if request.method == 'POST':
-        get_user_response = request.POST['user_response']
-
-        if get_user_response == 'Yes':
-            get_likes_for_post = LikedPost.objects.filter(id=get_postId).all()
-            posted_img.delete()
-            get_likes_for_post.delete()
-            messages.error(request, 'You have deleted one of your posts.')
-            return redirect('homepage')
-        else:
-            return redirect('homepage')
+    if posted_img:
+        get_likes_for_post = LikedPost.objects.filter(id=get_postObj).all()
+        posted_img.delete()
+        get_likes_for_post.delete()
+        messages.error(request, 'You have deleted one of your posts.')
+        return redirect('homepage')
+    else:
+        return redirect('homepage')
     
-    return redirect('homepage')
+    # return render(request, 'users/homepage.html')

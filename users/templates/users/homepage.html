@@ -27,9 +27,9 @@
                                             Are you sure you want to delete <br><b>"{{post.caption|truncatewords:5}}"?</b>
                                         </div>
                                         <hr>
-                                        <div class=" text-center">
-                                            <a href="{% url 'homepage' %}" class="btn btn-outline-warning mr-3">Cancel</a>
-                                            <button class="btn btn-danger" value="Yes">Delete <i class="bi-trash"></i></button>
+                                        <div class="text-center">
+                                            <input type="hidden" name="response" value="Yes">
+                                            <a href="/users/delete-post?id={{post.id}}" class="btn btn-outline-danger text-danger">Delete</a>
                                         </div>
                                         
                                     </div>
