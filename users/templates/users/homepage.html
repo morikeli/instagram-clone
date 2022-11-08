@@ -17,7 +17,7 @@
                 {% for post in posted reversed %}
                 <div class="posts-card card card-body">
                     <div class="row">
-                        <div class="d-flex align-items center">
+                        <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-center">
                                 <img id="post-dp" src="{{ request.user.userprofile.profile_pic.url }}" class="rounded-circle" alt="post-dp">
                             </div>
@@ -41,6 +41,35 @@
                             <a href="{{ post.image.url }}">
                                 <img class="posts-img" src="{{ post.image.url }}" alt="posted-pic">
                             </a>
+                            <div class="d-flex align-items-center posts-icons-container">
+                                    <a href="" class="icons-link"><i class="bi-heart-fill"></i></a>
+                                    <a href="" class="icons-link"><i class="bi-chat"></i></a>
+                                    <a href="" class="icons-link"><i class="bi-send"></i></a>
+                                    <a href="" class="icons-link" id="bookmark"><i class="bi-bookmark"></i></a>
+                            </div>
+                            <div class="d-flex align-items-center space-x-3 likes-dp-container">
+                                <div class="flex items-center">
+                                    <img src="{{ post.image.url }}" alt="followers-dp" class="rounded-circle likes-dp">
+                                    <img src="{{ post.image.url }}" alt="followers-dp" class="rounded-circle likes-dp">
+                                    <img src="{{ post.image.url }}" alt="followers-dp" class="rounded-circle likes-dp">
+                                </div>
+                                <div class="likes-text-container text-muted">
+                                    Liked by <strong>testuser</strong> and <strong>others</strong>
+                                </div>
+                            </div>
+                            <div class="description">
+                                <p><strong>{{ post.user }}</strong> {{ post.caption }}</p>
+                                <p class="small text-muted">{{ post.posted|timesince|upper|slice:":8" }} AGO</p>
+                            </div>
+                            <hr class="w-100">
+                            <div class="d-flex align-items-center comment-container">
+                                <a href=""><i class="bi-emoji-smile"></i></a>
+                                <form action="" method="post" class="d-flex">
+                                    {% csrf_token %}
+                                    <input type="text" placeholder="Add a comment..." name="comment" class="form-control" id="">
+                                    <button type="submit" class="btn btn-default text-primary">Post</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     

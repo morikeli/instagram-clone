@@ -186,6 +186,7 @@ body {
 	width: 526px;
 	height: auto;
 	margin-left: -1%;
+	margin-bottom: 3%;
 }
 .homepage-container .posts-card .posts-title {
 	margin-left: 2%;
@@ -219,4 +220,38 @@ body {
 }
 .homepage-container .posts-card .filter .dropdown-item {
   	padding: 8px 15px;
+}
+.homepage-container .posts-card .likes-dp {
+	height: 30px;
+	width: 30px;
+	margin-right: -10.5%;
+}
+.homepage-container .posts-card .posts-icons-container, .likes-dp-container, .description {
+	margin-bottom: 2%;
+	padding-left: 15px;
+}
+.homepage-container .posts-card .posts-icons-container .icons-link {
+	margin-right: 3%;
+	color: black;
+	font-size: 30px;
+}
+.homepage-container .posts-card .posts-icons-container #bookmark {
+	margin-left: 68%;
+}
+.homepage-container .posts-card .posts-img-container .likes-text-container {
+	margin-left: -3%;
+}
+.homepage-container .posts-card .posts-img-container .comment-container {
+	margin-left: 15px;
+	margin-bottom: -5%;
+}
+.homepage-container .posts-card .posts-img-container .comment-container a {
+	font-size: 25px;
+	margin-right: 1%;
+	margin-top: -3%;
+	color: black;
+}
+.homepage-container .posts-card .posts-img-container .comment-container input {
+	width: 400px;
+	border: none;
 }
