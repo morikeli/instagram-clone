@@ -42,7 +42,7 @@ def edit_profile_view(request):
 def profile_view(request):
     user_posts = Posts.objects.filter(user=request.user.userprofile).all()
 
-    context = {'my_posts': user_posts}
+    context = {'my_posts': user_posts, 'total_posts': user_posts.count(),}
     return render(request, 'accounts/profile.html', context)
 
 
