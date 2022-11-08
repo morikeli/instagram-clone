@@ -15,6 +15,30 @@
 
                 </div>
                 {% for post in posted reversed %}
+                    <!-- Modal forms -->
+                <div class="modal fade" id="user-response" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center mb-3">
+                                            Are you sure you want to delete <br><b>"{{post.caption|truncatewords:5}}"?</b>
+                                        </div>
+                                        <hr>
+                                        <div class=" text-center">
+                                            <a href="{% url 'homepage' %}" class="btn btn-outline-warning mr-3">Cancel</a>
+                                            <button class="btn btn-danger" value="Yes">Delete <i class="bi-trash"></i></button>
+                                        </div>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="posts-card card card-body">
                     <div class="row">
                         <div class="d-flex align-items-center">
@@ -28,7 +52,13 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow text-center">
-                                    {% if post.user == request.user.userprofile %}<li><a class="dropdown-item text-danger" href="/users/delete-post?id={{post.id}}"><i class="bi-trash-fill"></i> Delete</a></li>{% endif %}
+                                    {% if post.user == request.user.userprofile %}
+                                    <li>
+                                        <a class="dropdown-item text-danger" href="/users/delete-post?id={{post.id}}" data-bs-toggle="modal" data-bs-target="#user-response">
+                                            <i class="bi-trash-fill"></i> Delete
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                     <li><a class="dropdown-item text-danger" href="#">Report</a></li>
                                     {% if post.user != request.user.userprofile %}<li><a class="dropdown-item text-danger" href="#">Unfollow</a></li>{% endif %}
                                     <li><a class="dropdown-item" href="#">Add to favorites</a></li>
