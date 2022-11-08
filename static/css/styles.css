@@ -105,6 +105,12 @@ body {
 #edit-profile-row h6 {
 	margin-right: 22px;
 }
+.profile-container .tabs-container #borderedTabJustifiedContent #bordered-justified-posts img{
+	height: 230px;
+	width: 240px;
+	display: inline-block;
+	margin-bottom: 2%;
+}
 
 /* Bordered tabs in profile page */
 .tabs-container {
