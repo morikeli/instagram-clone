@@ -69,7 +69,7 @@ def delete_view(request):
     print('Object: ', get_postObj)
     posted_img = Posts.objects.get(id=get_postObj)
 
-    if posted_img:
+    if posted_img is not None:
         get_likes_for_post = LikedPost.objects.filter(id=get_postObj).all()
         posted_img.delete()
         get_likes_for_post.delete()
@@ -78,4 +78,3 @@ def delete_view(request):
     else:
         return redirect('homepage')
     
-    # return render(request, 'users/homepage.html')

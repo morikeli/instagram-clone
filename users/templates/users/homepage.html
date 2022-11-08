@@ -16,7 +16,7 @@
                 </div>
                 {% for post in posted reversed %}
                     <!-- Modal forms -->
-                <div class="modal fade" id="user-response" tabindex="-1">
+                <div class="modal fade" id="user-response-{{post.id}}" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -28,8 +28,8 @@
                                         </div>
                                         <hr>
                                         <div class="text-center">
-                                            <input type="hidden" name="response" value="Yes">
-                                            <a href="/users/delete-post?id={{post.id}}" class="btn btn-outline-danger text-danger">Delete</a>
+                                            <input type="hidden" name="delete_post" value="{{ post.id }}">
+                                            <a href="/users/delete-post?id={{post.id}}" class="btn btn-outline-danger">Delete</a>
                                         </div>
                                         
                                     </div>
@@ -54,7 +54,7 @@
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow text-center">
                                     {% if post.user == request.user.userprofile %}
                                     <li>
-                                        <a class="dropdown-item text-danger" href="/users/delete-post?id={{post.id}}" data-bs-toggle="modal" data-bs-target="#user-response">
+                                        <a class="dropdown-item text-danger" href="/users/delete-post?delete={{post.id}}" data-bs-toggle="modal" data-bs-target="#user-response-{{post.id}}">
                                             <i class="bi-trash-fill"></i> Delete
                                         </a>
                                     </li>

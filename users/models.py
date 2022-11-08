@@ -17,7 +17,7 @@ class Posts(models.Model):
 
     class Meta:
         verbose_name_plural = 'Posts'
-        ordering = ['user']
+        ordering = ['posted']
 
     def save(self, *args, **kwargs):
         super(Posts, self).save(*args, **kwargs)
