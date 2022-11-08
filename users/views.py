@@ -66,7 +66,6 @@ def like_posts_view(request):
 
 def delete_view(request):
     get_postObj = request.GET.get('id')
-    print('Object: ', get_postObj)
     posted_img = Posts.objects.get(id=get_postObj)
 
     if posted_img is not None:
