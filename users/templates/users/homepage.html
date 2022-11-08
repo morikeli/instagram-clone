@@ -38,11 +38,11 @@
                             </div>
                         </div>
                         <div class="col-md-12 p-0 posts-img-container">
-                            <a href="{{ post.image.url }}">
+                            <a href="/users/like-post?id={{ post.id }}">
                                 <img class="posts-img" src="{{ post.image.url }}" alt="posted-pic">
                             </a>
                             <div class="d-flex align-items-center posts-icons-container">
-                                    <a href="" class="icons-link"><i class="bi-heart-fill"></i></a>
+                                    <a href="/users/like-post?id={{ post.id }}" class="icons-link"><i class="bi-heart-fill"></i></a>
                                     <a href="" class="icons-link"><i class="bi-chat"></i></a>
                                     <a href="" class="icons-link"><i class="bi-send"></i></a>
                                     <a href="" class="icons-link" id="bookmark"><i class="bi-bookmark"></i></a>
