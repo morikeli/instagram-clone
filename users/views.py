@@ -2,11 +2,24 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Posts, LikedPost
+from .forms import CreatePostsForm, CommentPostForm
 
 @login_required(login_url='user_login')
 def homepage_view(request):
     posted_posts = Posts.objects.all()
-    
+    upload_post = CreatePostsForm()
+    post_comment = CommentPostForm()
+
+    if request.method == 'POST':
+        upload_post = CreatePostsForm(request.POST, request.FILES)
+        get_comment = request.POST['comment']
+
+        if upload_post.is_valid():
+            form = upload_post.save(commit=False)
+            form.user = request.user.userprofile
+            form.save()
+            messages.success(request, 'Your post was uploaded successfully!')
+            return redirect('')
     
     context = {'posted': posted_posts}
     return render(request, 'users/homepage.html', context)
