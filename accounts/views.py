@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import UserLoginForm, SignUpForm, EditProfileForm
 from .models import UserProfile
+from users.models import Posts
 
 class UserLogin(LoginView):
     authentication_form = UserLoginForm
@@ -39,8 +40,9 @@ def edit_profile_view(request):
 @login_required(login_url='user_login')
 @user_passes_test(lambda user: user.is_staff is False)
 def profile_view(request):
+    user_posts = Posts.objects.filter(user=request.user.userprofile).all()
 
-    context = {}
+    context = {'my_posts': user_posts}
     return render(request, 'accounts/profile.html', context)
 
 
