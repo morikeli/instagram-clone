@@ -28,11 +28,10 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow text-center">
-                                    <li><a class="dropdown-item text-danger" href="#"><i class="bi-trash-fill"></i> Delete</a></li>
+                                    {% if post.user == request.user.userprofile %}<li><a class="dropdown-item text-danger" href="/users/delete-post?id={{post.id}}"><i class="bi-trash-fill"></i> Delete</a></li>{% endif %}
                                     <li><a class="dropdown-item text-danger" href="#">Report</a></li>
-                                    <li><a class="dropdown-item text-danger" href="#">Unfollow</a></li>
+                                    {% if post.user != request.user.userprofile %}<li><a class="dropdown-item text-danger" href="#">Unfollow</a></li>{% endif %}
                                     <li><a class="dropdown-item" href="#">Add to favorites</a></li>
-                                    <li><a class="dropdown-item" href="#">Unfollow</a></li>
                                     <li><a class="dropdown-item" href="{% url 'homepage' %}">Cancel</a></li>
                                 </ul>
                             </div>

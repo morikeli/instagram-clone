@@ -9,6 +9,7 @@ from .forms import CreatePostsForm
 def homepage_view(request):
     posted_posts = Posts.objects.all()
     upload_post = CreatePostsForm()
+    get_post_id = None
 
     if request.method == 'POST':
         upload_post = CreatePostsForm(request.POST, request.FILES)
@@ -50,3 +51,23 @@ def like_posts_view(request):
         homepage_post.total_likes -= 1
         homepage_post.save()
         return redirect('homepage')
+
+
+def delete_view(request):
+    get_postId = request.GET['id']
+
+    posted_img = Posts.objects.get(id=get_postId)
+
+    if request.method == 'POST':
+        get_user_response = request.POST['user_response']
+
+        if get_user_response == 'Yes':
+            get_likes_for_post = LikedPost.objects.filter(id=get_postId).all()
+            posted_img.delete()
+            get_likes_for_post.delete()
+            messages.error(request, 'You have deleted one of your posts.')
+            return redirect('homepage')
+        else:
+            return redirect('homepage')
+    
+    return redirect('homepage')
