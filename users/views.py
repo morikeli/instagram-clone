@@ -14,7 +14,6 @@ def homepage_view(request):
         upload_post = CreatePostsForm(request.POST, request.FILES)
         get_post_id = request.POST['posted_id']
         get_comment_id = request.POST['comment']
-        print(f'Comment id: {get_post_id}')
 
         if upload_post.is_valid():
             form = upload_post.save(commit=False)
@@ -28,8 +27,8 @@ def homepage_view(request):
             new_comment = Comments.objects.create(name=post_obj, comment=get_comment_id)
             new_comment.save()
             return redirect('homepage')
-    print(f'Comment(s): {[c.comment for c in Comments.objects.all()]}')
-    context = {'posted': posted_posts}
+    
+    context = {'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(),}
     return render(request, 'users/homepage.html', context)
 
 

@@ -42,7 +42,13 @@
                                 <img class="posts-img" src="{{ post.image.url }}" alt="posted-pic">
                             </a>
                             <div class="d-flex align-items-center posts-icons-container">
-                                    <a href="/users/like-post?id={{ post.id }}" class="icons-link"><i class="bi-heart-fill"></i></a>
+                                    <a href="/users/like-post?id={{ post.id }}" class="icons-link">
+                                        {% if UserHasLikedPost is True %}
+                                        <i class="bi-heart-fill" style="color: #db2b2b;"></i>
+                                        {% else %}
+                                        <i class="bi-heart"></i>
+                                        {% endif %}
+                                    </a>
                                     <a href="" class="icons-link"><i class="bi-chat"></i></a>
                                     <a href="" class="icons-link"><i class="bi-send"></i></a>
                                     <a href="" class="icons-link" id="bookmark"><i class="bi-bookmark"></i></a>
