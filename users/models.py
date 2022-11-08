@@ -29,6 +29,16 @@ class Posts(models.Model):
             posted_img.thumbnail(output_size)
             posted_img.save(self.image.path)
 
+class Comments(models.Model):
+    id = models.CharField(max_length=10, primary_key=True, editable=False)
+    name = models.ForeignKey(Posts, on_delete=models.CASCADE, editable=False)
+    comment = models.TextField(blank=False)
+    commented = models.DateTimeField(auto_now_add=True)
+    edited = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
 
 class LikedPost(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
