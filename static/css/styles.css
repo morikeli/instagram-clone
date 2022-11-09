@@ -8,6 +8,9 @@ html, body {
 body {
 	background-color: rgba(235, 235, 250, 0.6);
 }
+a {
+	text-decoration: none;
+}
 .container {
 	margin-top: 10px;
 	margin-bottom: 3px;
