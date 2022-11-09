@@ -27,8 +27,8 @@
                 </div>
                 <div id="edit-profile-row">
                     <h6>{% if total_posts == 0 %}<b>0</b> posts{% elif total_posts == 1 %}<b>1</b> post{% else %}<b>{{total_posts}}</b> posts{% endif %}</h6>
-                    <h6><b>118</b> followers</h6>
-                    <h6><b>110</b> following</h6>
+                    <h6>{% if followers == 1 %}<b>1</b> followers {% else %}<b>{{followers}}</b> followers {% endif %}</h6>
+                    <h6>{% if following == 1 %}<b>1</b> following {% else %}<b>{{following}}</b> following {% endif %}</h6>
                 </div>
                 <div id="edit-profile-form">
                     <h6><b>{{ request.user.username }}</b></h6>

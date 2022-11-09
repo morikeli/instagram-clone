@@ -155,16 +155,26 @@
                         <h6 class="small fw-bold text-muted">Suggestions For You</h6>
                         <div class="row">
                             {% for user in new_users %}
-                            <div class="col-md-3">
-                                <img class="rounded-circle" height="50px" width="50px" src="{{user.profile_pic.url}}" alt="img">
-                            </div>
-                            <div class="col-md-7">
-                                <h6><b><a href="{% url 'follow_user_profile' user.id %}">{{ user.name }}</a></b></h6>
-                                <p class="small text-muted mt-n3">320k followers</p>
-                            </div>
-                            <div class="col-md-2">
-                                <a href="" class="text-primary">Follow</a>
-                            </div>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img class="rounded-circle" height="50px" width="50px" src="{{user.profile_pic.url}}" alt="img">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <h6><b><a href="{% url 'follow_user_profile' user.id %}">{{ user.name }}</a></b></h6>
+                                        <p class="small text-muted mt-n3">320k followers</p>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="hidden" name="follow" value="{{user.name}}">
+                                        <button type="submit" class="btn btn-outline-default text-primary">Follow</button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% empty %}
+                                <div class="col-sm-12">
+                                    <h6 class="small fw-bold text-muted">No suggestions</h6>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>

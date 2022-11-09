@@ -63,4 +63,4 @@ class Friends(models.Model):
         return f'{self.following}'
 
     class Meta:
-        verbose_name_plural = 'Friends'
+        verbose_name_plural = 'Followers'

@@ -32,8 +32,8 @@
                         {% else %}<b>{{posts_count}}</b> posts
                         {% endif %}
                     </h6>
-                    <h6><b>118</b> followers</h6>
-                    <h6><b>110</b> following</h6>
+                    <h6>{% if followers == 1 %} <b>1</b> follower {% else %}<b>{{followers}}</b> followers{% endif %}</h6>
+                    <h6>{% if following == 1 %} <b>1</b> following {% else %}<b>{{following}}</b> following{% endif %}</h6>
                 </div>
                 <div id="edit-profile-form">
                     <h6><b>{{ obj.user }}</b></h6>

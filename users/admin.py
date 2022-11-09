@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Posts, LikedPost, Comments
+from .models import Posts, LikedPost, Comments, Friends
 
 @admin.register(Posts)
 class UsersPostsTable(admin.ModelAdmin):
@@ -13,3 +13,7 @@ class LikedPostsTable(admin.ModelAdmin):
 @admin.register(Comments)
 class LikedPostsTable(admin.ModelAdmin):
     list_display = ['name', 'comment']
+
+@admin.register(Friends)
+class LikedPostsTable(admin.ModelAdmin):
+    list_display = ['following', 'followed', 'created']
