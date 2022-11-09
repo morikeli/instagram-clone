@@ -147,6 +147,20 @@
                 <div class="row mt-3">
                     <div class="col-md-12">
                         <h6 class="small fw-bold text-muted">Suggestions For You</h6>
+                        <div class="row">
+                            {% for user in new_users %}
+                            <div class="col-md-3">
+                                <img class="rounded-circle" height="50px" width="50px" src="{{user.profile_pic.url}}" alt="img">
+                            </div>
+                            <div class="col-md-7">
+                                <h6><b>{{ user.name }}</b></h6>
+                                <p class="small text-muted mt-n3">320k followers</p>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="" class="text-primary">Follow</a>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Posts, LikedPost, Comments
 from .forms import CreatePostsForm
-
+from accounts.models import UserProfile
 
 
 @login_required(login_url='user_login')
@@ -38,7 +38,7 @@ def homepage_view(request):
     
     context = {
         'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
-        'create_post_form': upload_post,
+        'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
 
     }
     return render(request, 'users/homepage.html', context)
