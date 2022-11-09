@@ -24,7 +24,7 @@ class EditProfileForm(forms.ModelForm):
         ('Female', 'Female'),
     )
 
-    bio = forms.CharField(widget=forms.Textarea(attrs={'type': 'text'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'type': 'text'}), required=False)
     gender = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_GENDER)
     country = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}))
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
