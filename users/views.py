@@ -39,6 +39,7 @@ def homepage_view(request):
     context = {
         'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
+        'comments': Comments.objects.all(),
 
     }
     return render(request, 'users/homepage.html', context)

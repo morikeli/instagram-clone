@@ -117,6 +117,11 @@
                             <div class="description">
                                 <p><strong>{{ post.user }}</strong> {{ post.caption }}</p>
                                 <p class="small text-muted">{{ post.posted|timesince|upper|slice:":8" }} AGO</p>
+                                {% for c in comments %}
+                                {% if c.id == post.id %}
+                                <p class="small"><b>{{c.name}}</b> {{c.comment}}</p>
+                                {% endif %}
+                                {% endfor %}
                             </div>
                             <hr class="w-100">
                             <div class="d-flex align-items-center comment-container">
