@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Posts, LikedPost, Comments
 from .forms import CreatePostsForm
 
-global get_user_response
 
 
 @login_required(login_url='user_login')
@@ -25,9 +24,6 @@ def homepage_view(request):
             form.save()
             messages.success(request, 'Your post was uploaded successfully!')
             return redirect('homepage')
-
-        elif get_user_response == 'Yes':
-            return delete_view(request)
 
         else:
             try:
