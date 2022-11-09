@@ -47,8 +47,11 @@ def suggested_user_profile_view(request, suggested_user):
     follow_obj = UserProfile.objects.get(id=suggested_user)
     
 
-    context = {'obj': follow_obj,}
-    return render(request, 'accounts/profile.html', context)
+    context = {
+        'obj': follow_obj, 'followers_posts': Posts.objects.filter(user=suggested_user),
+        'posts_count': Posts.objects.filter(user=follow_obj).count(),
+    }
+    return render(request, 'users/profile.html', context)
 
 
 def like_posts_view(request):
