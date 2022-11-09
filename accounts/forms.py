@@ -18,8 +18,14 @@ class SignUpForm(UserCreationForm):
         fields = ['email', 'first_name', 'username', 'password1', 'password2']
 
 class EditProfileForm(forms.ModelForm):
+    SELECT_GENDER = (
+        (None, '-- Select your gender --'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
+
     bio = forms.CharField(widget=forms.Textarea(attrs={'type': 'text'}))
-    gender = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}),)
+    gender = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_GENDER)
     country = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}))
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
 
