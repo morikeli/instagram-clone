@@ -262,3 +262,18 @@ body {
 	border: none;
 	margin-left: 2%;
 }
+.homepage-container .upload-posts-form .modal-content .modal-header .modal-title {
+	text-align: center;
+}
+.homepage-container .upload-posts-form form {
+	/* align-items: center; */
+	height: 300px;
+	padding-left: 35px;
+}
+.homepage-container .upload-posts-form form i {
+	font-size: 100px;
+	margin-bottom: 3%;
+}
+.homepage-container .upload-posts-form form label {
+	visibility: hidden;
+}

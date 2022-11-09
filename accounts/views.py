@@ -31,7 +31,7 @@ def edit_profile_view(request):
         form = EditProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
         if form.is_valid():
             form.save()
-            messages.info(request, 'Profile picture updated successfully!')
+            messages.info(request, 'Profile updated successfully!')
             return redirect('user_profile')
 
     context = {'edit_form': form}

@@ -35,7 +35,11 @@ def homepage_view(request):
                 return redirect('homepage')
 
 
-    context = {'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(),}
+    context = {
+        'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
+        'create_post_form': upload_post,
+        
+    }
     return render(request, 'users/homepage.html', context)
 
 

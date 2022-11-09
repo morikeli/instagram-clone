@@ -11,12 +11,32 @@
     <div class="container">
         <div class="row homepage-container">
             {% include 'messages.html' %}
+            <div class="modal fade upload-posts-form" id="create-posts-form" tabindex="-1">
+                <div class="modal-dialog modal-md modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create new post</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post" enctype="multipart/form-data" class="text-center">
+                                {% csrf_token %}
+                                <i class="bi-image"></i>
+                                {{create_post_form}}
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-primary">Upload photo</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-8">
                 <div class="card card-body posts-card">
 
                 </div>
                 {% for post in posted reversed %}
-                    <!-- Modal forms -->
+                <!-- Modal forms -->
                 <div class="modal fade" id="user-response-{{post.id}}" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
