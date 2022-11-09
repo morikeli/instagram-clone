@@ -74,7 +74,7 @@ def like_posts_view(request):
         return redirect('homepage')
 
 
-def delete_view(request):
+def delete_posts_view(request):
     get_postObj = request.GET.get('id')
     posted_img = Posts.objects.get(id=get_postObj)
 

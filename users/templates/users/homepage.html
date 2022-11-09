@@ -11,7 +11,6 @@
     {% block content %}
     <div class="container">
         <div class="row homepage-container">
-            {% include 'messages.html' %}
             <div class="modal fade upload-posts-form" id="create-posts-form" tabindex="-1">
                 <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
@@ -33,9 +32,11 @@
             </div>
 
             <div class="col-md-8">
-                <div class="card card-body posts-card">
-
-                </div>
+                {% include 'messages.html' %}
+                <!-- Card to display Instgram stories -->
+                <!-- <div class="card card-body posts-card">
+                    
+                </div> -->
                 {% for post in posted reversed %}
                 <!-- Modal forms -->
                 <div class="modal fade" id="user-response-{{post.id}}" tabindex="-1">
