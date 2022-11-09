@@ -14,36 +14,37 @@ def homepage_view(request):
 
     if request.method == 'POST':
         upload_post = CreatePostsForm(request.POST, request.FILES)
-        get_followObj = request.POST['follow']
+        get_followObj = request.POST.get('follow')
         get_post_id = request.POST.get('posted_id')
         get_comment_id = request.POST.get('comment')
 
-        follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
-        if follow_record is None:
-            new_follower = Friends.objects.create(following=request.user.userprofile, followed=get_followObj)
-            new_follower.save()
-            return redirect('homepage')
+        if get_followObj is not None:
+            follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
+            if follow_record is None:
+                new_follower = Friends.objects.create(following=request.user.userprofile, followed=get_followObj)
+                new_follower.save()
+                return redirect('homepage')
+            else:
+                unfollow = Friends.objects.get(followed=get_followObj)
+                unfollow.delete()
+                return redirect('homepage')
         else:
-            unfollow = Friends.objects.get(followed=get_followObj)
-            unfollow.delete()
-            return redirect('homepage')
-        
 
-        if upload_post.is_valid():
-            form = upload_post.save(commit=False)
-            form.user = request.user.userprofile
-            form.save()
-            messages.success(request, 'Your post was uploaded successfully!')
-            return redirect('homepage')
-        else:
-            try:
-                post_obj = Posts.objects.get(id=get_post_id)
-                new_comment = Comments.objects.create(id=get_post_id, name=post_obj, comment=get_comment_id)
-                new_comment.save()
+            if upload_post.is_valid():
+                form = upload_post.save(commit=False)
+                form.user = request.user.userprofile
+                form.save()
+                messages.success(request, 'Your post was uploaded successfully!')
                 return redirect('homepage')
-            except Posts.DoesNotExist:
-                return redirect('homepage')
-    
+            else:
+                try:
+                    post_obj = Posts.objects.get(id=get_post_id)
+                    new_comment = Comments.objects.create(id=get_post_id, name=post_obj, comment=get_comment_id)
+                    new_comment.save()
+                    return redirect('homepage')
+                except Posts.DoesNotExist:
+                    return redirect('homepage')
+        
     context = {
         'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
