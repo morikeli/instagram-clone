@@ -34,11 +34,12 @@ def homepage_view(request):
             except Posts.DoesNotExist:
                 return redirect('homepage')
 
-
+    # comments section
+    
     context = {
         'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
         'create_post_form': upload_post,
-        
+
     }
     return render(request, 'users/homepage.html', context)
 
