@@ -158,7 +158,7 @@
                                 <img class="rounded-circle" height="50px" width="50px" src="{{user.profile_pic.url}}" alt="img">
                             </div>
                             <div class="col-md-7">
-                                <h6><b>{{ user.name }}</b></h6>
+                                <h6><b><a href="{% url 'follow_user_profile' user.id %}">{{ user.name }}</a></b></h6>
                                 <p class="small text-muted mt-n3">320k followers</p>
                             </div>
                             <div class="col-md-2">

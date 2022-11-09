@@ -33,8 +33,6 @@ def homepage_view(request):
                 return redirect('homepage')
             except Posts.DoesNotExist:
                 return redirect('homepage')
-
-    # comments section
     
     context = {
         'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
@@ -44,6 +42,13 @@ def homepage_view(request):
     }
     return render(request, 'users/homepage.html', context)
 
+
+def suggested_user_profile_view(request, suggested_user):
+    follow_obj = UserProfile.objects.get(id=suggested_user)
+    
+
+    context = {'obj': follow_obj,}
+    return render(request, 'accounts/profile.html', context)
 
 
 def like_posts_view(request):
