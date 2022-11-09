@@ -28,7 +28,7 @@ def homepage_view(request):
         else:
             try:
                 post_obj = Posts.objects.get(id=get_post_id)
-                new_comment = Comments.objects.create(name=post_obj, comment=get_comment_id)
+                new_comment = Comments.objects.create(id=get_post_id, name=post_obj, comment=get_comment_id)
                 new_comment.save()
                 return redirect('homepage')
             except Posts.DoesNotExist:

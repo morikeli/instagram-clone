@@ -8,8 +8,3 @@ import uuid
 def generate_posts_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:15]
-
-@receiver(pre_save, sender=Comments)
-def generate_comment_id(sender, instance, **kwargs):
-    if instance.id == "":
-        instance.id = str(uuid.uuid4()).replace('-', '')[:10]

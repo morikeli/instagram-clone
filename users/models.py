@@ -30,7 +30,7 @@ class Posts(models.Model):
             posted_img.save(self.image.path)
 
 class Comments(models.Model):
-    id = models.CharField(max_length=10, primary_key=True, editable=False)
+    id = models.CharField(max_length=10, primary_key=True, editable=False, unique=False)
     name = models.ForeignKey(Posts, on_delete=models.CASCADE, editable=False)
     comment = models.TextField(blank=False)
     commented = models.DateTimeField(auto_now_add=True)
@@ -50,3 +50,17 @@ class LikedPost(models.Model):
     
     def __str__(self):
         return f'{self.username}'
+
+
+class Friends(models.Model):
+    id = models.CharField(max_length=15, primary_key=True, editable=False)
+    following = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=False)
+    followed = models.CharField(max_length=50, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    edited = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.following}'
+
+    class Meta:
+        verbose_name_plural = 'Friends'
