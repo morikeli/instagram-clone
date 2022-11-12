@@ -91,9 +91,9 @@
                         </div>
                         <div class="col-md-12 p-0 posts-img-container">
                             <a href="/users/like-post?id={{ post.id }}">
-                                <img class="posts-img" src="{{ post.image.url }}" alt="posted-pic">
+                                <img class="posts-img img-responsive" src="{{ post.image.url }}" alt="posted-pic">
                             </a>
-                            <div class="d-flex align-items-center posts-icons-container">
+                            <div class="d-flex align-items posts-icons-container">
                                     <a href="/users/like-post?id={{ post.id }}" class="icons-link">
                                         {% if UserHasLikedPost is True %}
                                         <i class="bi-heart-fill" style="color: #db2b2b;"></i>

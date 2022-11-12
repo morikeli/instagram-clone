@@ -46,11 +46,12 @@ def homepage_view(request):
                     return redirect('homepage')
         
     context = {
-        'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(id=get_post_id).exists(), 
+        'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(user=request.user.userprofile, id=get_post_id).exists(), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
     }
+    print(f"Context obj: {context['UserHasLikedPost']} | Post id: {get_post_id}")
     return render(request, 'users/homepage.html', context)
 
 @login_required(login_url='user_login')
