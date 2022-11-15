@@ -29,3 +29,5 @@ A user can also edit his/her profile.
 
 ![create](https://user-images.githubusercontent.com/78599959/202016056-34f97d24-3ef4-4ed1-809d-e944d8acdf43.png)
 
+
+The clone is still under development. More features are coming soon ... 
