@@ -3,6 +3,20 @@ from accounts.models import UserProfile
 from PIL import Image
 
 
+class Friends(models.Model):
+    id = models.CharField(max_length=15, primary_key=True, editable=False)
+    following = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=False)
+    followed = models.CharField(max_length=50, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    edited = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.following}'
+
+    class Meta:
+        verbose_name_plural = 'Followers'
+
+
 class Posts(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=True)
@@ -51,16 +65,3 @@ class LikedPost(models.Model):
     def __str__(self):
         return f'{self.username}'
 
-
-class Friends(models.Model):
-    id = models.CharField(max_length=15, primary_key=True, editable=False)
-    following = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=False)
-    followed = models.CharField(max_length=50, editable=False)
-    created = models.DateTimeField(auto_now_add=True)
-    edited = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'{self.following}'
-
-    class Meta:
-        verbose_name_plural = 'Followers'
