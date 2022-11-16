@@ -7,7 +7,7 @@ class UsersPostsTable(admin.ModelAdmin):
 
 @admin.register(LikedPost)
 class LikedPostsTable(admin.ModelAdmin):
-    list_display = ['username', 'liked']
+    list_display = ['id', 'username', 'liked']
 
 
 @admin.register(Comments)
