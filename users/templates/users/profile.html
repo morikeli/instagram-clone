@@ -23,7 +23,11 @@
                 <div id="edit-profile-row">
                     <h3>{{ obj.name }}</h3>
                     <a href=""><i class="bi-send" style="font-size: 30px; color: black; margin-top: 6%"></i></a>
-                    <a href="" class="btn btn-primary btn-sm">Follow</a>                 
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="follow" value="{{obj.name}}">
+                        <button type="submit" class="btn btn-primary btn-sm mt-3">Follow</button>
+                    </form>
                 </div>
                 <div id="edit-profile-row">
                     <h6>

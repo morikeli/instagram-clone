@@ -69,7 +69,11 @@
                                 <img id="post-dp" src="{{ post.user.profile_pic.url }}" class="rounded-circle" alt="post-dp">
                             </div>
                             <div class="posts-title mt-2 ml-3">
-                                <h6 class="fw-bold">{{ post.user }}</h6>
+                                {% if request.user.userprofile == post.user %}
+                                <h6 class="fw-bold"><a href="{% url 'user_profile' %}">{{post.user}}</a></h6>
+                                {% else %}
+                                <h6 class="fw-bold"><a href="{% url 'follow_user_profile' post.user.id %}">{{ post.user }}</a></h6>
+                                {% endif %}
                                 <h6 class="small">{{ post.user }}</h6>
                             </div>
                             <div class="filter">
@@ -112,7 +116,7 @@
                                     <img src="{{ post.image.url }}" alt="followers-dp" class="rounded-circle likes-dp">
                                 </div>
                                 <div class="likes-text-container text-muted">
-                                    Liked by <strong>testuser</strong> and <strong>others</strong>
+                                    <strong>{% if post.total_likes == 1 %}{{ post.total_likes }} like{% else %}{{ post.total_likes }} likes{% endif %}</strong>
                                 </div>
                             </div>
                             <div class="description">

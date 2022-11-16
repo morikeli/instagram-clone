@@ -44,9 +44,10 @@ def homepage_view(request):
                     return redirect('homepage')
                 except Posts.DoesNotExist:
                     return redirect('homepage')
+
         
     context = {
-        'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(user=request.user.userprofile, id=get_post_id).exists(), 
+        'posted': posted_posts, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
@@ -56,14 +57,30 @@ def homepage_view(request):
 
 @login_required(login_url='user_login')
 def suggested_user_profile_view(request, suggested_user):
-    follow_obj = UserProfile.objects.get(id=suggested_user)
-    
+    viewed_user = UserProfile.objects.get(id=suggested_user)
 
+    if request.method == 'POST':
+        get_followObj = request.POST.get('follow')
+        print(f'Follow obj: {get_followObj}')
+
+        if get_followObj is not None:
+            follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
+            
+            if follow_record is None:
+                new_follower = Friends.objects.create(following=request.user.userprofile, followed=get_followObj)
+                new_follower.save()
+                return redirect('follow_user_profile', suggested_user)
+            
+            else:
+                unfollow = Friends.objects.get(followed=get_followObj)
+                unfollow.delete()
+                return redirect('follow_user_profile', suggested_user)
+    
     context = {
-        'obj': follow_obj, 'followers_posts': Posts.objects.filter(user=suggested_user),
-        'posts_count': Posts.objects.filter(user=follow_obj).count(),
-        'following': Friends.objects.filter(following=follow_obj).count(), 
-        'followers': Friends.objects.filter(followed=follow_obj).count(),
+        'obj': viewed_user, 'followers_posts': Posts.objects.filter(user=suggested_user),
+        'posts_count': Posts.objects.filter(user=viewed_user).count(),
+        'following': Friends.objects.filter(following=viewed_user).count(), 
+        'followers': Friends.objects.filter(followed=viewed_user).count(),
     }
     return render(request, 'users/profile.html', context)
 
@@ -72,10 +89,10 @@ def like_posts_view(request):
     get_postId = request.GET.get('id')
     
     homepage_post = Posts.objects.get(id=get_postId)
-    liked_post = LikedPost.objects.filter(id=get_postId, username=request.user.username).first()
+    liked_post = LikedPost.objects.filter(post_id=get_postId, username=request.user.username).first()
 
     if liked_post is None:
-        new_like = LikedPost.objects.create(username=request.user.username, id=get_postId)
+        new_like = LikedPost.objects.create(username=request.user.username, post_id=get_postId)
         homepage_post.total_likes += 1
         new_like.save()
         homepage_post.save()

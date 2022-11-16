@@ -16,8 +16,12 @@ a {
 	margin-top: 10px;
 	margin-bottom: 3px;
 }
+
 .logo {
-	font-family: "Roboto";
+	font-family: "Lobster", serif;
+	font-size: 50px;
+	margin-left: 4%;
+
 }
 .sidebar {
 	position: fixed;
@@ -35,7 +39,6 @@ a {
 	background-color: #fff;
 	box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
 }
-
 .sidebar-nav {
 	padding: 0;
 	margin: 0;
@@ -82,6 +85,102 @@ a {
 	margin-top: -3%;
 	margin-left: -3%;
 }
+/* badge icon for notification */
+.sidebar .nav-item .nav-link .badge-number {
+	position: absolute;
+	inset: 363px 242px auto auto;
+	font-weight: normal;
+	font-size: 11px;
+	padding: 3px 5px;
+	background-color: #fd253a;
+	color: white;
+}
+/* dropdown menu for "More" link */
+.sidebar-nav .dropdown-menu {
+	border-radius: 4px;
+	padding: 10px 0;
+	-webkit-animation-name: dropdown-animate;
+	animation-name: dropdown-animate;
+	-webkit-animation-duration: 0.2s;
+	animation-duration: 0.2s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	border: 0;
+	box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+}
+
+/* remove the caret symbol in dropdown menu */
+.sidebar-nav .dropdown-toggle::after{
+	content: none;
+}
+.sidebar-nav .dropdown-menu .dropdown-header, .sidebar-nav .dropdown-menu .dropdown-footer {
+	text-align: center;
+	font-size: 15px;
+	padding: 10px 25px;
+}
+.sidebar-nav .dropdown-menu .dropdown-footer a {
+	color: #444444;
+	text-decoration: underline;
+}
+.sidebar-nav .dropdown-menu .dropdown-footer a:hover {
+  	text-decoration: none;
+}
+.sidebar-nav .dropdown-menu .dropdown-divider {
+	color: #a5c5fe;
+	margin: 0;
+}
+.sidebar-nav .dropdown-menu .dropdown-item {
+	font-size: 20px;
+	padding: 10px 15px;
+	transition: 0.3s;
+	width: 100px;
+}
+.sidebar-nav .dropdown-menu .dropdown-item i {
+	margin-right: 10px;
+	font-size: 18px;
+	line-height: 0;
+}
+.sidebar-nav .dropdown-menu .dropdown-item:hover {
+  	background-color: #f6f9ff;
+}
+
+@media (min-width: 768px) {
+	.sidebar-nav .dropdown-menu-arrow::before {
+		content: "";
+		width: 13px;
+		height: 13px;
+		background: #fff;
+		position: absolute;
+		bottom: -7px;
+		left: 20px;
+		transform: rotate(-140deg);
+		border-top: 1px solid #eaedf1;
+		border-left: 1px solid #eaedf1;
+	}
+}
+@-webkit-keyframes dropdown-animate {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+	0% {
+		opacity: 0;
+	}
+}
+@keyframes dropdown-animate {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+	0% {
+		opacity: 0;
+	}
+}
+
 .login-form form {
 	padding: 30px;
 }
