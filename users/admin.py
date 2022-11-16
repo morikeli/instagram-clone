@@ -11,9 +11,9 @@ class LikedPostsTable(admin.ModelAdmin):
 
 
 @admin.register(Comments)
-class LikedPostsTable(admin.ModelAdmin):
+class CommentsTable(admin.ModelAdmin):
     list_display = ['name', 'comment']
 
 @admin.register(Friends)
-class LikedPostsTable(admin.ModelAdmin):
+class FriendsTable(admin.ModelAdmin):
     list_display = ['following', 'followed', 'created']
