@@ -56,14 +56,30 @@ def homepage_view(request):
 
 @login_required(login_url='user_login')
 def suggested_user_profile_view(request, suggested_user):
-    follow_obj = UserProfile.objects.get(id=suggested_user)
-    
+    viewed_user = UserProfile.objects.get(id=suggested_user)
 
+    if request.method == 'POST':
+        get_followObj = request.POST.get('follow')
+        print(f'Follow obj: {get_followObj}')
+
+        if get_followObj is not None:
+            follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
+            
+            if follow_record is None:
+                new_follower = Friends.objects.create(following=request.user.userprofile, followed=get_followObj)
+                new_follower.save()
+                return redirect('follow_user_profile', suggested_user)
+            
+            else:
+                unfollow = Friends.objects.get(followed=get_followObj)
+                unfollow.delete()
+                return redirect('follow_user_profile', suggested_user)
+    
     context = {
-        'obj': follow_obj, 'followers_posts': Posts.objects.filter(user=suggested_user),
-        'posts_count': Posts.objects.filter(user=follow_obj).count(),
-        'following': Friends.objects.filter(following=follow_obj).count(), 
-        'followers': Friends.objects.filter(followed=follow_obj).count(),
+        'obj': viewed_user, 'followers_posts': Posts.objects.filter(user=suggested_user),
+        'posts_count': Posts.objects.filter(user=viewed_user).count(),
+        'following': Friends.objects.filter(following=viewed_user).count(), 
+        'followers': Friends.objects.filter(followed=viewed_user).count(),
     }
     return render(request, 'users/profile.html', context)
 
