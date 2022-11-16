@@ -44,9 +44,10 @@ def homepage_view(request):
                     return redirect('homepage')
                 except Posts.DoesNotExist:
                     return redirect('homepage')
+
         
     context = {
-        'posted': posted_posts, 'UserHasLikedPost': Posts.objects.filter(user=request.user.userprofile, id=get_post_id).exists(), 
+        'posted': posted_posts, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 

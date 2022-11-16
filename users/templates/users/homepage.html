@@ -116,7 +116,7 @@
                                     <img src="{{ post.image.url }}" alt="followers-dp" class="rounded-circle likes-dp">
                                 </div>
                                 <div class="likes-text-container text-muted">
-                                    Liked by <strong>testuser</strong> and <strong>others</strong>
+                                    <strong>{% if post.total_likes == 1 %}{{ post.total_likes }} like{% else %}{{ post.total_likes }} likes{% endif %}</strong>
                                 </div>
                             </div>
                             <div class="description">
