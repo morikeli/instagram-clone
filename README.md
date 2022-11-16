@@ -8,7 +8,8 @@
 
 ## 1. Homepage
 
-![homepage](https://user-images.githubusercontent.com/78599959/202015748-ab34997c-a575-4d95-8587-4cf71b3c6d78.png)
+![new_home](https://user-images.githubusercontent.com/78599959/202038952-510fdb95-fd49-47c1-a320-d75d2d174f1e.png)
+
 
 There is a like button, send message, comments section, posts a comment form among other fetaures
 
