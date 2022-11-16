@@ -16,9 +16,13 @@ a {
 	margin-top: 10px;
 	margin-bottom: 3px;
 }
+
 .logo {
-	font-family: "Roboto";
+	font-family: "Lobster", serif;
+	font-size: 50px;
+
 }
+
 .sidebar {
 	position: fixed;
 	top: 0;
@@ -35,7 +39,6 @@ a {
 	background-color: #fff;
 	box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
 }
-
 .sidebar-nav {
 	padding: 0;
 	margin: 0;
@@ -82,14 +85,17 @@ a {
 	margin-top: -3%;
 	margin-left: -3%;
 }
+/* badge icon for notification */
 .sidebar .nav-item .nav-link .badge-number {
 	position: absolute;
-	inset: 4px 6px auto auto;
+	inset: 343px 242px auto auto;
 	font-weight: normal;
 	font-size: 11px;
-	padding: 3px 6px;
+	padding: 3px 5px;
+	background-color: #fd253a;
+	color: white;
 }
-
+/* dropdown menu for "More" link */
 .sidebar-nav .dropdown-menu {
 	border-radius: 4px;
 	padding: 10px 0;
