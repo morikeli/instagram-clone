@@ -20,9 +20,9 @@ a {
 .logo {
 	font-family: "Lobster", serif;
 	font-size: 50px;
+	margin-left: 4%;
 
 }
-
 .sidebar {
 	position: fixed;
 	top: 0;
@@ -88,7 +88,7 @@ a {
 /* badge icon for notification */
 .sidebar .nav-item .nav-link .badge-number {
 	position: absolute;
-	inset: 343px 242px auto auto;
+	inset: 363px 242px auto auto;
 	font-weight: normal;
 	font-size: 11px;
 	padding: 3px 5px;
