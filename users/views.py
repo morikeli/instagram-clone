@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from .models import Posts, LikedPost, Comments, Friends
 from .forms import CreatePostsForm
 from accounts.models import UserProfile
-
+from itertools import chain
 
 @login_required(login_url='user_login')
 def homepage_view(request):
@@ -45,9 +45,26 @@ def homepage_view(request):
                     return redirect('homepage')
                 except Posts.DoesNotExist:
                     return redirect('homepage')
+    
+    # Posts feed - Current user should see posts for followers he/she is following
+    my_followers = []
+    my_feed = []
 
+    user_followers = Friends.objects.filter(following=request.user.userprofile)
+    
+    for f in user_followers:
+        my_followers.append(f.followed)     # append users I'm following in this list
+    
+    for users in my_followers:
+        print(f'Users: {users}')
+        feed_list = Posts.objects.filter(user__name__username=users)    # get posts of people I'm following
+        my_feed.append(feed_list)   # append the posts in this list
+
+    post_feed = list(chain(*my_feed))
+    print(f'User followers: {user_followers} | my_followers: {my_followers} | feed List: {feed_list} | QS: {post_feed}')
+    
     context = {
-        'posted': posted_posts, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
+        'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
