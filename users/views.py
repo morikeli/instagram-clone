@@ -6,6 +6,7 @@ from .models import Posts, LikedPost, Comments, Friends
 from .forms import CreatePostsForm
 from accounts.models import UserProfile
 from itertools import chain
+import random
 
 @login_required(login_url='user_login')
 def homepage_view(request):
@@ -56,16 +57,26 @@ def homepage_view(request):
         my_followers.append(f.followed)     # append users I'm following in this list
     
     for users in my_followers:
-        print(f'Users: {users}')
         feed_list = Posts.objects.filter(user__name__username=users)    # get posts of people I'm following
         my_feed.append(feed_list)   # append the posts in this list
 
     post_feed = list(chain(*my_feed))
-    print(f'User followers: {user_followers} | my_followers: {my_followers} | feed List: {feed_list} | QS: {post_feed}')
+    
+    # user suggestion feed
+    all_users = UserProfile.objects.all()
+    user_following = []
+
+    for followers in user_followers:
+        user_list = UserProfile.objects.get(name__username=followers.followed)
+        user_following.append(user_list)
+
+    new_suggestion_list = [person for person in list(all_users) if (person not in list(user_following))]
+    final_suggestion_list = [person for person in list(new_suggestion_list) if (person not in list(UserProfile.objects.filter(name__username=request.user.username)))]
+    random.shuffle(final_suggestion_list)
     
     context = {
         'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
-        'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
+        'create_post_form': upload_post, 'new_users': final_suggestion_list,
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
     }
