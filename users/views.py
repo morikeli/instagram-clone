@@ -51,7 +51,6 @@ def homepage_view(request):
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
     }
-    print(f'QS: {context["followers_posts"]}')
     return render(request, 'users/homepage.html', context)
 
 @login_required(login_url='user_login')
