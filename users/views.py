@@ -25,7 +25,7 @@ def homepage_view(request):
                 new_follower.save()
                 return redirect('homepage')
             else:
-                unfollow = Friends.objects.get(followed=get_followObj)
+                unfollow = Friends.objects.get(followed=get_followObj, following=request.user.userprofile)
                 unfollow.delete()
                 return redirect('homepage')
         else:
@@ -45,14 +45,13 @@ def homepage_view(request):
                 except Posts.DoesNotExist:
                     return redirect('homepage')
 
-        
     context = {
         'posted': posted_posts, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
         'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
     }
-    print(f"Context obj: {context['UserHasLikedPost']} | Post id: {get_post_id}")
+    print(f'QS: {context["followers_posts"]}')
     return render(request, 'users/homepage.html', context)
 
 @login_required(login_url='user_login')
@@ -61,7 +60,6 @@ def suggested_user_profile_view(request, suggested_user):
 
     if request.method == 'POST':
         get_followObj = request.POST.get('follow')
-        print(f'Follow obj: {get_followObj}')
 
         if get_followObj is not None:
             follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
