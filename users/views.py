@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .models import Posts, LikedPost, Comments, Friends
 from .forms import CreatePostsForm
 from accounts.models import UserProfile
 from itertools import chain
+import random
+
 
 @login_required(login_url='user_login')
 def homepage_view(request):
@@ -55,16 +58,29 @@ def homepage_view(request):
         my_followers.append(f.followed)     # append users I'm following in this list
     
     for users in my_followers:
-        print(f'Users: {users}')
         feed_list = Posts.objects.filter(user__name__username=users)    # get posts of people I'm following
         my_feed.append(feed_list)   # append the posts in this list
 
     post_feed = list(chain(*my_feed))
-    print(f'User followers: {user_followers} | my_followers: {my_followers} | feed List: {feed_list} | QS: {post_feed}')
+
+    # follow users suggestions feed
+    all_users = UserProfile.objects.all()
+    user_following = []
+
+    for followers in user_followers:
+        user_list = UserProfile.objects.get(name__username=followers.followed)
+        user_following.append(user_list)
+    
+    suggested_followers_list = [person for person in list(all_users) if (person not in list(user_following))]
+    final_suggestions_list = [new_user for new_user in list(suggested_followers_list) if (new_user not in list(UserProfile.objects.filter(name__username=request.user.username)))]
+
+    # shuffle suggested followers
+    random.shuffle(final_suggestions_list)
+
     
     context = {
         'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
-        'create_post_form': upload_post, 'new_users': UserProfile.objects.all().exclude(name=request.user),
+        'create_post_form': upload_post, 'new_users': final_suggestions_list,
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
     }
