@@ -7,7 +7,7 @@ import uuid
 @receiver(pre_save, sender=User)
 def generate_user_id(sender, instance, **kwargs):
     if instance.id == "":
-        instance.id = str(uuid.uuid4()).replace('-', '')[:15]
+        instance.id = str(uuid.uuid4()).replace('-', '')[:20]
 
 
 @receiver(post_save, sender=User)
