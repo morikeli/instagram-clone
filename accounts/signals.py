@@ -1,7 +1,7 @@
 from django.db.models.signals import pre_save, post_save
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from .models import UserProfile
+from .models import User
 import uuid
 
 @receiver(pre_save, sender=UserProfile)
@@ -14,4 +14,4 @@ def generate_user_id(sender, instance, **kwargs):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         if instance.is_staff is False and instance.is_superuser is False:
-            UserProfile.objects.create(name=instance)
+            User.objects.create(name=instance)

@@ -1,7 +1,6 @@
-from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import UserProfile
+from django import forms
+from .models import User
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):
@@ -30,5 +29,5 @@ class EditProfileForm(forms.ModelForm):
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
 
     class Meta:
-        model = UserProfile
+        model = User
         fields = ['profile_pic', 'bio', 'phone_no', 'gender', 'country']
