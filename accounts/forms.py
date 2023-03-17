@@ -8,13 +8,20 @@ class UserLoginForm(AuthenticationForm):
         self.error_messages['invalid_login'] = 'INVALID CREDENTIALS!!! Username and password maybe case-sensitive'
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Full Name', 'class': 'mb-2'}), label='', required=True)
-    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2'}), label='', required=True)
-    email = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Email', 'class': 'mb-2'}), label='', required=True)
+    SELECT_GENDER = (
+        (None, '-- Select your gender --'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2'}), required=True)
+    gender = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_GENDER, required=True)
+    email = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Email', 'class': 'mb-2'}), required=True)
+    phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}), required=True)
     
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'username', 'password1', 'password2']
+        fields = ['username', 'email', 'gender', 'phone_no', 'password1', 'password2']
 
 class EditProfileForm(forms.ModelForm):
     SELECT_GENDER = (
