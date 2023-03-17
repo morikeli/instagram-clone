@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Posts, LikedPost, Comments, Friends
 from .forms import CreatePostsForm
-from accounts.models import UserProfile
+from accounts.models import User
 from itertools import chain
 import random
 
