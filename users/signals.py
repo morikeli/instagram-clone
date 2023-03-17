@@ -1,6 +1,5 @@
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from accounts.models import UserProfile
 from .models import Posts, Comments, Friends, LikedPost
 import uuid
 
