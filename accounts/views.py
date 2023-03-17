@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import UserLoginForm, SignUpForm, EditProfileForm
 from .models import User
-from users.models import Posts, Friends
+# from users.models import Posts, Friends
 
 class UserLogin(LoginView):
     authentication_form = UserLoginForm
