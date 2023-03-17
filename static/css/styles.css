@@ -16,13 +16,10 @@ a {
 	margin-top: 10px;
 	margin-bottom: 3px;
 }
-
-.logo {
-	font-family: "Lobster", serif;
-	font-size: 50px;
-	margin-left: 4%;
-
+.nav-item > a > img {
+	margin-left: 10%;
 }
+
 .sidebar {
 	position: fixed;
 	top: 0;
