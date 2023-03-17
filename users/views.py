@@ -63,15 +63,15 @@ def homepage_view(request):
     post_feed = list(chain(*my_feed))
     
     # user suggestion feed
-    all_users = UserProfile.objects.all()
+    all_users = User.objects.filter(is_staff=False, is_superuser=False).all()   # exclude superuser and staff users
     user_following = []
 
     for followers in user_followers:
-        user_list = UserProfile.objects.get(name__username=followers.followed)
+        user_list = User.objects.get(username=followers.followed)
         user_following.append(user_list)
 
     new_suggestion_list = [person for person in list(all_users) if (person not in list(user_following))]
-    final_suggestion_list = [person for person in list(new_suggestion_list) if (person not in list(UserProfile.objects.filter(name__username=request.user.username)))]
+    final_suggestion_list = [person for person in list(new_suggestion_list) if (person not in list(User.objects.filter(username=request.user.username)))]
     random.shuffle(final_suggestion_list)
     
     context = {
