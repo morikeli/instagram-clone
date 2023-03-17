@@ -21,20 +21,20 @@ def homepage_view(request):
         get_comment_id = request.POST.get('comment')
 
         if get_followObj is not None:
-            follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
+            follow_record = Friends.objects.filter(following=request.user, followed=get_followObj).first()
             if follow_record is None:
-                new_follower = Friends.objects.create(following=request.user.userprofile, followed=get_followObj)
+                new_follower = Friends.objects.create(following=request.user, followed=get_followObj)
                 new_follower.save()
                 return redirect('homepage')
             else:
-                unfollow = Friends.objects.get(followed=get_followObj, following=request.user.userprofile)
+                unfollow = Friends.objects.get(followed=get_followObj, following=request.user)
                 unfollow.delete()
                 return redirect('homepage')
         else:
 
             if upload_post.is_valid():
                 form = upload_post.save(commit=False)
-                form.user = request.user.userprofile
+                form.user = request.user
                 form.save()
                 messages.success(request, 'Your post was uploaded successfully!')
                 return redirect('homepage')
@@ -51,7 +51,7 @@ def homepage_view(request):
     my_followers = []
     my_feed = []
 
-    user_followers = Friends.objects.filter(following=request.user.userprofile)
+    user_followers = Friends.objects.filter(following=request.user)
     
     for f in user_followers:
         my_followers.append(f.followed)     # append users I'm following in this list
@@ -75,7 +75,7 @@ def homepage_view(request):
     random.shuffle(final_suggestion_list)
     
     context = {
-        'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user.userprofile), 
+        'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user), 
         'create_post_form': upload_post, 'new_users': final_suggestion_list,
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
@@ -90,10 +90,10 @@ def suggested_user_profile_view(request, suggested_user):
         get_followObj = request.POST.get('follow')
 
         if get_followObj is not None:
-            follow_record = Friends.objects.filter(following=request.user.userprofile, followed=get_followObj).first()
+            follow_record = Friends.objects.filter(following=request.user, followed=get_followObj).first()
             
             if follow_record is None:
-                new_follower = Friends.objects.create(following=request.user.userprofile, followed=get_followObj)
+                new_follower = Friends.objects.create(following=request.user, followed=get_followObj)
                 new_follower.save()
                 return redirect('follow_user_profile', suggested_user)
             
