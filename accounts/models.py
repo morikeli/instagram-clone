@@ -13,7 +13,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(upload_to='User-Dps/', default='default.png')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         ordering = ['username']
@@ -30,3 +30,4 @@ class User(AbstractUser):
             output_size = (400, 400)
             dp.thumbnail(output_size)
             dp.save(self.profile_pic.path)
+
