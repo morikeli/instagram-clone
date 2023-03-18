@@ -33,8 +33,7 @@
 
             <div class="col-md-8">
                 {% include 'messages.html' %}
-                <!-- Card to display Instgram stories -->
-                <div class="card card-body instagram-stories-card">
+                <div class="card card-body instagram-stories-card mb-3">
                     <div class="row">
                         <div class="col-md-2">
                             <div id="instagram-stories">
@@ -43,8 +42,8 @@
                         </div>
                     </div>
                 </div>
+
                 {% for post in posted reversed %}
-                <!-- Modal forms -->
                 <div class="modal fade" id="user-response-{{post.id}}" tabindex="-1">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -72,10 +71,10 @@
                     <div class="row">
                         <div class="d-flex align-items-center">
                             <div class="d-flex align-items-center justify-content-center">
-                                <img id="post-dp" src="{{ post.user.profile_pic.url }}" class="rounded-circle" alt="post-dp">
+                                <img id="post-dp" src="{{ post.user.profile_pic.url }}" class="rounded-circle" alt="user-dp">
                             </div>
                             <div class="posts-title mt-2 ml-3">
-                                {% if request.user.userprofile == post.user %}
+                                {% if request.user == post.user %}
                                 <h6 class="fw-bold"><a href="{% url 'user_profile' %}">{{post.user}}</a></h6>
                                 {% else %}
                                 <h6 class="fw-bold"><a href="{% url 'follow_user_profile' post.user.id %}">{{ post.user }}</a></h6>
@@ -85,7 +84,7 @@
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow text-center">
-                                    {% if post.user == request.user.userprofile %}
+                                    {% if post.user == request.user %}
                                     <li>
                                         <a class="dropdown-item text-danger" href="/users/delete-post?delete={{post.id}}" data-bs-toggle="modal" data-bs-target="#user-response-{{post.id}}">
                                             <i class="bi-trash-fill"></i> Delete
@@ -93,7 +92,7 @@
                                     </li>
                                     {% endif %}
                                     <li><a class="dropdown-item text-danger" href="#">Report</a></li>
-                                    {% if post.user != request.user.userprofile %}<li><a class="dropdown-item text-danger" href="#">Unfollow</a></li>{% endif %}
+                                    {% if post.user != request.user %}<li><a class="dropdown-item text-danger" href="#">Unfollow</a></li>{% endif %}
                                     <li><a class="dropdown-item" href="#">Add to favorites</a></li>
                                     <li><a class="dropdown-item" href="{% url 'homepage' %}">Cancel</a></li>
                                 </ul>
@@ -177,7 +176,7 @@
                                         <p class="small text-muted mt-n3">320k followers</p>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="hidden" name="follow" value="{{user.name}}">
+                                        <input type="hidden" name="follow" value="{{user.username}}">
                                         <button type="submit" class="btn btn-outline-default text-primary">Follow</button>
                                     </div>
                                 </div>
