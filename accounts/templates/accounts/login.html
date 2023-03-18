@@ -1,5 +1,6 @@
 {% extends 'navbar.html' %}{% block title %}Login{% endblock %}
 {% load crispy_forms_tags %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +18,11 @@
             <div class="col-md-4 login-form">
                 <form action="" method="post" class="card card-body">
                     {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <img id="logo" src="{% static 'img/logo.png' %}" alt="logo">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             {% include 'messages.html' %}{{form|crispy}}
