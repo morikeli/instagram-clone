@@ -16,6 +16,16 @@ a {
 	margin-top: 10px;
 	margin-bottom: 3px;
 }
+.login-form form {
+	padding: 30px;
+}
+.login-form #logo, .signup-form #logo {
+    width: 200px;
+}
+.login-form a, .signup-form a {
+    color: #4154f1;
+}
+
 .nav-item > a > img {
 	margin-left: 10%;
 }
@@ -76,19 +86,19 @@ a {
 	color: #353c47;
 }
 .sidebar-nav .nav-link img {
-	height: 35px;
-	width: 35px;
+	height: 30px;
+	width: 30px;
 	margin-right: 10px;
 	margin-top: -3%;
-	margin-left: -3%;
+	margin-left: -2%;
 }
 /* badge icon for notification */
 .sidebar .nav-item .nav-link .badge-number {
 	position: absolute;
-	inset: 363px 242px auto auto;
+	inset: 333px 245px auto auto;
 	font-weight: normal;
 	font-size: 11px;
-	padding: 3px 5px;
+	padding: 3px;
 	background-color: #fd253a;
 	color: white;
 }
@@ -176,10 +186,6 @@ a {
 	0% {
 		opacity: 0;
 	}
-}
-
-.login-form form {
-	padding: 30px;
 }
 
 /* Profile page */
@@ -276,6 +282,17 @@ a {
 	height: 70px;
 	width: 70px;
 	margin-right: 5%;
+}
+.homepage-container #instagram-stories {
+    height: 73px;
+    width: 73px;
+    background: url('../img/gradient.jpg') center;
+    border-radius: 60%;
+}
+.homepage-container .instagram-stories-card #instagram-stories img {
+    height: 70px;
+    width: 70px;
+    padding: 3px 0 0 3px;
 }
 .homepage-container .posts-card {
 	margin-bottom: 3%;
