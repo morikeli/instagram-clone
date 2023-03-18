@@ -22,6 +22,7 @@ def homepage_view(request):
 
         if get_followObj is not None:
             follow_record = Friends.objects.filter(following=request.user, followed=get_followObj).first()
+
             if follow_record is None:
                 new_follower = Friends.objects.create(following=request.user, followed=get_followObj)
                 new_follower.save()
@@ -30,6 +31,7 @@ def homepage_view(request):
                 unfollow = Friends.objects.get(followed=get_followObj, following=request.user)
                 unfollow.delete()
                 return redirect('homepage')
+            
         else:
 
             if upload_post.is_valid():
@@ -57,7 +59,7 @@ def homepage_view(request):
         my_followers.append(f.followed)     # append users I'm following in this list
     
     for users in my_followers:
-        feed_list = Posts.objects.filter(user__name__username=users)    # get posts of people I'm following
+        feed_list = Posts.objects.filter(user__username=users)    # get posts of people I'm following
         my_feed.append(feed_list)   # append the posts in this list
 
     post_feed = list(chain(*my_feed))
@@ -84,7 +86,7 @@ def homepage_view(request):
 
 @login_required(login_url='user_login')
 def suggested_user_profile_view(request, suggested_user):
-    viewed_user = UserProfile.objects.get(id=suggested_user)
+    viewed_user = User.objects.get(id=suggested_user)
 
     if request.method == 'POST':
         get_followObj = request.POST.get('follow')
