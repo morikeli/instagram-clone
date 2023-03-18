@@ -14,10 +14,10 @@ class SignUpForm(UserCreationForm):
         ('Female', 'Female'),
     )
 
-    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2'}), required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2', 'autofocus': 'on', 'autocomplete': 'off'}), required=True)
     gender = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_GENDER, required=True)
     email = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Email', 'class': 'mb-2'}), required=True)
-    phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}), required=True)
+    phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'placeholder': 'Enter your mobile no.', 'class': 'mb-2'}), required=True)
     
     class Meta:
         model = User
