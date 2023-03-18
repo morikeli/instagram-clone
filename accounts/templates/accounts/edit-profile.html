@@ -25,7 +25,7 @@
                                     {% csrf_token %}
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <img src="{{ request.user.userprofile.profile_pic.url }}" class="rounded-circle" alt="dp" height="40px" width="40px">
+                                            <img src="{{ request.user.profile_pic.url }}" class="rounded-circle" alt="dp" height="40px" width="40px">
                                             {{edit_form|crispy}}
                                             <button type="submit" class="btn btn-primary mt-3">Submit</button>
                                         </div>

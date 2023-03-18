@@ -17,11 +17,11 @@
         <div class="row profile-container">
             {% include 'messages.html' %}
             <div class="col-md-3">
-                <img class="profile-img rounded-circle" src="{{ request.user.userprofile.profile_pic.url }}" alt="dp">
+                <img class="profile-img rounded-circle" src="{{ request.user.profile_pic.url }}" alt="dp">
             </div>
             <div class="col-md-6">
                 <div id="edit-profile-row">
-                    <h3>{{ request.user.userprofile }}</h3>
+                    <h3>{{ request.user.username }}</h3>
                     <a href="{% url 'edit_profile' %}" class="btn btn-outline-secondary btn-sm">Edit profile</a> 
                     <i class="bi bi-gear-wide" style="font-size: 25px;"></i>                    
                 </div>
