@@ -65,7 +65,7 @@ def homepage_view(request):
     post_feed = list(chain(*my_feed))
     
     # user suggestion feed
-    all_users = User.objects.filter(is_staff=False, is_superuser=False).all()   # exclude superuser and staff users
+    all_users = User.objects.filter(is_staff=False, is_superuser=False).all().exclude(username=request.user)   # exclude superuser and staff users
     user_following = []
 
     for followers in user_followers:
@@ -78,8 +78,9 @@ def homepage_view(request):
     
     context = {
         'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(user=request.user), 
-        'create_post_form': upload_post, 'new_users': final_suggestion_list,
+        'create_post_form': upload_post, 'new_users': final_suggestion_list[:3],
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
+        'my_friends': Friends.objects.filter(following=request.user).all()
 
     }
     return render(request, 'users/homepage.html', context)
