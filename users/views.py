@@ -77,7 +77,7 @@ def homepage_view(request):
     random.shuffle(final_suggestion_list)
     
     context = {
-        'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(username=request.user), 
+        'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(user=request.user), 
         'create_post_form': upload_post, 'new_users': final_suggestion_list,
         'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
 
@@ -117,10 +117,10 @@ def like_posts_view(request):
     get_postId = request.GET.get('id')
     
     homepage_post = Posts.objects.get(id=get_postId)
-    liked_post = LikedPost.objects.filter(post_id=get_postId, username=request.user.username).first()
+    liked_post = LikedPost.objects.filter(post_id=get_postId, user=request.user.username).first()
 
     if liked_post is None:
-        new_like = LikedPost.objects.create(username=request.user.username, post_id=get_postId)
+        new_like = LikedPost.objects.create(user=request.user.username, post_id=get_postId)
         homepage_post.total_likes += 1
         new_like.save()
         homepage_post.save()
