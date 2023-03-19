@@ -57,7 +57,7 @@ class Comments(models.Model):
 class LikedPost(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
     post_id = models.CharField(max_length=15, blank=False, editable=False)
-    username = models.CharField(max_length=50, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     liked = models.DateTimeField(auto_now_add=True)
 
     class Meta:
