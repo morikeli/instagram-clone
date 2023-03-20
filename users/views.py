@@ -118,10 +118,10 @@ def like_posts_view(request):
     get_postId = request.GET.get('id')
     
     homepage_post = Posts.objects.get(id=get_postId)
-    liked_post = LikedPost.objects.filter(post_id=get_postId, user=request.user.username).first()
+    liked_post = LikedPost.objects.filter(post_id=get_postId, user=request.user).first()
 
     if liked_post is None:
-        new_like = LikedPost.objects.create(user=request.user.username, post_id=get_postId)
+        new_like = LikedPost.objects.create(user=request.user, post_id=get_postId)
         homepage_post.total_likes += 1
         new_like.save()
         homepage_post.save()
