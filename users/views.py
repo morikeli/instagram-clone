@@ -119,7 +119,7 @@ def like_posts_view(request):
     get_postId = request.GET.get('id')
     
     homepage_post = Posts.objects.get(id=get_postId)
-    liked_post = LikedPost.objects.filter(post_id=get_postId, user=request.user).first()
+    liked_post = LikedPost.objects.filter(post=get_postId, user=request.user).first()
 
     if liked_post is None:
         new_like = LikedPost.objects.create(user=request.user, post_id=get_postId)
@@ -147,3 +147,4 @@ def delete_posts_view(request):
         return redirect('homepage')
     else:
         return redirect('homepage')
+
