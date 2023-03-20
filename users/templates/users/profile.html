@@ -25,14 +25,18 @@
                     <a href=""><i class="bi-send" style="font-size: 30px; color: black; margin-top: 6%"></i></a>
                     <form action="" method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="follow" value="{{obj.username}}">
+                        <input type="hidden" name="follow" value="{{obj}}">
+                        {% if following_user is True %}
+                        <button type="submit" class="btn btn-secondary btn-sm mt-3">Unfollow</button>
+                        {% else %}
                         <button type="submit" class="btn btn-primary btn-sm mt-3">Follow</button>
+                        {% endif %}
                     </form>
                 </div>
                 <div id="edit-profile-row">
                     <h6>
-                        {% if obj.user.total_posts == 0 %}<b>0</b> posts
-                        {% elif obj.total_posts == 1 %}<b>1</b> post
+                        {% if posts_count == 0 %}<b>0</b> posts
+                        {% elif posts_count == 1 %}<b>1</b> post
                         {% else %}<b>{{posts_count}}</b> posts
                         {% endif %}
                     </h6>
@@ -40,7 +44,7 @@
                     <h6>{% if following == 1 %} <b>1</b> following {% else %}<b>{{following}}</b> following{% endif %}</h6>
                 </div>
                 <div id="edit-profile-form">
-                    <h6><b>{{ obj.user }}</b></h6>
+                    <h6><b>{{ obj.bio }}</b></h6>
                 </div>
             </div>
             <div class="col-md-12 tabs-container">
