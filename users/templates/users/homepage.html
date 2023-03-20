@@ -97,7 +97,15 @@
                                     </li>
                                     {% endif %}
                                     <li><a class="dropdown-item text-danger" href="#">Report</a></li>
-                                    {% if post.user != request.user %}<li><a class="dropdown-item text-danger" href="#">Unfollow</a></li>{% endif %}
+                                    {% if post.user != request.user %}
+                                    <li>
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="follow" value="{{ post.user }}">
+                                            <button class="dropdown-item text-danger">Unfollow</button>
+                                        </form>
+                                    </li>
+                                    {% endif %}
                                     <li><a class="dropdown-item" href="#">Add to favorites</a></li>
                                     <li><a class="dropdown-item" href="{% url 'homepage' %}">Cancel</a></li>
                                 </ul>
