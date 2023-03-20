@@ -35,7 +35,7 @@ a {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 300px;
+	width: 230px;
 	z-index: 996;
 	transition: all 0.3s;
 	padding: 20px;
@@ -58,6 +58,11 @@ a {
 }
 .sidebar-nav .nav-item {
   	margin-bottom: 5px;
+}
+.sidebar-nav .nav-item .logo {
+    width: 150px;
+    margin-left: 3%;
+    
 }
 .sidebar-nav .nav-heading {
 	font-size: 11px;
@@ -275,8 +280,9 @@ a {
 
 /* Homepage */
 .homepage-container {
-	margin-left: 27%;
+	margin-left: 23%;
 	margin-top: 4%;
+    /* margin: 4% 4% 0 23%; */
 }
 .homepage-container #dp {
 	height: 70px;
@@ -306,9 +312,9 @@ a {
 	padding: 0;
 }
 .homepage-container .posts-card .posts-img-container .posts-img {
-	width: 526px;
+	width: 550px;
 	height: auto;
-	margin-left: -1%;
+    padding: 0px;
 	margin-bottom: 3%;
 }
 .homepage-container .posts-card .posts-title {
@@ -355,13 +361,13 @@ a {
 
 .homepage-container .posts-card .posts-icons-container, .homepage-container .posts-card .likes-dp-container, .homepage-container .posts-card .description {
 	margin-bottom: 2%;
-	padding-left: 20px;
+	padding-left: 15px;
 }
 .homepage-container .posts-card .posts-icons-container .icons-link {
-	margin-right: 3%;
+	margin-right: 2.5%;
 	color: black;
-	font-size: 30px;
-	line-height: 60px;
+	font-size: 25px;
+	line-height: 70px;
 }
 .homepage-container .posts-card .posts-icons-container #bookmark {
 	margin-left: 64%;
