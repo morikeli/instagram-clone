@@ -12,15 +12,12 @@
     {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-
-            </div>
-            <div class="col-md-4 login-form">
+            <div class="col-md-4 offset-sm-4 login-form">
                 <form action="" method="post" class="card card-body">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-sm-12 text-center">
-                            <img id="logo" src="{% static 'img/logo.png' %}" alt="logo">
+                            <img id="logo" class="mb-4" src="{% static 'img/logo.png' %}" alt="logo">
                         </div>
                     </div>
                     <div class="row">
