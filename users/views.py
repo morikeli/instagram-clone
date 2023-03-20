@@ -101,7 +101,7 @@ def suggested_user_profile_view(request, suggested_user):
                 return redirect('follow_user_profile', suggested_user)
             
             else:
-                unfollow = Friends.objects.get(followed=get_followObj)
+                unfollow = Friends.objects.get(followed=get_followObj, following=request.user)
                 unfollow.delete()
                 return redirect('follow_user_profile', suggested_user)
     
@@ -110,6 +110,7 @@ def suggested_user_profile_view(request, suggested_user):
         'posts_count': Posts.objects.filter(user=viewed_user).count(),
         'following': Friends.objects.filter(following=viewed_user).count(), 
         'followers': Friends.objects.filter(followed=viewed_user).count(),
+        'following_user': Friends.objects.filter(following=request.user, followed=viewed_user.username).exists(),
     }
     return render(request, 'users/profile.html', context)
 
