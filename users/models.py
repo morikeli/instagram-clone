@@ -1,11 +1,11 @@
 from django.db import models
-from accounts.models import UserProfile
+from accounts.models import User
 from PIL import Image
 
 
 class Friends(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False)
-    following = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=False)
+    following = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     followed = models.CharField(max_length=50, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
@@ -19,7 +19,7 @@ class Friends(models.Model):
 
 class Posts(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, editable=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=True)
     image = models.ImageField(upload_to='UserPosts/', null=False)
     caption = models.TextField(blank=True)
     total_likes = models.PositiveIntegerField(default=0, editable=False)
@@ -57,7 +57,7 @@ class Comments(models.Model):
 class LikedPost(models.Model):
     id = models.CharField(max_length=15, primary_key=True, editable=False, unique=True)
     post_id = models.CharField(max_length=15, blank=False, editable=False)
-    username = models.CharField(max_length=50, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     liked = models.DateTimeField(auto_now_add=True)
 
     class Meta:

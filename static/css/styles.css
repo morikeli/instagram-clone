@@ -16,6 +16,16 @@ a {
 	margin-top: 10px;
 	margin-bottom: 3px;
 }
+.login-form form {
+	padding: 30px;
+}
+.login-form #logo, .signup-form #logo {
+    width: 200px;
+}
+.login-form a, .signup-form a {
+    color: #4154f1;
+}
+
 .nav-item > a > img {
 	margin-left: 10%;
 }
@@ -25,7 +35,7 @@ a {
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 300px;
+	width: 230px;
 	z-index: 996;
 	transition: all 0.3s;
 	padding: 20px;
@@ -48,6 +58,11 @@ a {
 }
 .sidebar-nav .nav-item {
   	margin-bottom: 5px;
+}
+.sidebar-nav .nav-item .logo {
+    width: 150px;
+    margin-left: 3%;
+    
 }
 .sidebar-nav .nav-heading {
 	font-size: 11px;
@@ -76,19 +91,19 @@ a {
 	color: #353c47;
 }
 .sidebar-nav .nav-link img {
-	height: 35px;
-	width: 35px;
+	height: 30px;
+	width: 30px;
 	margin-right: 10px;
 	margin-top: -3%;
-	margin-left: -3%;
+	margin-left: -2%;
 }
 /* badge icon for notification */
 .sidebar .nav-item .nav-link .badge-number {
 	position: absolute;
-	inset: 363px 242px auto auto;
+	inset: 333px 245px auto auto;
 	font-weight: normal;
 	font-size: 11px;
-	padding: 3px 5px;
+	padding: 3px;
 	background-color: #fd253a;
 	color: white;
 }
@@ -178,10 +193,6 @@ a {
 	}
 }
 
-.login-form form {
-	padding: 30px;
-}
-
 /* Profile page */
 .profile-container {
 	margin-left: 30%;
@@ -269,13 +280,25 @@ a {
 
 /* Homepage */
 .homepage-container {
-	margin-left: 27%;
+	margin-left: 23%;
 	margin-top: 4%;
+    /* margin: 4% 4% 0 23%; */
 }
 .homepage-container #dp {
 	height: 70px;
 	width: 70px;
 	margin-right: 5%;
+}
+.homepage-container #instagram-stories {
+    height: 73px;
+    width: 73px;
+    background: url('../img/gradient.jpg') center;
+    border-radius: 60%;
+}
+.homepage-container .instagram-stories-card #instagram-stories img {
+    height: 70px;
+    width: 70px;
+    padding: 3px 0 0 3px;
 }
 .homepage-container .posts-card {
 	margin-bottom: 3%;
@@ -289,9 +312,9 @@ a {
 	padding: 0;
 }
 .homepage-container .posts-card .posts-img-container .posts-img {
-	width: 526px;
+	width: 550px;
 	height: auto;
-	margin-left: -1%;
+    padding: 0px;
 	margin-bottom: 3%;
 }
 .homepage-container .posts-card .posts-title {
@@ -338,13 +361,13 @@ a {
 
 .homepage-container .posts-card .posts-icons-container, .homepage-container .posts-card .likes-dp-container, .homepage-container .posts-card .description {
 	margin-bottom: 2%;
-	padding-left: 20px;
+	padding-left: 15px;
 }
 .homepage-container .posts-card .posts-icons-container .icons-link {
-	margin-right: 3%;
+	margin-right: 2.5%;
 	color: black;
-	font-size: 30px;
-	line-height: 60px;
+	font-size: 25px;
+	line-height: 70px;
 }
 .homepage-container .posts-card .posts-icons-container #bookmark {
 	margin-left: 64%;

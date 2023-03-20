@@ -1,4 +1,4 @@
-{% extends 'navbar.html' %}{% block title %}{{obj.name}}'s profile{% endblock %}
+{% extends 'navbar.html' %}{% block title %}{{obj.username}}'s profile{% endblock %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,11 +21,11 @@
             </div>
             <div class="col-md-6">
                 <div id="edit-profile-row">
-                    <h3>{{ obj.name }}</h3>
+                    <h3>{{ obj.username }}</h3>
                     <a href=""><i class="bi-send" style="font-size: 30px; color: black; margin-top: 6%"></i></a>
                     <form action="" method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="follow" value="{{obj.name}}">
+                        <input type="hidden" name="follow" value="{{obj.username}}">
                         <button type="submit" class="btn btn-primary btn-sm mt-3">Follow</button>
                     </form>
                 </div>

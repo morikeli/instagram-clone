@@ -1,7 +1,6 @@
-from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import UserProfile
+from django import forms
+from .models import User
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):
@@ -9,13 +8,20 @@ class UserLoginForm(AuthenticationForm):
         self.error_messages['invalid_login'] = 'INVALID CREDENTIALS!!! Username and password maybe case-sensitive'
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Full Name', 'class': 'mb-2'}), label='', required=True)
-    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2'}), label='', required=True)
-    email = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Email', 'class': 'mb-2'}), label='', required=True)
+    SELECT_GENDER = (
+        (None, '-- Select your gender --'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+    )
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Username', 'class': 'mb-2', 'autofocus': 'on', 'autocomplete': 'off'}), required=True)
+    gender = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_GENDER, required=True)
+    email = forms.CharField(widget=forms.TextInput(attrs={'type':'text', 'placeholder': 'Email', 'class': 'mb-2'}), required=True)
+    phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'placeholder': 'Enter your mobile no.', 'class': 'mb-2'}), required=True)
     
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'username', 'password1', 'password2']
+        fields = ['username', 'email', 'gender', 'phone_no', 'password1', 'password2']
 
 class EditProfileForm(forms.ModelForm):
     SELECT_GENDER = (
@@ -30,5 +36,5 @@ class EditProfileForm(forms.ModelForm):
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
 
     class Meta:
-        model = UserProfile
+        model = User
         fields = ['profile_pic', 'bio', 'phone_no', 'gender', 'country']

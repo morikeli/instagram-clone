@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .forms import UserLoginForm, SignUpForm, EditProfileForm
-from .models import UserProfile
+from .models import User
 from users.models import Posts, Friends
 
 class UserLogin(LoginView):
@@ -26,9 +26,9 @@ def signup_view(request):
 @login_required(login_url='user_login')
 @user_passes_test(lambda user: user.is_staff is False)
 def edit_profile_view(request):
-    form = EditProfileForm(instance=request.user.userprofile)
+    form = EditProfileForm(instance=request.user)
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.info(request, 'Profile updated successfully!')
@@ -40,12 +40,12 @@ def edit_profile_view(request):
 @login_required(login_url='user_login')
 @user_passes_test(lambda user: user.is_staff is False)
 def profile_view(request):
-    user_posts = Posts.objects.filter(user=request.user.userprofile).all()
+    user_posts = Posts.objects.filter(user=request.user).all()
 
     context = {
         'my_posts': user_posts, 'total_posts': user_posts.count(),
-        'followers': Friends.objects.filter(followed=request.user.userprofile).count(),
-        'following': Friends.objects.filter(following=request.user.userprofile).count(),
+        'followers': Friends.objects.filter(followed=request.user).count(),
+        'following': Friends.objects.filter(following=request.user).count(),
 
     }
     return render(request, 'accounts/profile.html', context)
