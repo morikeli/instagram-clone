@@ -1,5 +1,6 @@
-from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 from PIL import Image
 
 
@@ -9,7 +10,7 @@ class User(AbstractUser):
     bio = models.TextField()
     gender = models.CharField(max_length=7, blank=False)
     country = models.CharField(max_length=30, blank=False)
-    phone_no = models.CharField(max_length=14, blank=False)
+    phone_no = PhoneNumberField(blank=False)
     profile_pic = models.ImageField(upload_to='User-Dps/', default='default.png')
 
     USERNAME_FIELD = 'email'
