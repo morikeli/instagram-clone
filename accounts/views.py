@@ -4,13 +4,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.views import View
-from .forms import UserLoginForm, SignUpForm, EditProfileForm
+from .forms import SignUpForm, EditProfileForm
 from .models import User
 from users.models import Posts, Friends
 
 
 class UserLogin(LoginView):
-    authentication_form = UserLoginForm
     template_name = 'accounts/login.html'
 
 
@@ -66,4 +65,4 @@ def profile_view(request):
 
 
 class LogoutUser(LogoutView):
-    template_name = 'accounts/logout.html'
+    template_name = 'accounts/login.html'
