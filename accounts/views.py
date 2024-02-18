@@ -53,12 +53,12 @@ def edit_profile_view(request):
 @login_required(login_url='user_login')
 @user_passes_test(lambda user: user.is_staff is False)
 def profile_view(request):
-    user_posts = Posts.objects.filter(user=request.user).all()
+    user_posts = Post.objects.filter(user=request.user).all()
 
     context = {
         'my_posts': user_posts, 'total_posts': user_posts.count(),
-        'followers': Friends.objects.filter(followed=request.user).count(),
-        'following': Friends.objects.filter(following=request.user).count(),
+        'followers': Friend.objects.filter(followed=request.user).count(),
+        'following': Friend.objects.filter(following=request.user).count(),
 
     }
     return render(request, 'accounts/profile.html', context)
