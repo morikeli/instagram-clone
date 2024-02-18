@@ -8,7 +8,7 @@ urlpatterns = [
     path('profile', views.profile_view, name='user_profile'),
     path('edit/', views.edit_profile_view, name='edit_profile'),
 
-    path('logout/', views.LogoutUser.as_view(), name='logout_user'),    
+    path('logout/', views.LogoutUser.as_view(), name='logout'),    
 ]
 
 htmx_urlpatterns = [
