@@ -19,4 +19,4 @@ class CommentsTable(admin.ModelAdmin):
 
 @admin.register(Friend)
 class FriendsTable(admin.ModelAdmin):
-    list_display = ['follower', 'followed_by', 'created']
+    list_display = ['follower', 'following', 'created']
