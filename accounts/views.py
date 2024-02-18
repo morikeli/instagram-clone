@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.views import View
 from .forms import SignUpForm, EditProfileForm
 from .models import User
-from users.models import Posts, Friends
+from users.models import Post, Friend
 
 
 class UserLogin(LoginView):
