@@ -1,19 +1,45 @@
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from .models import Posts, Comments, Friends, LikedPost
+from .models import Post, Comment, Friend, LikedPost, Tag, NewsFeed
 import uuid
 
-@receiver(pre_save, sender=Posts)
+
+@receiver(pre_save, sender=Post)
 def generate_posts_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:15]
 
-@receiver(pre_save, sender=Friends)
+
+@receiver(pre_save, sender=Friend)
 def generate_followers_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:15]
+
 
 @receiver(pre_save, sender=LikedPost)
 def generate_likedPosts_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:15]
+
+
+@receiver(pre_save, sender=Tag)
+def generate_tags_id(sender, instance, **kwargs):
+    if instance.id == "":
+        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
+
+
+@receiver(post_save, sender=NewsFeed)
+def add_post(sender, instance, *args, **kwargs):
+    """ This signal updates the current user's followers news feed when he/she posts something. """
+    
+    post = instance
+    user = post.user
+    followers = Friend.objects.filter(follower=user)    # filter users following the current user
+
+    for follower in followers:
+        user_feed = NewsFeed(
+            post=post,
+            user=follower.follower,
+            date=post.date_posted,
+            following=user,   
+        )
