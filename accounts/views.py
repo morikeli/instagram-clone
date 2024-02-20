@@ -57,7 +57,7 @@ def profile_view(request):
 
     context = {
         'my_posts': user_posts, 'total_posts': user_posts.count(),
-        'followers': Friend.objects.filter(followed=request.user).count(),
+        'followers': Friend.objects.filter(follower=request.user).count(),
         'following': Friend.objects.filter(following=request.user).count(),
 
     }
