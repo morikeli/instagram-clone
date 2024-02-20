@@ -55,12 +55,12 @@ class NewsFeed(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, related_name='following_feed')
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    post_date = models.DateTimeField()  # date of the post posted by user object "following"
+    date_posted = models.DateTimeField()  # date of the post posted by user object "following"
 
 
     class Meta:
         verbose_name_plural = 'NewsFeed'
-        ordering = ['post_date']
+        ordering = ['date_posted']
     
     
     def __str__(self):
