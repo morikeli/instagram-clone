@@ -4,6 +4,11 @@ from django.db import models
 from PIL import Image
 
 
+def user_directory_path(instance, filename):
+    """ Files will be uploaded to MEDIA_ROOT/user_{id}/blogs/filename """
+    return f'user_{str(instance.user.id)[:8]}/blogs/{filename}'
+
+
 class User(AbstractUser):
     id = models.CharField(max_length=20, primary_key=True, editable=False, unique=True)
     email = models.EmailField(unique=True, blank=False)
