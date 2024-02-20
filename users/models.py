@@ -35,7 +35,7 @@ class Tag(models.Model):
 
 
 class Friend(models.Model):
-    id = models.CharField(max_length=15, primary_key=True, editable=False)
+    id = models.CharField(max_length=25, primary_key=True, editable=False)
     follower = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, related_name='follower')   # current logged in user
     following = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, related_name='following')  # this user is followed by the current logged in user
     created = models.DateTimeField(auto_now_add=True)
