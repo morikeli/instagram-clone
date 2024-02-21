@@ -52,9 +52,6 @@ def custom_timesince_filter(value):
     elif 'year' in time_diff:
         time_elapsed = f"{time_diff[:2]}y"
         return time_elapsed
-    
-    else:
-        return 'Just now'
 
 
 @register.filter(name='totalcount')
