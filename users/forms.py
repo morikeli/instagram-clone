@@ -16,7 +16,7 @@ class CreatePostsForm(forms.ModelForm):
         widget=forms.FileInput(attrs={
             'type': 'file', 'class': 'form-control mb-2', 'accept': '.3gpp, .jpg, .jpeg, .mp4, .mpeg, .ogg, .opus, .png, .wav',
         }),
-        required=False,
+        required=True,
         validators=[is_valid_media_file],   # perform form validations
     )
 
