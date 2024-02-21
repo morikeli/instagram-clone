@@ -24,7 +24,7 @@ def custom_timesince_filter(value):
     (time_diff := time_diff.split(',')[0])  # split time and access the first value.
     
     if 'minute' in time_diff:
-        if time_diff[:2] > 1:
+        if int(time_diff[:2]) > 1:
             time_elapsed = f"{time_diff[:2]}mins"     # get the first 2 items in the str. value
         else:
             time_elapsed = f"{time_diff[:2]}min"
