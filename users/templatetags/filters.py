@@ -26,11 +26,14 @@ def custom_timesince_filter(value):
     if 'minute' in time_diff:
         if int(time_diff[:1]) == 0:
             time_elapsed = f"Just now"
+            return time_elapsed
         
-        if int(time_diff[:2]) > 1:
+        elif int(time_diff[:2]) > 1:
             time_elapsed = f"{time_diff[:2]}mins"     # get the first 2 items in the str. value
+        
         else:
             time_elapsed = f"{time_diff[:2]}min"
+        
         return time_elapsed
     
     elif 'hour' in time_diff:
