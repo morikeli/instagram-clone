@@ -43,13 +43,11 @@ def add_post(sender, instance, created, *args, **kwargs):
         user = post.user
         followers = Friend.objects.filter(following=user)    # filter users following the current user
 
-
         for follower in followers:
             user_feed = NewsFeed.objects.get_or_create(
                 post=post,
-                user=follower.follower,
+                user=user,
                 date_posted=post.date_posted,
-                following=user,   
+                following=follower.follower,
             )
-        
-        return user_feed
+
