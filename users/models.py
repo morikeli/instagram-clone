@@ -54,8 +54,10 @@ class NewsFeed(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     following = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, related_name='following_feed')
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, editable=False)
     date_posted = models.DateTimeField()  # date of the post posted by user object "following"
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
 
 
     class Meta:
