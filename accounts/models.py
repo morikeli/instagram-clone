@@ -6,7 +6,7 @@ from PIL import Image
 
 def user_directory_path(instance, filename):
     """ Files will be uploaded to MEDIA_ROOT/user_{id}/blogs/filename """
-    return f'user_{str(instance.id)[:8]}/blogs/{filename}'
+    return f'user_{str(instance.id)[:8]}/profile-pics/{filename}'
 
 
 class User(AbstractUser):
