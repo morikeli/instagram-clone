@@ -20,10 +20,13 @@ def custom_timesince_filter(value):
         - My main aim was to mimic how Instagram displays time elapsed since a logged in user uploaded his/her post to their News Feed.
     """
     
-    time_diff = timesince(value).strip()    # time difference
+    time_diff = timesince(value)   # time difference
     (time_diff := time_diff.split(',')[0])  # split time and access the first value.
     
     if 'minute' in time_diff:
+        if int(time_diff[:1]) == 0:
+            time_elapsed = f"Just now"
+        
         if int(time_diff[:2]) > 1:
             time_elapsed = f"{time_diff[:2]}mins"     # get the first 2 items in the str. value
         else:
