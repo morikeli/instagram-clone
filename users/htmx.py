@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from .models import Friend, LikedPost, NewsFeed, Post
+from .models import Friend, NewsFeed, Post
 from django.shortcuts import redirect
 
 
@@ -53,22 +53,22 @@ def like_or_unlike_post(request):
     _reaction = request.POST.get('like-unlike')
 
     if not _reaction is None:
-        is_available = LikedPost.objects.filter(user=request.user, post=_reaction).exists()    # check if the user has liked the post
+        is_available = Post.objects.filter(total_likes=request.user, id=_reaction).exists()    # check if the user has liked the post
         
         if is_available:    # True
             get_post_qs = Post.objects.get(id=_reaction)
-            get_post_qs.total_likes -= 1
+            get_post_qs.total_likes.remove(request.user)
+            get_post_qs.liked_by_user = None
+            get_post_qs.is_liked = False
             get_post_qs.save()
-
-            delete_like = LikedPost.objects.get(user=request.user, post_id=_reaction)
-            delete_like.delete()    # delete like record from db.
         
         else:
             get_post_qs = Post.objects.get(id=_reaction)
-            get_post_qs.total_likes += 1
+            get_post_qs.total_likes.add(request.user)
+            get_post_qs.liked_by_user = request.user
+            get_post_qs.is_liked = True
             get_post_qs.save()
 
-            user_has_liked = LikedPost.objects.get_or_create(user=request.user, post_id=_reaction)
     
     return redirect('homepage')
 
