@@ -85,6 +85,18 @@ class Post(models.Model):
         return f'{self.user}'
     
 
+    def get_total_likes(self):
+        return self.total_likes.count()
+
+
+    def get_liked_by_user_profile_pic(self):
+        """ Method to get profile pictures of the first three users who liked the post. """
+        
+        liked_users = self.total_likes.all()[:3]
+        profile_pictures = [user.profile_pic for user in liked_users]
+        return profile_pictures
+    
+
     class Meta:
         verbose_name_plural = 'Posts'
         ordering = ['-date_posted']
