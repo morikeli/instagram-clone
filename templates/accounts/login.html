@@ -42,14 +42,42 @@
                     <div class="d-grid gap-2 mt-2">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
-                    <div class="text-center mt-2">
-                        <p class="small pb-0 mt-4"><a href="">Forgot password?</a></h6>
-                    </div>
+                    <p class="small text-center pb-0 mt-3"><a href="">Forgot password?</a></h6>
                 </form>
                 <div class="card card-body mt-3">
                     <h6 class="text-center">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></h6>
                 </div>
+                <div id="app-store-container" class="row">
+                    <div class="col-md-12">
+                        <p class="text-center mt-3">Get the app</p>
+                        <div class="app-store-images text-center">
+                            <a href="" class="me-2 mb-3"><img src="{% static 'img/apple-store.png' %}" /></a>
+                            <a href="" class="me-2 mb-3"><img src="{% static 'img/google-playstore.png' %}" /></a>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <footer class="mt-3">
+                <p>
+                    <a href="">Meta</a>
+                    <a href="">About</a>
+                    <a href="">Blog</a>
+                    <a href="">Jobs</a>
+                    <a href="">Help</a>
+                    <a href="">API</a>
+                    <a href="">Privacy</a>
+                    <a href="">Terms</a>
+                    <a href="">Locations</a>
+                    <a href="">Instagram Lite</a>
+                    <a href="">Threads</a>
+                    <a href="">Contact Uploading & Non-Users</a>
+                    <a href="">Meta Verified</a>
+                </p>
+                <p>
+                    <a href="">English</a>
+                    <a class="small brand-name">&copy; {% now 'Y' %} Instagram from Meta</a>
+                </p>
+            </footer>
         </div>
     </div>
 </body>
