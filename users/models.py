@@ -102,17 +102,6 @@ class Post(models.Model):
         ordering = ['-date_posted']
 
 
-    def save(self, *args, **kwargs):
-        super(Post, self).save(*args, **kwargs)
-
-        posted_img = Image.open(self.image.path)
-
-        if posted_img.height > 500 and posted_img.width > 500:
-            output_size = (500, 500)
-            posted_img.thumbnail(output_size)
-            posted_img.save(self.image.path)
-
-
 class Comment(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     name = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
