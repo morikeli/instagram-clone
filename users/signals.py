@@ -1,6 +1,6 @@
+from .models import Post, Comment, Friend, Tag, NewsFeed
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from .models import Post, Comment, Friend, LikedPost, Tag, NewsFeed
 import uuid
 
 
@@ -12,12 +12,6 @@ def generate_posts_id(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=Friend)
 def generate_followers_id(sender, instance, **kwargs):
-    if instance.id == "":
-        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
-
-
-@receiver(pre_save, sender=LikedPost)
-def generate_likedPosts_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
 
