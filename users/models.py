@@ -70,12 +70,14 @@ class NewsFeed(models.Model):
     
 
 class Post(models.Model):
-    id = models.CharField(max_length=25, primary_key=True, editable=False, unique=True)
+    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     image = models.ImageField(upload_to=user_directory_path, null=False)
     caption = models.TextField(blank=True)
-    total_likes = models.PositiveIntegerField(default=0, editable=False)
+    total_likes = models.ManyToManyField(User, related_name='liked_posts', blank=True, editable=False)
+    liked_by_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='liked_post', editable=False)
     tags = models.ManyToManyField(Tag, related_name='tags')
+    is_liked = models.BooleanField(default=False, editable=False)
     date_posted = models.DateTimeField(auto_now_add=True)
     date_edited = models.DateTimeField(auto_now=True)
 
