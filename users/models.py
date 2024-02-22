@@ -112,17 +112,3 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.name}'
 
-
-class LikedPost(models.Model):
-    id = models.CharField(max_length=25, primary_key=True, editable=False, unique=True)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['-date_created']
-    
-    def __str__(self):
-        return f'{self.user}'
-
