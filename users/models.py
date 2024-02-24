@@ -96,6 +96,12 @@ class Post(models.Model):
         profile_pictures = [user.profile_pic for user in liked_users]
         return profile_pictures
     
+    def get_comments(self):
+        return Comment.objects.filter(item=self.id)
+
+    def total_comments(self):
+        return Comment.objects.filter(item=self.id).count()
+    
 
     class Meta:
         verbose_name_plural = 'Posts'
