@@ -97,3 +97,15 @@ def like_or_unlike_post(request):
     return redirect('homepage')
 
 
+def add_comment(request):
+    user_comment = request.POST.get('comment')
+    _post = request.POST.get('post')
+
+    if user_comment:
+        post_obj = Post.objects.get(id=_post)
+        create_comment = Comment.objects.create(author=request.user, item=post_obj, comment=user_comment)
+        create_comment.save()
+        messages.success(request, 'Comment submitted successfully!')
+        return redirect('homepage')
+
+    return HttpResponse()
