@@ -10,9 +10,11 @@ urlpatterns = [
 ]
 
 htmx_urlpatterns = [
-    path('sugeested-user/follow/', htmx.follow_or_unfollow_users_homepage, name='follow_suggested_user'),
-    path('<str:user_id>/follow/', htmx.follow_or_unfollow_users_in_profile_page, name='follow_user'),
+    path('suggested-user/follow/', htmx.follow_or_unfollow_users_homepage, name='follow_suggested_user'),
+    path('<str:user_id>follow/', htmx.follow_or_unfollow_viewed_user, name='follow_viewed_user'),
+    path('follow/', htmx.follow_or_unfollow_users_in_profile_page, name='follow_user'),
     path('like/', htmx.like_or_unlike_post, name='like_or_unlike'),
+    path('comment/', htmx.add_comment, name='post_comment'),
 
 ]
 
