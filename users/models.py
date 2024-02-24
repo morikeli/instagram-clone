@@ -110,11 +110,12 @@ class Post(models.Model):
 
 class Comment(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
-    name = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
+    item = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
     comment = models.TextField(blank=False)
-    commented = models.DateTimeField(auto_now_add=True)
-    edited = models.DateTimeField(auto_now=True)
+    date_commented = models.DateTimeField(auto_now_add=True)
+    date_edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.item}"
 
