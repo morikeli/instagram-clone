@@ -34,4 +34,20 @@
 		select('body').classList.add('toggle-sidebar');
 	}
 
+	// Function to hide modal backdrop
+	function hideModalBackdrop() {
+		// Find the modal backdrop element
+		var modalBackdrop = document.querySelector('.modal-backdrop');
+		// If modal backdrop exists, hide it
+		if (modalBackdrop) {
+			modalBackdrop.style.display = 'none';
+		}
+	}
+
+	// Detect page redirection (e.g., after clicking a link)
+	document.querySelector('#wrapper').addEventListener('click', function(event) {
+		// Hide modal backdrop after redirection
+		hideModalBackdrop();
+	});
+
 })();
