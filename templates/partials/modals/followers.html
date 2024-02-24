@@ -1,0 +1,73 @@
+<div id="followers-modal" class="modal modal-md" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto text-center">Followers</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <ol class="list-group">
+                {% for follower in my_followers %}
+                <div class="d-flex justify-content-between align-items-start my-3 mx-3">
+                    <input type="text" name="q-follower"
+                        hx-get="/trigger_delay"
+                        hx-trigger="keyup changed delay:500ms"
+                        hx-target="#search-results"
+                        placeholder="Search..."
+                        class="form-control"
+                    >
+                    <div id="search-results">
+
+                    </div>
+                </div>
+                
+                <li class="list-group-item d-flex justify-content-between align-items-start py-3">
+                    <img class="rounded-circle" src="{{ follower.follower.profile_pic.url }}" height="50px" alt="">
+                    <div class="mt- ms-2 me-auto">
+                        <div class="fw-bold">{{ follower }}</div>
+                        {{ follower }}
+                    </div>
+                    {% if not request.user == follower %}
+                    <a hx-post="{% url 'follow_user' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ follower }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-secondary btn-sm rounded mt-2" data-bs-dismiss="modal">Following</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+              </ol>
+        </div>
+    </div>
+</div>
+
+<div id="following-modal" class="modal modal-md" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mx-auto text-center">Following</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <ol class="list-group">
+                {% for follower in people_i_follow %}
+                <div class="d-flex justify-content-between align-items-start my-3 mx-3">
+                    <input type="text" name="q-follower"
+                        hx-get="/trigger_delay"
+                        hx-trigger="keyup changed delay:500ms"
+                        hx-target="#search-results"
+                        placeholder="Search..."
+                        class="form-control"
+                    >
+                    <div id="search-results">
+                        
+                    </div>
+                </div>
+                
+                <li class="list-group-item d-flex justify-content-between align-items-start py-3">
+                    <img class="rounded-circle" src="{{ follower.follower.profile_pic.url }}" height="50px" alt="">
+                    <div class="mt- ms-2 me-auto">
+                        <div class="fw-bold">{{ follower }}</div>
+                        {{ follower }}
+                    </div>
+                    <a hx-post="{% url 'follow_user' %}" hx-trigger="click" hx-push-url="{% url 'user_profile' %}" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ follower }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-secondary btn-sm rounded mt-2" data-bs-dismiss="modal">Following</a>
+                </li>
+                {% endfor %}
+              </ol>
+        </div>
+    </div>
+</div>
