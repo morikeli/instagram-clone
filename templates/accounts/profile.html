@@ -9,6 +9,7 @@
 <body>
     {% block content %}
     <div class="container">
+        {% include 'partials/modals/followers.html' %}
         <div class="row profile-container">
             {% include 'toasts.html' %}
             <div class="col-md-3">
@@ -22,8 +23,8 @@
                 </div>
                 <div id="edit-profile-row">
                     <h6>{% if total_posts == 0 %}<b>0</b> posts{% elif total_posts == 1 %}<b>1</b> post{% else %}<b>{{total_posts}}</b> posts{% endif %}</h6>
-                    <h6>{% if followers == 1 %}<b>1</b> follower {% else %}<b>{{followers}}</b> followers {% endif %}</h6>
-                    <h6>{% if following == 1 %}<b>1</b> following {% else %}<b>{{following}}</b> following {% endif %}</h6>
+                    <h6><a href="" data-bs-toggle="modal" data-bs-target="#followers-modal">{% if followers == 1 %}<b>1</b> follower {% else %}<b>{{followers}}</b> followers {% endif %}</a></h6>
+                    <h6><a href="" data-bs-toggle="modal" data-bs-target="#following-modal">{% if following == 1 %}<b>1</b> following {% else %}<b>{{following}}</b> following {% endif %}</a></h6>
                 </div>
                 <div id="edit-profile-form">
                     <h6>{{ request.user.bio }}</h6>
