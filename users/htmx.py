@@ -49,6 +49,28 @@ def follow_or_unfollow_viewed_user(request, user_id):
     return redirect('view_user_profile', user_id)
 
 
+def follow_or_unfollow_users_in_profile_page(request):
+    """ This function allows a logged in user to follow/unfollow other users via modal forms in his/her profile page. """
+
+    _user = request.POST.get('follow-user')
+    user_instance = get_user_model().objects.get(username=_user)    # create user instance
+
+    if not _user is None:
+        user_is_following = Friend.objects.filter(follower=request.user, following=user_instance).exists()
+
+        if user_is_following:
+            unfollow_user = Friend.objects.get(follower=request.user, following=user_instance)
+            unfollow_user.delete()
+
+            delete_posts = NewsFeed.objects.filter(user=request.user, following=user_instance)
+            delete_posts.delete()   # delete post of the user followed by the logged in user
+        
+        else:
+            follow_user = Friend.objects.get_or_create(follower=request.user, following=user_instance)
+    
+    return redirect('user_profile')
+
+
 def like_or_unlike_post(request):
     """ This function allows a user to like or unlike a post. """
 
