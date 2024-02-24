@@ -1,0 +1,50 @@
+{% load filters %}
+<div id="comments-modal" class="modal modal-xl" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ post.image.url }}" class="img-fluid rounded-start" alt="post-img">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="posts-modal-header" class="modal-header d-flex align-items-center">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <img class="rounded-circle mb-2" src="{{ post.user.profile_pic.url }}" height="40px"  alt="user-dp">
+                                            <h6 class="small text-muted mx-2"><a href="" class="fw-bold">{{ post.user }}</a></h6>
+                                        </div>
+                                        <div class="filter">
+                                            <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#select-posts-menu"><i class="bi bi-three-dots"></i></a>
+                                            {% include 'partials/modals/menu.html' %}
+                                        </div>
+                                    </div>
+                                    {% for comment in comments %}
+                                    <div class="row my-3 mx-3">
+                                        <div class="col-md-1">
+                                            <img class="rounded-circle" height="28px" src="{{ comment.author.profile_pic.url }}" alt="">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p class="small">{{ comment.comment }}</p>
+                                            <p id="subtitle" class="small card-text text-muted">{{ comment.date_commented|post_timesince }}</p>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <div class="modal-footer d-flex align-items-center justify-content-between">
+                                        <form id="modal-form" hx-post="{% url 'post_comment' %}" hx-swap="outerHTML" hx-target="#wrapper" hx-vals='{"post": "{{ post.id }}"}' class="d-flex w-100 me-2">
+                                            {% csrf_token %}
+                                            <input type="text" placeholder="Add a comment..." name="comment"  class="form-control" required>
+                                            <button type="submit" class="btn btn-default fs-6 text-primary" data-bs-dismiss="modal">Post</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
