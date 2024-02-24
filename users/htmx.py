@@ -27,7 +27,7 @@ def follow_or_unfollow_users_homepage(request):
     return redirect('homepage')
 
 
-def follow_or_unfollow_users_in_profile_page(request, user_id):
+def follow_or_unfollow_viewed_user(request, user_id):
     """ This function allows a user to follow or unfollow other users in their profile page. """
 
     _user = request.POST.get('follow-user')
