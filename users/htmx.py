@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
-from .models import Friend, NewsFeed, Post
+from .models import Friend, NewsFeed, Post, Comment
 from django.shortcuts import redirect
+from django.contrib import messages
+from django.http import HttpResponse
 
 
 def follow_or_unfollow_users_homepage(request):
