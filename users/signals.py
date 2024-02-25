@@ -71,12 +71,10 @@ def send_follow_notification(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Friend)
 def delete_follow_notification(sender, instance, **kwargs):
-    # if created:
-        follow = instance
-        sender = follow.follower
-        following = follow.following
-        print(f'Sender: {sender} | Receiver: {following}')
+    follow = instance
+    sender = follow.follower
+    following = follow.following
 
-        _notify = Notification.objects.filter(sender=sender, receiver=following, notification_type=3)
-        _notify.delete()
+    _notify = Notification.objects.filter(sender=sender, receiver=following, notification_type=3)
+    _notify.delete()
 
