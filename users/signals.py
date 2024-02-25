@@ -1,4 +1,4 @@
-from .models import Post, Comment, Friend, Tag, NewsFeed
+from .models import Post, Comment, Friend, Tag, NewsFeed, Notification
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 import uuid
@@ -30,6 +30,12 @@ def generate_tags_id(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=NewsFeed)
 def generate_news_feed_id(sender, instance, **kwargs):
+    if instance.id == "":
+        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
+
+
+@receiver(pre_save, sender=Notification)
+def generate_notification_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
 
