@@ -8,6 +8,7 @@ urlpatterns = [
     path('profile/<str:user_id>/', views.SuggestedUserProfileView.as_view(), name='view_user_profile'),
     path('explore/', views.ExplorePostsView.as_view(), name='explore'),
     path('search', views.SearchView.as_view(), name='search'),
+    path('notifications/', views.UserNotificationsView.as_view(), name='notifications'),
     
 ]
 
