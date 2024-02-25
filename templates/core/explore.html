@@ -1,0 +1,29 @@
+{% extends 'navbar.html' %}{% block title %}{% endblock %}
+    {% block content %}
+    <main id="main" class="main">
+        <section id="explorer-posts" class="explorer-posts">
+            <div class="container">
+                <div class="row g-1 explorer-posts-container">
+                    {% for post in posts %}
+                    <div class="col-lg-4 col-md-6 explorer-posts-item">
+                        <div class="explorer-posts-wrap">
+                            <img src="{{ post.image.url }}" class="img-fluid" alt="post-img">
+                            <div class="explorer-posts-info">
+                                <div class="explorer-posts-links">
+                                    <a href="{{ post.image.url }}" data-gallery="explorer-postsGallery" class="explorer-lightbox me-3 small">
+                                        <i class="bi bi-heart-fill"></i> {{ post.get_total_likes }}
+                                    </a>
+                                    <a href="" class="small">
+                                        <i class="bi bi-chat-fill"></i> {{ post.total_comments }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+          </section>    
+    </main>
+    
+    {% endblock %}
