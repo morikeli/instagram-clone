@@ -10,6 +10,12 @@ def generate_posts_id(sender, instance, **kwargs):
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
 
 
+@receiver(pre_save, sender=Comment)
+def generate_comments_id(sender, instance, **kwargs):
+    if instance.id == "":
+        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
+
+
 @receiver(pre_save, sender=Friend)
 def generate_followers_id(sender, instance, **kwargs):
     if instance.id == "":
