@@ -102,3 +102,30 @@ class SuggestedUserProfileView(View):
             'people_i_follow': _following,
         }
         return render(request, self.template_name, context)
+
+
+@method_decorator(login_required(login_url='login'), name='get')
+class ExplorePostsView(View):
+    template_name = 'core/explore.html'
+
+    def get(self, request, *args, **kwargs):
+        posts_qs = Post.objects.all()
+
+        context = {'posts': posts_qs}
+        return render(request, self.template_name, context)
+
+
+@method_decorator(login_required(login_url='login'), name='get')
+class SearchView(View):
+    template_name = 'core/search.html'
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
+        users_qs = User.objects.none()  # default qs if query is None.
+        users_ids = []
+        
+        if not query is None:
+            users_qs = User.objects.filter(username__contains=query).exclude(username=request.user)
+
+        context = {'searched_users': users_qs}
+        return render(request, self.template_name, context)
