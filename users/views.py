@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.views import View
-from .models import Post, Friend, NewsFeed, Comment
+from .models import Post, Friend, NewsFeed, Comment, Notification
 from .forms import CreatePostsForm
 from accounts.models import User
 from itertools import chain
