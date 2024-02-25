@@ -34,20 +34,26 @@
 		select('body').classList.add('toggle-sidebar');
 	}
 
-	// Function to hide modal backdrop
-	function hideModalBackdrop() {
-		// Find the modal backdrop element
-		var modalBackdrop = document.querySelector('.modal-backdrop');
-		// If modal backdrop exists, hide it
-		if (modalBackdrop) {
-			modalBackdrop.style.display = 'none';
+	function handleFormSubmission(event) {
+		// Reset form fields
+		document.getElementById('modal-form').reset();
+		
+		// Hide modal
+		var modal = document.getElementById('comments-modal');
+		modal.classList.remove('show');
+		document.body.classList.remove('modal-open');
+		var backdrop = document.getElementsByClassName('modal-backdrop')[0];
+		if (backdrop) {
+			backdrop.parentNode.removeChild(backdrop);
 		}
-	}
-
-	// Detect page redirection (e.g., after clicking a link)
-	document.querySelector('#wrapper').addEventListener('click', function(event) {
-		// Hide modal backdrop after redirection
-		hideModalBackdrop();
-	});
+	  }
+	
+	  // Add event listener to form after htmx:afterSwap event
+	  document.addEventListener('htmx:afterSwap', function(event) {
+		if (event.target.id === 'comments-modal') {
+			// Add event listener to the form after it's swapped
+			document.getElementById('modal-form').addEventListener('htmx:response', handleFormSubmission);
+		}
+	  });
 
 })();
