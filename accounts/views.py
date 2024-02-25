@@ -58,12 +58,17 @@ def profile_view(request):
     total_followers = Friend.objects.filter(following=request.user).count()
     total_posts = Post.objects.filter(user=request.user).count()
     user_posts = Post.objects.filter(user=request.user)
+    _followers = Friend.objects.filter(following=request.user)
+    _following = Friend.objects.filter(follower=request.user)
+
     
     context = {
         'my_posts': user_posts,
         'total_posts': total_posts,
         'following': user_following, 
         'followers': total_followers,
+        'my_followers': _followers,
+        'people_i_follow': _following,
     }
     return render(request, 'accounts/profile.html', context)
 
