@@ -1,5 +1,6 @@
 {% extends 'navbar.html' %}{% block title %}{% endblock %}
 {% load static %}
+{% load filters %}
     {% block content %}
     <main id="main" class="main">
        <div class="row">
@@ -7,15 +8,16 @@
                 <div class="mt-1">
                     <ul class="list-group">
                         {% for alerts in notifications %}
-                        <li class="list-group-item d-flex justify-content-between align-items-start py-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-start py-2">
                             {% if alerts.notification_type == 1 %}
-                            <img class="rounded-circle" src="{{ alerts.sender.profile_pic.url }}" height="50px" alt="user-img">
-                            <div class="text-center">
-                                <div class="text-center">
+                            <img class="rounded-circle my-1" src="{{ alerts.sender.profile_pic.url }}" height="50px" alt="user-img">
+                            <div class="ms-3 me-auto my-2">
+                                <div>
                                     <a hx-get="{% url 'view_user_profile' alerts.sender %}" hx-trigger="click" hx-push-url="{% url 'view_user_profile' alerts.sender %}" hx-swap="outerHTML" hx-target="#wrapper" class="fw-bold">{{ alerts.sender }}</a> liked your post.
                                 </div>
+                                <p class="small text-muted">{{ alerts.date_created|post_timesince }}</p>
                             </div>
-                            <img src="{{ alerts.post.image.url }}" height="50px" alt="posted-img">
+                            <img class="my-2" src="{{ alerts.post.image.url }}" height="50px" alt="posted-img">
                             {% endif %}
                         </li>
                         {% empty %}
