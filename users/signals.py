@@ -41,7 +41,7 @@ def generate_notification_id(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Post)
-def add_post(sender, instance, created, *args, **kwargs):
+def add_post(sender, instance, created, **kwargs):
     """ This signal updates the current user's followers news feed when he/she posts something. """
     
     if created:
