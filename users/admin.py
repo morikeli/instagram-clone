@@ -1,20 +1,15 @@
 from django.contrib import admin
-from .models import Post, LikedPost, Comment, Friend
+from .models import Post, Comment, Friend
 
 
 @admin.register(Post)
 class UsersPostsTable(admin.ModelAdmin):
-    list_display = ['user', 'total_likes', 'date_posted']
-
-
-@admin.register(LikedPost)
-class LikedPostsTable(admin.ModelAdmin):
-    list_display = ['id', 'user', 'date_created']
+    list_display = ['user', 'date_posted']
 
 
 @admin.register(Comment)
 class CommentsTable(admin.ModelAdmin):
-    list_display = ['name', 'comment']
+    list_display = ['item', 'comment']
 
 
 @admin.register(Friend)
