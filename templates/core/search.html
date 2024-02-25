@@ -24,7 +24,7 @@
                         {% for user in searched_users %}
                         <li class="list-group-item d-flex justify-content-between align-items-start py-3">
                             <img class="rounded-circle" src="{{ user.profile_pic.url }}" height="50px" alt="">
-                            <div class="mt- ms-2 me-auto">
+                            <div class="mt-1 ms-2 me-auto">
                                 <div class="fw-bold"><a hx-get="{% url 'view_user_profile' user %}" hx-trigger="click" hx-push-url="{% url 'view_user_profile' user %}" hx-swap="outerHTML" hx-target="#wrapper">{{ user }}</a></div>
                                 {{ user }}
                             </div>
