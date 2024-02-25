@@ -145,7 +145,7 @@ class UserNotificationsView(View):
                 _notification.is_read = True    # mark notification as read
                 _notification.save()
 
-        notifications_qs = Notification.objects.filter(receiver=request.user, is_read=False)
+        notifications_qs = Notification.objects.filter(receiver=request.user)
 
         context = {'notifications': notifications_qs}
         return render(request, self.template_name, context)

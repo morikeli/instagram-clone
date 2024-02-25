@@ -1,5 +1,5 @@
 from .models import Post, Comment, Friend, Tag, NewsFeed, Notification
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 import uuid
 
@@ -41,7 +41,7 @@ def generate_notification_id(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Post)
-def add_post(sender, instance, created, *args, **kwargs):
+def add_post(sender, instance, created, **kwargs):
     """ This signal updates the current user's followers news feed when he/she posts something. """
     
     if created:
@@ -56,4 +56,57 @@ def add_post(sender, instance, created, *args, **kwargs):
                 date_posted=post.date_posted,
                 following=follower.follower,
             )
+
+
+@receiver(post_save, sender=Friend)
+def send_follow_notification(sender, instance, created, **kwargs):
+    if created:
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+
+        _notify = Notification.objects.get_or_create(sender=sender, receiver=following, notification_type=3)
+        _notify
+
+
+@receiver(post_delete, sender=Friend)
+def delete_follow_notification(sender, instance, **kwargs):
+    follow = instance
+    sender = follow.follower
+    following = follow.following
+
+    _notify = Notification.objects.filter(sender=sender, receiver=following, notification_type=3)
+    _notify.delete()
+
+
+@receiver(post_save, sender=Comment)
+def send_comment_notification(sender, instance, **kwargs):
+    comment = instance
+    post = comment.item
+    text_preview = comment.comment[:50]
+    sender = comment.author
+
+    _notify = Notification.objects.get_or_create(
+        post=post,
+        sender=sender,
+        receiver=post.user,
+        notification_text=text_preview,
+        notification_type=2
+    )
+    _notify
+
+
+@receiver(post_delete, sender=Comment)
+def delete_comment_notification(sender, instance, **kwargs):
+    comment = instance
+    post = comment.item
+    sender = comment.author
+
+    _notify = Notification.objects.filter(
+        post=post,
+        sender=sender,
+        receiver=post.user,
+        notification_type=2
+    )
+    _notify.delete()
 
