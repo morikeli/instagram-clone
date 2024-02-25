@@ -88,7 +88,7 @@ def like_or_unlike_post(request):
             get_post_qs.is_liked = False
             get_post_qs.save()
 
-            if notification_exists:     # if notification exists - True
+            if notification_exists and not (request.user == post_obj.user):     # if notification exists - True
                 _notify = Notification.objects.get(
                     post=post_obj,
                     sender=request.user,
