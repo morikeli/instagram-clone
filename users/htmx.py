@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from .models import Friend, NewsFeed, Post, Comment
+from .models import Friend, NewsFeed, Post, Comment, Notification
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse
@@ -77,14 +77,23 @@ def like_or_unlike_post(request):
     _reaction = request.POST.get('like-unlike')
 
     if not _reaction is None:
+        post_obj = Post.objects.get(id=_reaction)
         is_available = Post.objects.filter(total_likes=request.user, id=_reaction).exists()    # check if the user has liked the post
-        
+        notification_exists = Notification.objects.filter(post=post_obj).exists()
+
         if is_available:    # True
             get_post_qs = Post.objects.get(id=_reaction)
             get_post_qs.total_likes.remove(request.user)
             get_post_qs.liked_by_user = None
             get_post_qs.is_liked = False
             get_post_qs.save()
+
+            if notification_exists:     # if notification exists - True
+                _notify = Notification.objects.get(
+                    post=post_obj,
+                    sender=request.user,
+                )
+                _notify.delete()
         
         else:
             get_post_qs = Post.objects.get(id=_reaction)
@@ -93,6 +102,16 @@ def like_or_unlike_post(request):
             get_post_qs.is_liked = True
             get_post_qs.save()
 
+            # send notification
+            if not (request.user == post_obj.user):   # only send notification when the user is not the owner of the post
+                _notify = Notification.objects.get_or_create(
+                    post=post_obj,
+                    sender=request.user,
+                    receiver=post_obj.user,
+                    notification_type=1,
+
+                )
+                _notify
     
     return redirect('homepage')
 
