@@ -1,150 +1,131 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .models import Posts, LikedPost, Comments, Friends
+from django.db.models import Q
+from django.views import View
+from .models import Post, Friend, NewsFeed, Comment
 from .forms import CreatePostsForm
 from accounts.models import User
 from itertools import chain
 import random
 
-@login_required(login_url='user_login')
-def homepage_view(request):
-    posted_posts = Posts.objects.all()
-    upload_post = CreatePostsForm()
-    get_post_id = None
 
-    if request.method == 'POST':
-        upload_post = CreatePostsForm(request.POST, request.FILES)
-        get_followObj = request.POST.get('follow')
-        get_post_id = request.POST.get('posted_id')
-        get_comment_id = request.POST.get('comment')
+@method_decorator(login_required(login_url='login'), name='get')
+class HomepageView(View):
+    form_class = CreatePostsForm
+    template_name = 'core/homepage.html'
 
-        if get_followObj is not None:
-            follow_record = Friends.objects.filter(following=request.user, followed=get_followObj).first()
 
-            if follow_record is None:
-                new_follower = Friends.objects.create(following=request.user, followed=get_followObj)
-                new_follower.save()
-                return redirect('homepage')
-            else:
-                unfollow = Friends.objects.get(followed=get_followObj, following=request.user)
-                unfollow.delete()
-                return redirect('homepage')
-            
-        else:
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
 
-            if upload_post.is_valid():
-                form = upload_post.save(commit=False)
-                form.user = request.user
-                form.save()
-                messages.success(request, 'Your post was uploaded successfully!')
-                return redirect('homepage')
-            else:
-                try:
-                    post_obj = Posts.objects.get(id=get_post_id)
-                    new_comment = Comments.objects.create(id=get_post_id, name=post_obj, comment=get_comment_id)
-                    new_comment.save()
-                    return redirect('homepage')
-                except Posts.DoesNotExist:
-                    return redirect('homepage')
-    
-    # Posts feed - Current user should see posts for followers he/she is following
-    my_followers = []
-    my_feed = []
+        # News feed
+        # A News Feed contains posts that are posted by the current logged in user and/or the users he/she is following.
+        # use Q to filter all posts.
+        posted_items = NewsFeed.objects.filter(Q(following=request.user) | Q(post__user=request.user))
+        group_ids = []
+        
+        for post in posted_items:
+            group_ids.append(post.post_id)
 
-    user_followers = Friends.objects.filter(following=request.user)
-    
-    for f in user_followers:
-        my_followers.append(f.followed)     # append users I'm following in this list
-    
-    for users in my_followers:
-        feed_list = Posts.objects.filter(user__username=users)    # get posts of people I'm following
-        my_feed.append(feed_list)   # append the posts in this list
+        # use Q method to also filter items/media posted by the logged in user instead of items only in the 'posted_items' list.
+        # this is useful especially if a user has created an account recently and isn't following any user.
+        news_feed = Post.objects.filter(Q(id__in=group_ids) | Q(user=request.user)).order_by('-date_posted')
+        
+        # user suggestion feed
+        user_following = []
+        _users = User.objects.filter(is_staff=False, is_superuser=False).exclude(username=request.user)   # all users except current user, superuser or is_staff=True
 
-    post_feed = list(chain(*my_feed))
-    
-    # user suggestion feed
-    all_users = User.objects.filter(is_staff=False, is_superuser=False).all().exclude(username=request.user)   # exclude superuser and staff users
-    user_following = []
+        user_followers = Friend.objects.filter(follower=request.user)
+        
+        for followers in user_followers:
+            user_list = User.objects.get(username=followers.following)
+            user_following.append(user_list)
+        
+        suggestion_list = [person for person in list(_users) if (person not in list(user_following))]
+        random.shuffle(suggestion_list[:5])     # shuffle list and get the first 5 suggested users
 
-    for followers in user_followers:
-        user_list = User.objects.get(username=followers.followed)
-        user_following.append(user_list)
+        # display comments
+        comments_qs = Comment.objects.all()
+        
+        context = {
+            'suggested_followers': suggestion_list,
+            'posted_items': news_feed,
+            'comments': comments_qs,
+            'CreatePostsForm': CreatePostsForm,
+        }
+        return render(request, self.template_name, context)
 
-    new_suggestion_list = [person for person in list(all_users) if (person not in list(user_following))]
-    final_suggestion_list = [person for person in list(new_suggestion_list) if (person not in list(User.objects.filter(username=request.user.username)))]
-    random.shuffle(final_suggestion_list)
-    
-    context = {
-        'posted': post_feed, 'UserHasLikedPost': LikedPost.objects.filter(user=request.user), 
-        'create_post_form': upload_post, 'new_users': final_suggestion_list[:3],
-        'comments': Comments.objects.all(), 'followers': Friends.objects.filter().count(),
-        'my_friends': Friends.objects.filter(following=request.user).all()
 
-    }
-    return render(request, 'users/homepage.html', context)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
 
-@login_required(login_url='user_login')
-def suggested_user_profile_view(request, suggested_user):
-    viewed_user = User.objects.get(id=suggested_user)
+        if form.is_valid():
+            upload_post = form.save(commit=False)
+            upload_post.user = request.user
+            upload_post.save()
 
-    if request.method == 'POST':
-        get_followObj = request.POST.get('follow')
+            messages.success(request, 'Your post was uploaded sucessfully!')
+            return redirect('homepage')
+        
+        context = {
+            'CreatePostsForm': CreatePostsForm,
+        }
+        return render(request, self.template_name, context)
 
-        if get_followObj is not None:
-            follow_record = Friends.objects.filter(following=request.user, followed=get_followObj).first()
-            
-            if follow_record is None:
-                new_follower = Friends.objects.create(following=request.user, followed=get_followObj)
-                new_follower.save()
-                return redirect('follow_user_profile', suggested_user)
-            
-            else:
-                unfollow = Friends.objects.get(followed=get_followObj, following=request.user)
-                unfollow.delete()
-                return redirect('follow_user_profile', suggested_user)
-    
-    context = {
-        'obj': viewed_user, 'followers_posts': Posts.objects.filter(user=suggested_user),
-        'posts_count': Posts.objects.filter(user=viewed_user).count(),
-        'following': Friends.objects.filter(following=viewed_user).count(), 
-        'followers': Friends.objects.filter(followed=viewed_user).count(),
-        'following_user': Friends.objects.filter(following=request.user, followed=viewed_user.username).exists(),
-    }
-    return render(request, 'users/profile.html', context)
 
-@login_required(login_url='user_login')
-def like_posts_view(request):
-    get_postId = request.GET.get('id')
-    
-    homepage_post = Posts.objects.get(id=get_postId)
-    liked_post = LikedPost.objects.filter(post=get_postId, user=request.user).first()
+@method_decorator(login_required(login_url='login'), name='get')
+class SuggestedUserProfileView(View):
+    template_name = 'core/profile.html'
 
-    if liked_post is None:
-        new_like = LikedPost.objects.create(user=request.user, post_id=get_postId)
-        homepage_post.total_likes += 1
-        new_like.save()
-        homepage_post.save()
-        return redirect('homepage')
-    
-    else:
-        liked_post.delete()
-        homepage_post.total_likes -= 1
-        homepage_post.save()
-        return redirect('homepage')
 
-@login_required(login_url='user_login')
-def delete_posts_view(request):
-    get_postObj = request.GET.get('id')
-    posted_img = Posts.objects.get(id=get_postObj)
+    def get(self, request, user_id, *args, **kwargs):
+        viewed_user = User.objects.get(username=user_id)
+        is_following_user = Friend.objects.filter(follower=request.user, following=viewed_user).exists()
+        user_following = Friend.objects.filter(follower=viewed_user).count()
+        total_followers = Friend.objects.filter(following=viewed_user).count()
+        total_posts = Post.objects.filter(user=viewed_user).count()
+        followers_posts = Post.objects.filter(user=viewed_user)     # posts for user (following) followed/viewed by the logged in user
+        _followers = Friend.objects.filter(following=viewed_user)   # followers of the 'viewed_user' object.
+        _following = Friend.objects.filter(follower=viewed_user)
 
-    if posted_img is not None:
-        get_likes_for_post = LikedPost.objects.filter(id=get_postObj).all()
-        posted_img.delete()
-        get_likes_for_post.delete()
-        messages.error(request, 'You have deleted one of your posts.')
-        return redirect('homepage')
-    else:
-        return redirect('homepage')
 
+        context = {
+            'obj': viewed_user, 
+            'followers_posts': followers_posts,
+            'posts_count': total_posts,
+            'following': user_following, 
+            'followers': total_followers,
+            'is_following_user': is_following_user,
+            'my_followers': _followers,
+            'people_i_follow': _following,
+        }
+        return render(request, self.template_name, context)
+
+
+@method_decorator(login_required(login_url='login'), name='get')
+class ExplorePostsView(View):
+    template_name = 'core/explore.html'
+
+    def get(self, request, *args, **kwargs):
+        posts_qs = Post.objects.all()
+
+        context = {'posts': posts_qs}
+        return render(request, self.template_name, context)
+
+
+@method_decorator(login_required(login_url='login'), name='get')
+class SearchView(View):
+    template_name = 'core/search.html'
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
+        users_qs = User.objects.none()  # default qs if query is None.
+        users_ids = []
+        
+        if not query is None:
+            users_qs = User.objects.filter(username__contains=query).exclude(username=request.user)
+
+        context = {'searched_users': users_qs}
+        return render(request, self.template_name, context)

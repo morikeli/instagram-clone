@@ -6,6 +6,8 @@ from . import htmx
 urlpatterns = [
     path('homepage/', views.HomepageView.as_view(), name='homepage'),
     path('profile/<str:user_id>/', views.SuggestedUserProfileView.as_view(), name='view_user_profile'),
+    path('explore/', views.ExplorePostsView.as_view(), name='explore'),
+    path('search', views.SearchView.as_view(), name='search'),
     
 ]
 

@@ -46,14 +46,19 @@
 		if (backdrop) {
 			backdrop.parentNode.removeChild(backdrop);
 		}
-	  }
+	}
 	
-	  // Add event listener to form after htmx:afterSwap event
-	  document.addEventListener('htmx:afterSwap', function(event) {
+	// Add event listener to form after htmx:afterSwap event
+	document.addEventListener('htmx:afterSwap', function(event) {
 		if (event.target.id === 'comments-modal') {
 			// Add event listener to the form after it's swapped
 			document.getElementById('modal-form').addEventListener('htmx:response', handleFormSubmission);
 		}
-	  });
+	});
+
+	// initiate posts lightbox
+	const postsLightbox = GLightbox({
+		selector: '.expolorer-posts-lightbox'
+	});
 
 })();

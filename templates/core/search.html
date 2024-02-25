@@ -1,0 +1,38 @@
+{% extends 'navbar.html' %}{% block title %}{% endblock %}
+{% load static %}
+    {% block content %}
+    <main id="main" class="main">
+       <div class="row">
+            <div class="col-md-6 offset-sm-3">
+                <input type="text" name="q" class="form-control"
+                    hx-get="{% url 'search' %}"
+                    hx-trigger="keyup changed delay:500ms"
+                    hx-target="#wrapper"
+                    hx-swap="outerHTML"
+                    hx-indicator="#spinner"
+                    hx-indicator-delay="3000"
+                    placeholder="Search..."
+                    autocomplete="off"
+                >
+                <div class="mt-3">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <img src="{% static 'img/spinner.gif' %}" alt="spinner" id="spinner" class="htmx-indicator">
+                        </div>
+                    </div>
+                    <ul class="list-group">
+                        {% for user in searched_users %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start py-3">
+                            <img class="rounded-circle" src="{{ user.profile_pic.url }}" height="50px" alt="">
+                            <div class="mt- ms-2 me-auto">
+                                <div class="fw-bold"><a hx-get="{% url 'view_user_profile' user %}" hx-trigger="click" hx-push-url="{% url 'view_user_profile' user %}" hx-swap="outerHTML" hx-target="#wrapper">{{ user }}</a></div>
+                                {{ user }}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>    
+            </div>
+       </div> 
+    </main>
+    {% endblock %}

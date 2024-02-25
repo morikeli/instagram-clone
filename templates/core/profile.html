@@ -1,12 +1,4 @@
 {% extends 'navbar.html' %}{% block title %}{{ request.user.username }}'s profile{% endblock %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
     {% block content %}
     <div class="container">
         {% include 'partials/modals/followers.html' %}
@@ -79,5 +71,3 @@
         </div>
     </div>
     {% endblock %}
-</body>
-</html>
