@@ -78,3 +78,35 @@ def delete_follow_notification(sender, instance, **kwargs):
     _notify = Notification.objects.filter(sender=sender, receiver=following, notification_type=3)
     _notify.delete()
 
+
+@receiver(post_save, sender=Comment)
+def send_comment_notification(sender, instance, **kwargs):
+    comment = instance
+    post = comment.item
+    text_preview = comment.comment[:50]
+    sender = comment.author
+
+    _notify = Notification.objects.get_or_create(
+        post=post,
+        sender=sender,
+        receiver=post.user,
+        notification_text=text_preview,
+        notification_type=2
+    )
+    _notify
+
+
+@receiver(post_delete, sender=Comment)
+def delete_comment_notification(sender, instance, **kwargs):
+    comment = instance
+    post = comment.item
+    sender = comment.author
+
+    _notify = Notification.objects.filter(
+        post=post,
+        sender=sender,
+        receiver=post.user,
+        notification_type=2
+    )
+    _notify.delete()
+
