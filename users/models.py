@@ -119,3 +119,23 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.item}"
 
+
+class Notification(models.Model):
+    NOTIFICATION_TYPE = (
+        (1, 'Like'),
+        (2, 'Comment'),
+        (3, 'Follow')
+    )
+
+    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', editable=False)
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver', editable=False)
+    notification_type = models.IntegerField(choices=NOTIFICATION_TYPE)
+    is_read = models.BooleanField(default=False, editable=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_edited = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.notification_type

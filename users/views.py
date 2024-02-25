@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.views import View
-from .models import Post, Friend, NewsFeed, Comment
+from .models import Post, Friend, NewsFeed, Comment, Notification
 from .forms import CreatePostsForm
 from accounts.models import User
 from itertools import chain
@@ -128,4 +128,24 @@ class SearchView(View):
             users_qs = User.objects.filter(username__contains=query).exclude(username=request.user)
 
         context = {'searched_users': users_qs}
+        return render(request, self.template_name, context)
+
+
+@method_decorator(login_required(login_url='login'), name='get')
+class UserNotificationsView(View):
+    template_name = 'core/notifications.html'
+
+    def get(self, request, *args, **kwargs):
+        _value = request.GET.get('notification-read')
+        
+        if not _value is None:
+            read_notification = Notification.objects.filter(receiver=request.user)
+            for alert in read_notification:
+                _notification = Notification.objects.get(id=alert.id)
+                _notification.is_read = True    # mark notification as read
+                _notification.save()
+
+        notifications_qs = Notification.objects.filter(receiver=request.user, is_read=False)
+
+        context = {'notifications': notifications_qs}
         return render(request, self.template_name, context)

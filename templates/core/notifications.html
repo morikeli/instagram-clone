@@ -1,0 +1,32 @@
+{% extends 'navbar.html' %}{% block title %}{% endblock %}
+{% load static %}
+    {% block content %}
+    <main id="main" class="main">
+       <div class="row">
+            <div class="col-md-6 offset-sm-3">
+                <div class="mt-1">
+                    <ul class="list-group">
+                        {% for alerts in notifications %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start py-3">
+                            {% if alerts.notification_type == 1 %}
+                            <img class="rounded-circle" src="{{ alerts.sender.profile_pic.url }}" height="50px" alt="user-img">
+                            <div class="text-center">
+                                <div class="text-center">
+                                    <a hx-get="{% url 'view_user_profile' alerts.sender %}" hx-trigger="click" hx-push-url="{% url 'view_user_profile' alerts.sender %}" hx-swap="outerHTML" hx-target="#wrapper" class="fw-bold">{{ alerts.sender }}</a> liked your post.
+                                </div>
+                            </div>
+                            <img src="{{ alerts.post.image.url }}" height="50px" alt="posted-img">
+                            {% endif %}
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item text-center">
+                            <i class="bi bi-bell-fill fs-2"></i>
+                            <p class="small">No notifications available</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>    
+            </div>
+       </div> 
+    </main>
+    {% endblock %}

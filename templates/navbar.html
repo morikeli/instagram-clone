@@ -50,8 +50,8 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="" class="sidebar-link">
-                        <i class="bi-heart"><span class="badge">12</span></i>
+                    <a hx-get="{% url 'notifications' %}" hx-trigger="click" hx-push-url="{% url 'notifications' %}" hx-target="#wrapper"  hx-swap="outerHTML" hx-vals='{"notification-read": "True"}' class="sidebar-link">
+                        <i class="bi-heart">{% if not total_notifications == 0 %}<span class="badge">{{ total_notifications }}</span>{% endif %}</i>
                         <span>Notifications</span>
                     </a>
                 </li>
