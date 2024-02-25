@@ -1,18 +1,18 @@
-#### This is an Instagram clone I'm personally developing.
+# Instagram clone
 
-### Technologies used:
-  - HTML
-  - CSS
-  - Bootstrap CSS
-  - Django
+## Overview
+![Screenshot from 2024-02-24 20-43-11](https://github.com/morikeli/Instagram_clone/assets/78599959/cb99eb64-28e1-4ef9-9d64-9b3a5705e7ca)
 
-#### 1. Project Structure
-##### The project contains the following files and folders:
-    1. src - main project folder. This is where all configurations are handled.
-    2. accounts - this is an app for handling login, signup and editing user profile.
-    3. users - this is an app for handling liking posts, uploading posts, following and unfollowing users.
-    4. static - contains static files, e.g. images, css and js
-    5. templates - contains base templates (navbar and flash messages)
-    6. requirements.txt - contains Python modules used to develop the project.
-    7. README.md - project documentation
+This is an Instagram clone that has most of the features available in Instagram. These features include:
+  - Authentication
+  - Follow/unfollow users
+  - Like/Unlike posts
+  - Comment on posts
+  - Update user profile
+
+## User instructions
+
+## Developer instructions
+
+## Known issues
 
