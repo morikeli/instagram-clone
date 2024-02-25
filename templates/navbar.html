@@ -67,37 +67,11 @@
                         <span>Profile</span>
                     </a>
                 </li>
-                <li class="sidebar-item dropdown">
-                    <a class="nav-link d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
-                        <i class="bi-list toggle-sidebar-btn"></i>
-                        <span class="d-none d-md-block dropdown-toggle ps-2">More</span>
+                <li class="sidebar-item">
+                    <a href="{% url 'logout' %}" class="sidebar-link">
+                        <i class="bi-box-arrow-right"></i>
+                        <span>Logout</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{% url 'edit_profile' %}">
-                                <i class="bi bi-gear-wide"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="">
-                                <i class="bi bi-bookmark-fill"></i>
-                                <span>Saved</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{% url 'logout' %}">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </aside>
