@@ -129,3 +129,23 @@ class SearchView(View):
 
         context = {'searched_users': users_qs}
         return render(request, self.template_name, context)
+
+
+@method_decorator(login_required(login_url='login'), name='get')
+class UserNotificationsView(View):
+    template_name = 'core/notifications.html'
+
+    def get(self, request, *args, **kwargs):
+        _value = request.GET.get('notification-read')
+        
+        if not _value is None:
+            read_notification = Notification.objects.filter(receiver=request.user)
+            for alert in read_notification:
+                _notification = Notification.objects.get(id=alert.id)
+                _notification.is_read = True    # mark notification as read
+                _notification.save()
+
+        notifications_qs = Notification.objects.filter(receiver=request.user, is_read=False)
+
+        context = {'notifications': notifications_qs}
+        return render(request, self.template_name, context)
