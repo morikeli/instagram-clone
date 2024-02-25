@@ -9,6 +9,7 @@
 <body>
     {% block content %}
     <div class="container">
+        {% include 'partials/modals/followers.html' %}
         <div class="row profile-container">
             <div class="col-md-3">
                 <img class="profile-img rounded-circle" src="{{ obj.profile_pic.url }}" alt="dp">
@@ -19,15 +20,21 @@
                     <h3>{{ obj }}</h3>
                     <a href=""><i class="bi-send" style="font-size: 30px; color: black; margin-top: 6%"></i></a>
                     {% if is_following_user %}
-                    <a hx-post="{% url 'follow_user' obj %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ obj }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-secondary btn-sm">Unfollow</a>
+                    <a hx-post="{% url 'follow_viewed_user' obj %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ obj }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-secondary btn-sm">Unfollow</a>
                     {% else %}
-                    <a hx-post="{% url 'follow_user' obj %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ obj }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-outline-secondary btn-sm">Follow</a>
+                    <a hx-post="{% url 'follow_viewed_user' obj %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ obj }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-outline-secondary btn-sm">Follow</a>
                     {% endif %}
                 </div>
                 <div id="edit-profile-row">
-                    <h6>{% if posts_count == 1 %}<b>1</b> post{% else %}<b>{{ posts_count }}</b> posts{% endif %}</h6>
-                    <h6>{% if followers == 1 %} <b>1</b> follower {% else %}<b>{{ followers }}</b> followers{% endif %}</h6>
-                    <h6>{% if following == 1 %} <b>1</b> following {% else %}<b>{{ following }}</b> following{% endif %}</h6>
+                    <h6 class="me-3">{% if posts_count == 1 %}<b>1</b> post{% else %}<b>{{ posts_count }}</b> posts{% endif %}</h6>
+                    <h6 class="me-1">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#followers-modal">{% if followers == 1 %}<b>1</b> follower {% else %}<b>{{followers}}</b> followers {% endif %}
+                        </a>
+                    </h6>
+                    <h6>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#following-modal">{% if following == 1 %}<b>1</b> following {% else %}<b>{{following}}</b> following {% endif %}
+                        </a>
+                    </h6>
                 </div>
                 <div id="edit-profile-form">
                     <h6><b>{{ obj.bio }}</b></h6>
