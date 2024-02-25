@@ -128,7 +128,7 @@ class Notification(models.Model):
     )
 
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, editable=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, editable=False)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender', editable=False)
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver', editable=False)
     notification_type = models.IntegerField(choices=NOTIFICATION_TYPE)
