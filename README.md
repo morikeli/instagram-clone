@@ -10,6 +10,10 @@ This is an Instagram clone that has most of the features available in Instagram.
   - Comment on posts
   - Update user profile
 
+Technologies used:
+  - HTML, CSS, Javascript, Bootsrap 5, htmx (front end)
+  - Django (back end)
+
 ## User instructions
 
 ## Developer instructions
