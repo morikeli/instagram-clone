@@ -1,5 +1,5 @@
 from .models import Post, Comment, Friend, Tag, NewsFeed, Notification
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 import uuid
 
@@ -56,4 +56,27 @@ def add_post(sender, instance, created, **kwargs):
                 date_posted=post.date_posted,
                 following=follower.follower,
             )
+
+
+@receiver(post_save, sender=Friend)
+def send_follow_notification(sender, instance, created, **kwargs):
+    if created:
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+
+        _notify = Notification.objects.get_or_create(sender=sender, receiver=following, notification_type=3)
+        _notify
+
+
+@receiver(post_delete, sender=Friend)
+def delete_follow_notification(sender, instance, **kwargs):
+    # if created:
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+        print(f'Sender: {sender} | Receiver: {following}')
+
+        _notify = Notification.objects.filter(sender=sender, receiver=following, notification_type=3)
+        _notify.delete()
 
