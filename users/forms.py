@@ -1,3 +1,4 @@
+from django.forms import ClearableFileInput
 from django import forms
 from .models import Post, Comment
 from .utils import is_valid_media_file
@@ -13,10 +14,11 @@ class CreatePostsForm(forms.ModelForm):
     )
 
     image = forms.FileField(
-        widget=forms.FileInput(attrs={
+        widget=forms.ClearableFileInput(attrs={
             'type': 'file',
             'class': 'form-control mb-2',
             'accept': '.3gpp, .jpg, .jpeg, .mp4, .mpeg, .ogg, .opus, .png, .wav',
+            'multiple': True,
         }),
         required=True,
         validators=[is_valid_media_file],   # perform form validations
