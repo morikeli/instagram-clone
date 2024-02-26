@@ -61,4 +61,16 @@
 		selector: '.expolorer-posts-lightbox'
 	});
 
+	document.addEventListener('DOMContentLoaded', function() {
+		var carousel = document.getElementById('carouselExampleIndicators');
+		var prevBtn = carousel.querySelector('.carousel-control-prev');
+		var nextBtn = carousel.querySelector('.carousel-control-next');
+
+		carousel.addEventListener('slid.bs.carousel', function() {
+			var currentIndex = Array.from(carousel.querySelectorAll('.carousel-item')).indexOf(carousel.querySelector('.carousel-item.active'));
+			prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+			nextBtn.style.display = currentIndex === carousel.querySelectorAll('.carousel-item').length - 1 ? 'none' : 'block';
+		});
+	});
+
 })();
