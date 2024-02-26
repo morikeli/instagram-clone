@@ -46,9 +46,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 px-0 posts-img-container">
-                            <a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-                                <img class="img-fluid px-0" src="{{ post.image.url }}" alt="posted-pic">
-                            </a>
+                            {% include 'partials/posts-carousel.html' %}
                             <div class="d-flex align-items-center justify-content-between mt-1 mx-2">
                                 <div class="d-flex">
                                     {% if post.is_liked and post.liked_by_user == request.user %}
