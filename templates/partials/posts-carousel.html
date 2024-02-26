@@ -1,4 +1,4 @@
-	<div id="post-{{ post.id|slice:':5' }}" class="carousel slide">
+	<div id="post-{{ post.id|slice:':5' }}" class="carousel slide" data-bs-ride="carousel">
 		{% if post.get_posted_images.count > 1 %}
 		<div class="carousel-indicators">
 			{% for image in post.get_posted_images %}
