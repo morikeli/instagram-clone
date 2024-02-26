@@ -79,7 +79,6 @@ class PostedContentFiles(models.Model):
 class Post(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
-    # image = models.ManyToManyField(PostedContentFiles, related_name='content_files')
     caption = models.TextField(blank=True)
     total_likes = models.ManyToManyField(User, related_name='liked_posts', blank=True, editable=False)
     liked_by_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='liked_post', editable=False)
