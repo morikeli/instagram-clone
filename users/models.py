@@ -69,10 +69,17 @@ class NewsFeed(models.Model):
         return f'{self.following}'
     
 
+class PostedContentFiles(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='content_owner')
+    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='files')
+    posted_file = models.FileField(upload_to=user_directory_path)
+    date_created = models.DateTimeField(auto_now_add=True)
+
+
 class Post(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
-    image = models.ImageField(upload_to=user_directory_path, null=False)
+    # image = models.ManyToManyField(PostedContentFiles, related_name='content_files')
     caption = models.TextField(blank=True)
     total_likes = models.ManyToManyField(User, related_name='liked_posts', blank=True, editable=False)
     liked_by_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='liked_post', editable=False)
@@ -81,9 +88,23 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     date_edited = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return f'{self.user}'
+
+
+    def save_uploaded_files(self, files):
+        """ Call this function to save a post when a user uploads file(s). A user can upload one or more files. """
+        for f in files:
+            PostedContentFiles.objects.create(user=self.user, posted_file=f, post_id=self.id)
     
+
+    def get_posted_images(self):
+        """ Returns all the images related to this post. A user can upload more than one image files, therefore, this function
+            retrieves all files related to this post.
+        """
+        return self.files.all()
+
 
     def get_total_likes(self):
         return self.total_likes.count()
@@ -95,9 +116,11 @@ class Post(models.Model):
         liked_users = self.total_likes.all()[:3]
         profile_pictures = [user.profile_pic for user in liked_users]
         return profile_pictures
-    
+
+
     def get_comments(self):
         return Comment.objects.filter(item=self.id)
+
 
     def total_comments(self):
         return Comment.objects.filter(item=self.id).count()
