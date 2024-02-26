@@ -1,30 +1,75 @@
-	
-	<div id="carouselExampleIndicators" class="carousel slide">
+	<div id="post-{{ post.id|slice:':5' }}" class="carousel slide">
 		{% if post.get_posted_images.count > 1 %}
 		<div class="carousel-indicators">
 			{% for image in post.get_posted_images %}
-			<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %} aria-current="true"></button>
+			<li data-bs-target="#post-{{ post.id|slice:':5' }}" data-bs-slide-to="{{ forloop.counter0 }}" data-image-id="{{ image.id }}" {% if forloop.first %}class="active"{% endif %} aria-current="true"></li>
 			{% endfor %}
 		</div>
 		{% endif %}
 		<div class="carousel-inner">
 			{% for image in post.get_posted_images %}
-			<div class="carousel-item {% if forloop.first %}active{% endif %}">
+			<div class="carousel-item {% if forloop.first %}active{% endif %}" id="image{{ image.id }}">
 				<a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-					<img src="{{ image.posted_file.url }}" class="d-block w-100" alt="posts-img">	
+					<img src="{{ image.posted_file.url }}" class="d-block w-100 img-fluid" alt="posted-image">	
 				</a>
 			</div>
 			{% endfor %}
 		</div>
 		{% if post.get_posted_images.count > 1 %}
-		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+		<button class="carousel-control-prev" type="button" data-bs-target="#post-{{ post.id|slice:':5' }}" data-bs-slide="prev">
 			<i class="small carousel-control-prev-icon" aria-hidden="true"></i>
 			<span class="visually-hidden">Previous</span>
 		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+		<button class="carousel-control-next" type="button" data-bs-target="#post-{{ post.id|slice:':5' }}" data-bs-slide="next">
 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
 			<span class="visually-hidden">Next</span>
 		</button>
 		{% endif %}
   	</div>
-  	
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var carousel = document.getElementById('post-{{ post.id }}');
+			var prevBtn = carousel.querySelector('.carousel-control-prev');
+			var nextBtn = carousel.querySelector('.carousel-control-next');
+	
+			carousel.addEventListener('slid.bs.carousel', function() {
+				var currentIndex = Array.from(carousel.querySelectorAll('.carousel-item')).indexOf(carousel.querySelector('.carousel-item.active'));
+				prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+				nextBtn.style.display = currentIndex === carousel.querySelectorAll('.carousel-item').length - 1 ? 'none' : 'block';
+			});
+		});
+	
+	
+		document.addEventListener('DOMContentLoaded', function () {
+			// Get all carousel indicators
+			const indicators = document.querySelectorAll('#post-{{ post.id }} .carousel-indicators li');
+			// Get all carousel items
+			const items = document.querySelectorAll('#post-{{ post.id }} .carousel-item');
+	
+			// Loop through each indicator and set the data-bs-target attribute
+			indicators.forEach(function (indicator, index) {
+				indicator.setAttribute('data-bs-target', '#post-{{ post.id }}');
+				indicator.setAttribute('data-bs-slide-to', index);
+			});
+	
+			// Loop through each item and set the id attribute
+			items.forEach(function (item) {
+				const imageId = item.getAttribute('data-image-id');
+				if (imageId) {
+					item.setAttribute('id', 'image' + imageId);
+				}
+			});
+	
+			// Set data-bs-target attribute for previous and next buttons
+			const prevButton = document.querySelector('.carousel-control-prev');
+			const nextButton = document.querySelector('.carousel-control-next');
+			prevButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
+			nextButton.setAttribute('data-bs-target', '#carouselExampleIndicators');
+		});
+	
+		document.addEventListener('DOMContentLoaded', function () {
+			var carousel = new bootstrap.Carousel(document.getElementById('post-{{ post.id }}'));
+		}); 
+	</script>
+	
