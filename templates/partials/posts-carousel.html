@@ -1,0 +1,30 @@
+	
+	<div id="carouselExampleIndicators" class="carousel slide">
+		{% if post.get_posted_images.count > 1 %}
+		<div class="carousel-indicators">
+			{% for image in post.get_posted_images %}
+			<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %} aria-current="true"></button>
+			{% endfor %}
+		</div>
+		{% endif %}
+		<div class="carousel-inner">
+			{% for image in post.get_posted_images %}
+			<div class="carousel-item {% if forloop.first %}active{% endif %}">
+				<a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+					<img src="{{ image.posted_file.url }}" class="d-block w-100" alt="posts-img">	
+				</a>
+			</div>
+			{% endfor %}
+		</div>
+		{% if post.get_posted_images.count > 1 %}
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+			<i class="small carousel-control-prev-icon" aria-hidden="true"></i>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+		{% endif %}
+  	</div>
+  	
