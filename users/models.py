@@ -102,7 +102,7 @@ class Post(models.Model):
         """ Returns all the images related to this post. A user can upload more than one image files, therefore, this function
             retrieves all files related to this post.
         """
-        return self.files.all()
+        return PostedContentFiles.objects.filter(post_id=self.id)
 
 
     def get_total_likes(self):
