@@ -1,0 +1,26 @@
+{% for post in posted_items %}
+    <div id="select-posts-menu" class="modal modal-sm" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <ul class="list-group text-center">
+                    {% if request.user.id == post.user_id %}
+                    <li class="list-group-item">
+                        <a href="" class="fw-bold text-danger" data-bs-toggle="modal" data-bs-target="#user-response-{{ post.id|slice:':5' }}">
+                            Delete
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item"><a class="fw-bold text-danger" href="{% url 'homepage' %}">Report</a></li>
+                    {% if not request.user == post.user %}
+                    <li class="list-group-item">
+                        <a hx-post="{% url 'follow_suggested_user' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ post.user }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="fw-bold text-danger">Unfollow</a>
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item"><a href="{% url 'homepage' %}">Add to favorites</a></li>
+                    <li class="list-group-item"><a href="{% url 'homepage' %}">Go to post</a></li>
+                    <li class="list-group-item"><a href="{% url 'homepage' %}">Cancel</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endfor %}
