@@ -17,9 +17,10 @@ htmx_urlpatterns = [
     path('<str:user_id>follow/', htmx.follow_or_unfollow_viewed_user, name='follow_viewed_user'),
     path('follow/', htmx.follow_or_unfollow_users_in_profile_page, name='follow_user'),
     path('post/like/', htmx.like_or_unlike_post, name='like_or_unlike'),
+    path('post/delete/', htmx.delete_post, name='delete_post'),
+    path('post/save/', htmx.save_favorite_posts, name='save_favorite_post'),
     path('comment/like/', htmx.like_or_unlike_comment, name='like_or_unlike_comment'),
     path('comment/', htmx.add_comment, name='post_comment'),
-    path('post/delete/', htmx.delete_post, name='delete_post'),
     path('comment/delete/', htmx.delete_comment, name='delete_comment'),
 
 ]
