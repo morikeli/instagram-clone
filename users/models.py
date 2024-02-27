@@ -163,7 +163,16 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False, editable=False)
     date_created = models.DateTimeField(auto_now_add=True)
     date_edited = models.DateTimeField(auto_now=True)
+    
+
+    class Meta:
+        ordering = ['-date_created']
 
 
     def __str__(self):
         return f'{self.notification_type}'
+
+
+    def get_post_image_files(self):
+        """ Return only the first image if the posted image file related to this notification is 1 or more than one image file. """
+        return PostedContentFiles.objects.filter(post_id=self.post.id).first()
