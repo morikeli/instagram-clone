@@ -28,7 +28,19 @@
                                         </div>
                                         <div class="col-md-9">
                                             <p class="small">{{ comment.comment }}</p>
-                                            <p id="subtitle" class="small card-text text-muted">{{ comment.date_commented|post_timesince }}</p>
+                                            <p id="subtitle" class="small card-text text-muted">
+                                                <small>{{ comment.date_commented|post_timesince }} &centerdot; </small>
+                                                
+                                                {% if request.user == comment.author %}
+                                                <a hx-post="{% url 'delete_comment' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"delete-comment": "{{ comment.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="small text-muted text-danger" data-bs-dismiss="modal">Delete</a> &centerdot;
+                                                {% endif %}
+                                                
+                                                {% if comment.is_liked is True and comment.liked_by_user == request.user %}
+                                                <a hx-post="{% url 'like_or_unlike_comment' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike-comment": "{{ comment.id }}", "commented-post": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="small text-muted text-danger" data-bs-dismiss="modal"><i class="bi-heart-fill"></i></a>
+                                                {% else %}
+                                                <a hx-post="{% url 'like_or_unlike_comment' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike-comment": "{{ comment.id }}", "commented-post": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="small text-muted text-danger" data-bs-dismiss="modal"><i class="bi-heart"></i></a>
+                                                {% endif %}
+                                            </p>
                                         </div>
                                     </div>
                                     {% endfor %}
