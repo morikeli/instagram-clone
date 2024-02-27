@@ -1,0 +1,20 @@
+    <div class="modal fade" id="user-response-{{ post.id|slice:':5' }}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 text-center py-3">
+                            Are you sure you want to delete post with caption <br><b>"{{ post.caption|truncatewords:7 }}"?</b>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="" data-bs-dismiss="modal" class="btn btn-outline-secondary">Cancel</a>
+                    <a hx-post="{% url 'delete_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"delete-post": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="btn btn-outline-danger" data-bs-dismiss="modal">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
