@@ -90,6 +90,11 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.user}'
+    
+
+    def favorite_posts(self):
+        """ Return posts that a user has saved. """
+        return SavedPost.objects.get(favorite_post=self.id)
 
 
     def save_uploaded_files(self, files):
@@ -134,6 +139,8 @@ class SavedPost(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     favorite_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='favorites', editable=False)
+    is_saved = models.BooleanField(default=False, editable=False)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
