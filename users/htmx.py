@@ -142,3 +142,17 @@ def delete_post(request):
 
 
     return redirect('homepage')
+
+
+def delete_comment(request):
+    delete_request = request.POST.get('delete-comment')
+
+    if not delete_request is None:
+        get_comment = Comment.objects.get(id=delete_request)
+        get_comment.delete()
+
+        messages.error(request, 'Comment deleted successfully!')
+        return redirect('homepage')
+
+
+    return redirect('homepage')
