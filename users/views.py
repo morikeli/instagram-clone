@@ -123,7 +123,6 @@ class SearchView(View):
     def get(self, request, *args, **kwargs):
         query = request.GET.get('q')
         users_qs = User.objects.none()  # default qs if query is None.
-        users_ids = []
         
         if not query is None:
             users_qs = User.objects.filter(username__contains=query).exclude(username=request.user)
