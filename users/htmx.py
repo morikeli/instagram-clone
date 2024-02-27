@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from .models import Friend, NewsFeed, Post, Comment, Notification
+from .models import Friend, NewsFeed, Post, Comment, Notification, SavedPost
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse
@@ -216,6 +216,24 @@ def delete_comment(request):
 
         messages.error(request, 'Comment deleted successfully!')
         return redirect('homepage')
+
+
+    return redirect('homepage')
+
+
+def save_favorite_posts(request):
+    save_request = request.POST.get('add-to-favorites')
+    
+    if not save_request is None:
+        post_obj = Post.objects.get(id=save_request)
+        saved_post_exists = SavedPost.objects.filter(user=request.user, favorite_post=post_obj).exists()
+        
+        if saved_post_exists:   # True
+            get_favorite_post = SavedPost.objects.get(user=request.user, favorite_post=post_obj)
+            get_favorite_post.delete()
+        
+        else:
+            _, created = SavedPost.objects.get_or_create(user=request.user, favorite_post=post_obj, is_saved=True)
 
 
     return redirect('homepage')
