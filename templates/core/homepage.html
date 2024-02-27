@@ -58,7 +58,11 @@
                                     <a href="" class="mx-1 fs-4" data-bs-toggle="modal" data-bs-target="#comments-modal"><i class="bi-chat"></i></a>
                                     <a href="" class="mx-1 fs-4"><i class="bi-send"></i></a>
                                 </div>
-                                <a href="" class="text-end fs-4"><i class="bi-bookmark"></i></a>
+                                {% if post.favorite_posts.user == request.user %}
+                                <a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="text-end fs-4" title="Remove"><i class="bi-bookmark-fill"></i></a>
+                                {% else %}
+                                <a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="text-end fs-4" title="Save post"><i class="bi-bookmark"></i></a>
+                                {% endif %}
                             </div>
                             <div id="post-content" class="d-flex align-items-center space-x-3 justify-content-start mx-3">
                                 <div class="d-flex">
