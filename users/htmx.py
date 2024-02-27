@@ -116,14 +116,72 @@ def like_or_unlike_post(request):
     return redirect('homepage')
 
 
+def like_or_unlike_comment(request):
+    """ This function allows a user to like or unlike a comment on a given post. """
+
+    _reaction = request.POST.get('like-unlike-comment')
+    get_post_id = request.POST.get('commented-post')
+
+
+    if not _reaction is None:
+        post_obj = Post.objects.get(id=get_post_id)
+        comment_obj = Comment.objects.get(id=_reaction)
+        is_available = Comment.objects.filter(total_likes=request.user, id=_reaction).exists()    # check if the user has liked the post
+        notification_exists = Notification.objects.filter(post=post_obj).exists()
+
+        if is_available:    # True
+            get_comment_qs = Comment.objects.get(id=_reaction)
+            get_comment_qs.total_likes.remove(request.user)
+            get_comment_qs.liked_by_user = None
+            get_comment_qs.is_liked = False
+            get_comment_qs.save()
+
+            if notification_exists:     # if notification exists - True
+                _notify = Notification.objects.get(
+                    post=post_obj,
+                    sender=request.user,
+                    receiver=comment_obj.author,
+                    notification_type=4,
+                )
+                _notify.delete()
+        
+        else:
+            get_comment_qs = Comment.objects.get(id=_reaction)
+            get_comment_qs.total_likes.add(request.user)
+            get_comment_qs.liked_by_user = request.user
+            get_comment_qs.is_liked = True
+            get_comment_qs.save()
+
+            # send notification
+            _notify = Notification.objects.get_or_create(
+                post=post_obj,
+                sender=request.user,
+                receiver=comment_obj.author,
+                notification_type=4,
+            )
+            _notify
+
+    return redirect('homepage')
+
+
 def add_comment(request):
     user_comment = request.POST.get('comment')
     _post = request.POST.get('post')
 
     if user_comment:
         post_obj = Post.objects.get(id=_post)
-        create_comment = Comment.objects.create(author=request.user, item=post_obj, comment=user_comment)
-        create_comment.save()
+        create_comment = Comment.objects.get_or_create(author=request.user, item=post_obj, comment=user_comment)
+
+        # send notification
+        get_saved_comment = Comment.objects.get(item=post_obj, comment=user_comment)
+        _notify = Notification.objects.get_or_create(
+            post=post_obj,
+            sender=get_saved_comment.author,
+            receiver=get_saved_comment.item.user,
+            notification_text=get_saved_comment.comment[:30],
+            notification_type=2,
+        )
+        
         messages.success(request, 'Comment submitted successfully!')
         return redirect('homepage')
 
