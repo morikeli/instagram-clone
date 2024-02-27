@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.views import View
-from .models import Post, Friend, NewsFeed, Comment, Notification, PostedContentFiles
+from .models import Post, Friend, NewsFeed, Comment, Notification, SavedPost
 from .forms import CreatePostsForm
 from accounts.models import User
 from itertools import chain
@@ -90,6 +90,7 @@ class SuggestedUserProfileView(View):
         followers_posts = Post.objects.filter(user=viewed_user)     # posts for user (following) followed/viewed by the logged in user
         _followers = Friend.objects.filter(following=viewed_user)   # followers of the 'viewed_user' object.
         _following = Friend.objects.filter(follower=viewed_user)
+        saved_posts = SavedPost.objects.filter(user=viewed_user, is_saved=True)
 
 
         context = {
@@ -101,6 +102,7 @@ class SuggestedUserProfileView(View):
             'is_following_user': is_following_user,
             'my_followers': _followers,
             'people_i_follow': _following,
+            'saved_posts': saved_posts,
         }
         return render(request, self.template_name, context)
 
