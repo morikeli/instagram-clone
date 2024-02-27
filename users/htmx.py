@@ -128,3 +128,18 @@ def add_comment(request):
         return redirect('homepage')
 
     return HttpResponse()
+
+
+def delete_post(request):
+    delete_request = request.POST.get('delete')
+    print(f'Delete request: {delete_request}')
+
+    if not delete_request is None:
+        get_post = Post.objects.get(id=delete_request)
+        get_post.delete()
+
+        messages.error(request, 'Post deleted successfully!')
+        return redirect('homepage')
+
+
+    return redirect('homepage')
