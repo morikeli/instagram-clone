@@ -148,7 +148,8 @@ class Notification(models.Model):
     NOTIFICATION_TYPE = (
         (1, 'Like'),
         (2, 'Comment'),
-        (3, 'Follow')
+        (3, 'Follow'),
+        (4, 'Like comment'),
     )
 
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
