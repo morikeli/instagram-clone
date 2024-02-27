@@ -7,7 +7,7 @@
                     {% for post in posts %}
                     <div class="col-lg-4 col-md-6 explorer-posts-item">
                         <div class="explorer-posts-wrap">
-                            <img src="{{ post.image.url }}" class="img-fluid" alt="post-img">
+                            {% include 'partials/posts-carousel.html' %}
                             <div class="explorer-posts-info">
                                 <div class="explorer-posts-links">
                                     <a href="{{ post.image.url }}" data-gallery="explorer-postsGallery" class="explorer-lightbox me-3 small">
@@ -25,5 +25,4 @@
             </div>
           </section>    
     </main>
-    
     {% endblock %}
