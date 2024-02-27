@@ -10,7 +10,7 @@
 			{% for image in post.get_posted_images %}
 			<div class="carousel-item {% if forloop.first %}active{% endif %}" id="image{{ image.id }}">
 				<a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-					<img src="{{ image.posted_file.url }}" class="d-block w-100 img-fluid" alt="posted-image">	
+					<img src="{{ image.posted_file.url }}" class="d-block w-100 img-fluid mb-0" alt="posted-image">	
 				</a>
 			</div>
 			{% endfor %}
