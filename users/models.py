@@ -164,4 +164,4 @@ class Notification(models.Model):
 
 
     def __str__(self):
-        return self.notification_type
+        return f'{self.notification_type}'
