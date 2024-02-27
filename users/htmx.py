@@ -177,13 +177,15 @@ def add_comment(request):
 
         # send notification
         get_saved_comment = Comment.objects.get(item=post_obj, comment=user_comment)
-        _notify = Notification.objects.get_or_create(
-            post=post_obj,
-            sender=get_saved_comment.author,
-            receiver=get_saved_comment.item.user,
-            notification_text=get_saved_comment.comment[:30],
-            notification_type=2,
-        )
+
+        if not (request.user == post_obj.user):
+            _notify = Notification.objects.get_or_create(
+                post=post_obj,
+                sender=get_saved_comment.author,
+                receiver=get_saved_comment.item.user,
+                notification_text=get_saved_comment.comment[:30],
+                notification_type=2,
+            )
         
         messages.success(request, 'Comment submitted successfully!')
         return redirect('homepage')
