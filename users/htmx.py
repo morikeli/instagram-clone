@@ -126,7 +126,7 @@ def like_or_unlike_comment(request):
     if not _reaction is None:
         post_obj = Post.objects.get(id=get_post_id)
         comment_obj = Comment.objects.get(id=_reaction)
-        is_available = Comment.objects.filter(total_likes=request.user, id=_reaction).exists()    # check if the user has liked the post
+        is_available = Comment.objects.filter(total_likes=request.user, id=_reaction).exists()    # check if the user has liked the comment
         notification_exists = Notification.objects.filter(post=post_obj).exists()
 
         if is_available:    # True
@@ -141,6 +141,7 @@ def like_or_unlike_comment(request):
                     post=post_obj,
                     sender=request.user,
                     receiver=comment_obj.author,
+                    notification_text=comment_obj.comment[:30],
                     notification_type=4,
                 )
                 _notify.delete()
@@ -155,8 +156,10 @@ def like_or_unlike_comment(request):
             # send notification
             _notify = Notification.objects.get_or_create(
                 post=post_obj,
+                comment=comment_obj,
                 sender=request.user,
                 receiver=comment_obj.author,
+                notification_text=comment_obj.comment[:30],
                 notification_type=4,
             )
             _notify
