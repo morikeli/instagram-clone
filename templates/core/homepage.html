@@ -41,7 +41,7 @@
                                 <p id="subtitle" class="small">{{ post.user }}</p>
                             </div>
                             <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#select-posts-menu"><i class="bi bi-three-dots"></i></a>
+                                <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#select-posts-menu-{{ post.id|slice:':5' }}"><i class="bi bi-three-dots"></i></a>
                                 {% include 'partials/modals/menu.html' %}
                             </div>
                         </div>
