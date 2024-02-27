@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.views import View
 from .forms import SignUpForm, EditProfileForm
 from .models import User
-from users.models import Post, Friend
+from users.models import Post, Friend, SavedPost
 
 
 class UserLogin(LoginView):
@@ -60,6 +60,7 @@ def profile_view(request):
     user_posts = Post.objects.filter(user=request.user)
     _followers = Friend.objects.filter(following=request.user)
     _following = Friend.objects.filter(follower=request.user)
+    saved_posts = SavedPost.objects.filter(user=request.user, is_saved=True)
 
     
     context = {
@@ -69,6 +70,7 @@ def profile_view(request):
         'followers': total_followers,
         'my_followers': _followers,
         'people_i_follow': _following,
+        'saved_posts': saved_posts,
     }
     return render(request, 'accounts/profile.html', context)
 
