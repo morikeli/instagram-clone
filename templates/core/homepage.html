@@ -47,6 +47,7 @@
                         </div>
                         <div class="col-md-12 px-0 posts-img-container">
                             {% include 'partials/posts-carousel.html' %}
+                            {% include 'partials/modals/comments.html' %}
                             <div class="d-flex align-items-center justify-content-between mt-1 mx-2">
                                 <div class="d-flex">
                                     {% if post.is_liked and post.liked_by_user == request.user %}
@@ -54,7 +55,7 @@
                                     {% else %}
                                     <a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="mx-1 fs-4"><i class="bi-heart"></i></a>
                                     {% endif %}
-                                    <a href="" class="mx-1 fs-4"><i class="bi-chat"></i></a>
+                                    <a href="" class="mx-1 fs-4" data-bs-toggle="modal" data-bs-target="#comments-modal"><i class="bi-chat"></i></a>
                                     <a href="" class="mx-1 fs-4"><i class="bi-send"></i></a>
                                 </div>
                                 <a href="" class="text-end fs-4"><i class="bi-bookmark"></i></a>
@@ -83,7 +84,6 @@
                                         {% endfor %}
                                     {% else %}
                                     <a href="" data-bs-toggle="modal" data-bs-target="#comments-modal">View {{ post.total_comments }} comments</a>
-                                        {% include 'partials/modals/comments.html' %}
                                     {% endif %}
                                     {% endif %}
                                 </p>
