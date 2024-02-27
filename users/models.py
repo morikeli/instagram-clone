@@ -137,6 +137,7 @@ class Comment(models.Model):
     comment = models.TextField(blank=False)
     total_likes = models.ManyToManyField(User, related_name='total_likes', blank=True, editable=False)
     liked_by_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='liked_comment', editable=False)
+    is_liked = models.BooleanField(default=False, editable=False)
     date_commented = models.DateTimeField(auto_now_add=True)
     date_edited = models.DateTimeField(auto_now=True)
 
