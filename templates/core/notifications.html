@@ -17,7 +17,7 @@
                                 </div>
                                 <p class="small text-muted">{{ alerts.date_created|post_timesince }}</p>
                             </div>
-                            <img class="my-2" src="{{ alerts.post.image.url }}" height="50px" alt="posted-img">
+                            <img class="my-2" src="{{ alerts.get_post_image_files.posted_file.url }}" height="60px" alt="posted-img">
                             {% elif alerts.notification_type == 2 %}
                             <img class="rounded-circle my-1" src="{{ alerts.sender.profile_pic.url }}" height="50px" alt="user-img">
                             <div class="ms-3 me-auto my-2">
@@ -27,13 +27,22 @@
                                 <p class="small">{{ alerts.notification_text }}</p>
                                 <p class="small text-muted" style="margin-top: -2vh;">{{ alerts.date_created|post_timesince }}</p>
                             </div>
-                            <img class="my-2" src="{{ alerts.post.image.url }}" height="50px" alt="posted-img">
-                            {% else %}
+                            <img class="my-2" src="{{ alerts.get_post_image_files.posted_file.url }}" height="60px" alt="posted-img">
+                            {% elif alerts.notification_type == 3 %}
                             <img class="rounded-circle my-1" src="{{ alerts.sender.profile_pic.url }}" height="50px" alt="user-img">
                             <div class="ms-3 me-auto my-2">
                                 <div>
                                     <a hx-get="{% url 'view_user_profile' alerts.sender %}" hx-trigger="click" hx-push-url="{% url 'view_user_profile' alerts.sender %}" hx-swap="outerHTML" hx-target="#wrapper" class="fw-bold">{{ alerts.sender }}</a> started following you.
                                 </div>
+                                <p class="small text-muted">{{ alerts.date_created|post_timesince }}</p>
+                            </div>
+                            {% else %}
+                            <img class="rounded-circle my-1" src="{{ alerts.sender.profile_pic.url }}" height="50px" alt="user-img">
+                            <div class="ms-3 me-auto my-2">
+                                <div>
+                                    <a hx-get="{% url 'view_user_profile' alerts.sender %}" hx-trigger="click" hx-push-url="{% url 'view_user_profile' alerts.sender %}" hx-swap="outerHTML" hx-target="#wrapper" class="fw-bold">{{ alerts.sender }}</a> liked your comment
+                                </div>
+                                <p class="small mb-0">{{ alerts.notification_text }}</p>
                                 <p class="small text-muted">{{ alerts.date_created|post_timesince }}</p>
                             </div>
                             {% endif %}
