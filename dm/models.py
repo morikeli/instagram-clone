@@ -42,7 +42,7 @@ class Message(models.Model):
     def get_inbox_messages(user):
         """ This functions is used to get messages sent to the currently logged in user's inbox """
         users_lists = []
-        msgs = Message.objects.filter(sender=user).values('recipient').annotate(last_msg=models.Max('date_sent')).order_by('-last_msg')
+        msgs = Message.objects.filter(sender=user).values('receiver').annotate(last_msg=models.Max('date_sent')).order_by('-last_msg')
 
         for message in msgs:
             users_lists.append({
