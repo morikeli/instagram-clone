@@ -1,5 +1,4 @@
 from django.utils.timesince import timesince
-from django.utils import timezone
 from django import template
 
 
