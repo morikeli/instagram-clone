@@ -40,6 +40,7 @@ class Message(models.Model):
                 'user': User.objects.get(pk=message["receiver"]),
                 'last': message["last_msg"],
                 "unread": Message.objects.filter(sender=user, receiver__pk=message["receiver"], is_read=False).count(),
+                'last_message': [last_text.text for last_text in Message.objects.filter(receiver__pk=message["receiver"]).order_by('-date_sent')][0]    # get the last sent message in user's chat
             })
         
         return users_lists
