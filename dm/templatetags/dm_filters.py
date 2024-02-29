@@ -22,7 +22,7 @@ def last_login_timesince_filter(value):
     
     if 'minute' in time_diff:
         if int(time_diff[:1]) == 0:
-            time_elapsed = ""
+            time_elapsed = "Last seen recently"
             return time_elapsed
         
         elif int(time_diff[:2]) > 1:
