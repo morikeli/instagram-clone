@@ -1,10 +1,13 @@
 # Instagram clone
 
 ## Overview
+
 1. Login page
+
 ![Screenshot from 2024-02-24 20-43-11](https://github.com/morikeli/Instagram_clone/assets/78599959/cb99eb64-28e1-4ef9-9d64-9b3a5705e7ca)
 
 2. Homepage
+
 ![Screenshot from 2024-02-26 13-55-21](https://github.com/morikeli/Instagram_clone/assets/78599959/8818beea-75fc-448e-8a2b-c437045816ff)
 
 
