@@ -15,8 +15,6 @@ def custom_timesince_filter(value):
             - weeks, return 'w',
         
         If all the above conditions are false, i.e. time past is less than a minute, then return 'Just now'.
-
-        - My main aim was to mimic how Instagram displays time elapsed since a logged in user uploaded his/her post to their News Feed.
     """
     
     time_diff = timesince(value)   # time difference
