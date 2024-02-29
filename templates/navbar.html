@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a  hx-get="" hx-trigger="click" hx-push-url="" hx-target="#wrapper"  hx-swap="outerHTML"  class="sidebar-link">
+                    <a  hx-get="{% url 'inbox' %}" hx-trigger="click" hx-push-url="{% url 'inbox' %}" hx-target="#wrapper"  hx-swap="outerHTML"  class="sidebar-link">
                         <i class="bi-messenger"></i>
                         <span>Messages</span>
                     </a>
