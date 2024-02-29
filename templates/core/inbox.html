@@ -20,7 +20,9 @@
                                     </div>
                                     <div id="sender-column">
                                         <ul class="nav nav-tabs nav-tabs-borderless list-unstyled mb-0">
-                                            <li class="small mt-0 mb-3 fs-6 fw-bold text-muted">Messages</li>
+                                            <li class="small mt-0 mb-3 fs-6 fw-bold text-muted">
+                                                <a href="{% url 'inbox' %}" class="text-muted">Messages</a>
+                                            </li>
 
                                             {% for message in inbox_messages %}
                                             <li class="nav-link p-2 border-bottom {% if active_user == message.user.username %}active{% endif %} w-100">
@@ -32,12 +34,12 @@
                                                         </div>
                                                         <div class="pt-1">
                                                             <p class="fw-bold mb-0">{{ message.user }}</p>
-                                                            <p class="small text-muted">{{ message.text }}</p>
+                                                            <p class="small text-muted">{{ message.last_message|truncatewords:7 }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="pt-1">
-                                                        <p class="small text-muted mb-1">Just now</p>
-                                                        <span class="badge bg-danger rounded-pill float-end">3</span>
+                                                        <p class="small text-muted mb-1">{{ message.last|date:"H:i" }}</p>
+                                                        <span class="badge bg-danger rounded-pill float-end"></span>
                                                     </div>
                                                 </a>
                                             </li>
