@@ -9,7 +9,7 @@ register = template.Library()
 @register.filter(name='post_timesince')
 def custom_timesince_filter(value):
     """ 
-        This is function returns the value of time past since a scheduled lecture to the current date. If the time past is in: 
+        This is function returns the value of time elapsed since a post was uploaded on his/her News Feed. If the time elsapsed is in: 
             - minutes, return 'm',
             - hours, return 'h', 
             - days, return 'd',
