@@ -1,6 +1,6 @@
 *venv
 *env
-*sqlite3
+# *sqlite3
 
 *migrations
 *__pycache__
