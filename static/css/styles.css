@@ -782,7 +782,8 @@ a.sidebar-link:hover {
 #left-msg-box #msg-text {
 	background-color: #dbdcdd;
 	height: auto;
-	width: 100vh;
+	width: auto;
+	max-width: 210px;
 }
 
 
