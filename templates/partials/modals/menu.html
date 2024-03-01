@@ -17,7 +17,7 @@
                     </li>
                     {% endif %}
                     <li class="list-group-item"><a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' data-bs-dismiss="modal">Add to favorites</a></li>
-                    <li class="list-group-item"><a href="{% url 'homepage' %}">Go to post</a></li>
+                    <li class="list-group-item"><a href="{% url 'post_details' post.id %}">Go to post</a></li>
                     <li class="list-group-item"><a href="{% url 'homepage' %}">Cancel</a></li>
                 </ul>
             </div>
