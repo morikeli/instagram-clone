@@ -7,6 +7,7 @@
             <div class="col-md-5 offset-sm-2">
                 {% include 'toasts.html' %}
                 {% include 'partials/modals/delete.html' %}
+                
                 <div class="posts-card card card-body">
                     <div class="row">
                         <div class="d-flex align-items-center">
@@ -102,7 +103,7 @@
                                 <a href="" class="mx-2 fs-5"><i class="bi-emoji-smile"></i></a>
                                 <form hx-post="{% url 'post_details' post.id %}" hx-trigger="submit" hx-push-url="{% url 'post_details' post.id %}" hx-swap="outerHTML" hx-target="#wrapper" hx-vals='{"post": "{{ post.id }}"}' class="d-flex w-100 me-2">
                                     {% csrf_token %}
-                                    <input type="text" placeholder="Add a comment..." name="post-comment"  class="form-control" required>
+                                    <input type="text" placeholder="Add a comment..." name="comment"  class="form-control" required>
                                     <button type="submit" class="btn btn-default fs-6 text-primary">Post</button>
                                 </form>
                             </div>
@@ -110,6 +111,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </main>
     {% endblock %}
