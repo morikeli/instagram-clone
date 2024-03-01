@@ -77,24 +77,6 @@ class HomepageView(View):
 
 
 @method_decorator(login_required(login_url='login'), name='get')
-class PostDetailsView(View):
-    template_name = 'core/posts.html'
-
-
-    def get(self, request, post_id, *args, **kwargs):
-        get_post = Post.objects.get(id=post_id)
-
-
-        context = {'post': get_post}
-        return render(request, self.template_name, context)
-
-
-    def post(self, request, post_id, *args, **kwargs):
-
-        return redirect('post_details', post_id)
-
-
-@method_decorator(login_required(login_url='login'), name='get')
 class SuggestedUserProfileView(View):
     template_name = 'core/profile.html'
 
