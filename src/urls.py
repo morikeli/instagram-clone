@@ -9,7 +9,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('messages/', include('dm.urls')),
     path('admin/', admin.site.urls),
-    re_path(r'^/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
+    re_path(r'^media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
