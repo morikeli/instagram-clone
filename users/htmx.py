@@ -191,7 +191,7 @@ def add_comment(request):
         return redirect('homepage')
 
     return redirect('homepage')
-
+   
 
 def delete_post(request):
     delete_request = request.POST.get('delete-post')
