@@ -1,0 +1,115 @@
+{% extends 'navbar.html' %}{% block title %}Post details{% endblock %}
+{% load crispy_forms_tags %}
+{% load filters %}
+    {% block content %}
+    <main id="main" class="main">
+        <div class="row homepage-container">
+            <div class="col-md-5 offset-sm-2">
+                {% include 'toasts.html' %}
+                {% include 'partials/modals/delete.html' %}
+                <div class="posts-card card card-body">
+                    <div class="row">
+                        <div class="d-flex align-items-center">
+                            <div id="post-dp-bg" class="d-flex align-items-center justify-content-center">
+                                <img id="post-dp" src="{{ post.user.profile_pic.url }}" class="rounded-circle" alt="user-dp">
+                            </div>
+                            <div class="posts-title mt-2 ml-3">
+                                {% if request.user == post.user %}
+                                <h6 class="small text-muted"><a href="{% url 'user_profile' %}" class="fw-bold">{{ post.user }}</a>&centerdot; {{ post.date_posted|post_timesince }}</h6>
+                                {% else %}
+                                <h6 class="small text-muted"><a href="{% url 'view_user_profile' post.user %}" class="fw-bold">{{ post.user }}</a> &centerdot; {{ post.date_posted|post_timesince }}</h6>
+                                {% endif %}
+                                <p id="subtitle" class="small">{{ post.user }}</p>
+                            </div>
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="modal" data-bs-target="#select-posts-menu-{{ post.id|slice:':5' }}"><i class="bi bi-three-dots"></i></a>
+
+                                <div id="select-posts-menu-{{ post.id|slice:':5' }}" class="modal modal-sm" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <ul class="list-group text-center">
+                                                {% if request.user.id == post.user_id %}
+                                                <li class="list-group-item">
+                                                    <a href="" class="fw-bold text-danger" data-bs-toggle="modal" data-bs-target="#user-response-{{ post.id|slice:':5' }}">
+                                                        Delete
+                                                    </a>
+                                                </li>
+                                                {% endif %}
+                                                <li class="list-group-item"><a class="fw-bold text-danger" href="{% url 'homepage' %}">Report</a></li>
+                                                {% if not request.user == post.user %}
+                                                <li class="list-group-item">
+                                                    <a hx-post="{% url 'follow_suggested_user' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ post.user }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="fw-bold text-danger">Unfollow</a>
+                                                </li>
+                                                {% endif %}
+                                                <li class="list-group-item"><a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' data-bs-dismiss="modal">Add to favorites</a></li>
+                                                <li class="list-group-item"><a href="{% url 'post_details' post.id %}">Go to post</a></li>
+                                                <li class="list-group-item"><a href="{% url 'homepage' %}">Cancel</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 px-0 posts-img-container">
+                            {% include 'partials/posts-carousel.html' %}
+                            {% include 'partials/modals/comments.html' %}
+                            <div class="d-flex align-items-center justify-content-between mt-1 mx-2">
+                                <div class="d-flex">
+                                    {% if post.is_liked and post.liked_by_user == request.user %}
+                                    <a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="mx-1 fs-4"><i class="bi-heart-fill"></i></a>
+                                    {% else %}
+                                    <a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="mx-1 fs-4"><i class="bi-heart"></i></a>
+                                    {% endif %}
+                                    <a href="" class="mx-1 fs-4" data-bs-toggle="modal" data-bs-target="#comments-modal"><i class="bi-chat"></i></a>
+                                    <a href="" class="mx-1 fs-4"><i class="bi-send"></i></a>
+                                </div>
+                                {% if post.favorite_posts.user == request.user %}
+                                <a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="text-end fs-4" title="Remove"><i class="bi-bookmark-fill"></i></a>
+                                {% else %}
+                                <a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="text-end fs-4" title="Save post"><i class="bi-bookmark"></i></a>
+                                {% endif %}
+                            </div>
+                            <div id="post-content" class="d-flex align-items-center space-x-3 justify-content-start mx-3">
+                                <div class="d-flex">
+                                    {% for dp in post.get_liked_by_user_profile_pic %}
+                                    <img src="{{ dp.url }}" class="rounded-circle likes-dp" alt="followers-dp">
+                                    {% endfor %}
+                                </div>
+                                <strong class="mx-3">
+                                    <p class="small text-muted mt-3">
+                                        {% if post.get_total_likes == 1 %}{{ post.get_total_likes }} like{% else %}{{ post.get_total_likes }} likes{% endif %}
+                                    </p>
+                                </strong>
+                            </div>
+                            <div class="mx-3">
+                                <p class="small text-muted"><b class="text-dark">{{ post.user }}</b> {{ post.caption }}</p>
+                                <p class="small text-muted">
+                                    {% if not post.total_comments == 0 %}
+                                    {% if post.total_comments == 1 %}
+                                        {% for comment in comments %}
+                                        {% if post.id == comment.item_id %}
+                                        <p class="small text-muted"><b class="text-dark">{{ comment.author }}</b> {{ comment.comment }}</p>
+                                        {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#comments-modal">View {{ post.total_comments }} comments</a>
+                                    {% endif %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <hr class="w-100">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="" class="mx-2 fs-5"><i class="bi-emoji-smile"></i></a>
+                                <form hx-post="{% url 'post_details' post.id %}" hx-trigger="submit" hx-push-url="{% url 'post_details' post.id %}" hx-swap="outerHTML" hx-target="#wrapper" hx-vals='{"post": "{{ post.id }}"}' class="d-flex w-100 me-2">
+                                    {% csrf_token %}
+                                    <input type="text" placeholder="Add a comment..." name="post-comment"  class="form-control" required>
+                                    <button type="submit" class="btn btn-default fs-6 text-primary">Post</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock %}
