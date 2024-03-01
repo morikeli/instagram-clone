@@ -1,0 +1,30 @@
+
+		<div id="new-message-modal" class="modal modal-md" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">New message</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12">
+								<p class="small text-muted text-center">Select the user you wish to text</p>
+								<ol class="list-group border-none">
+									{% for follower in followers %}
+									<li class="list-group-item border-0 d-flex justify-content-between align-items-start py-1">
+										<img class="rounded-circle" src="{{ follower.follower.profile_pic.url }}" height="50px" alt="">
+										<div class="mt- ms-2 me-auto">
+											<div class="fw-bold">{{ follower }}</div>
+											<p class="small text-muted">{{ follower }}</p>
+										</div>
+										<a hx-post="{% url 'text_searched_follower' %}" hx-trigger="click" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-vals='{"selected-follower": "{{ follower }}"}' type="button" class="mt-2 fs-4" data-bs-dismiss="modal"><i class="bi bi-send"></i></a>
+									</li>
+									{% endfor %}
+								</ol>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

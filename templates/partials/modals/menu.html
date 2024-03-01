@@ -1,5 +1,5 @@
 {% for post in posted_items %}
-    <div id="select-posts-menu" class="modal modal-sm" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
+    <div id="select-posts-menu-{{ post.id|slice:':5' }}" class="modal modal-sm" tabindex="-1" aria-labelledby="PostsMenu" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <ul class="list-group text-center">
@@ -16,8 +16,8 @@
                         <a hx-post="{% url 'follow_suggested_user' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"follow-user": "{{ post.user }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="fw-bold text-danger">Unfollow</a>
                     </li>
                     {% endif %}
-                    <li class="list-group-item"><a href="{% url 'homepage' %}">Add to favorites</a></li>
-                    <li class="list-group-item"><a href="{% url 'homepage' %}">Go to post</a></li>
+                    <li class="list-group-item"><a hx-post="{% url 'save_favorite_post' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"add-to-favorites": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' data-bs-dismiss="modal">Add to favorites</a></li>
+                    
                     <li class="list-group-item"><a href="{% url 'homepage' %}">Cancel</a></li>
                 </ul>
             </div>

@@ -5,4 +5,5 @@ django-phonenumber-field==7.3.0
 django-widget-tweaks==1.5.0
 phonenumberslite==8.13.30
 Pillow==9.3.0
+python-magic==0.4.27
 sqlparse==0.4.3
