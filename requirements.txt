@@ -1,6 +1,7 @@
 asgiref==3.5.2
 Django==4.1.7
 django-crispy-forms==1.14.0
+django-environ==0.11.2
 django-phonenumber-field==7.3.0
 django-widget-tweaks==1.5.0
 gunicorn==21.2.0
