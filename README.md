@@ -23,6 +23,7 @@ Technologies used:
   - Django (back end)
 
 ## User instructions
+Users can view the website by clicking this [link](https://instagram-clone-decode.onrender.com/accounts/login). 
 
 ## Developer instructions
 
@@ -38,5 +39,7 @@ Installation instructions
 
 ## Known issues
 Incase of an error or bug create an issue using the `Issues` tab or create a new branch using Git and make a pull request.
+
+Don't forget to star the repo 🌟😉
 
 
