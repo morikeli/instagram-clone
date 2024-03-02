@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from .models import User
+from .utils import is_image_file
 
 
 class UserLoginForm(AuthenticationForm):
@@ -36,6 +37,13 @@ class EditProfileForm(forms.ModelForm):
     gender = forms.ChoiceField(widget=forms.Select(attrs={'type': 'select', 'class': 'mb-2'}), choices=SELECT_GENDER)
     country = forms.CharField(widget=forms.TextInput(attrs={'type': 'text', 'class': 'mb-2'}))
     phone_no = forms.CharField(widget=forms.TextInput(attrs={'type': 'tel', 'class': 'mb-2'}))
+    profile_pic = forms.FileField(
+        widget=forms.FileInput(attrs={
+            'type': 'file', 'class': 'form-control mb-2', 'accept': '.jpg, .jpeg, .png',
+        }),
+        required=False,
+        validators=[is_image_file],
+    )
 
     class Meta:
         model = User
