@@ -1,6 +1,6 @@
 from django.forms import ClearableFileInput
 from django import forms
-from .models import Post, Comment
+from .models import Post, InstagramStory
 from .utils import is_valid_media_file
 
 
