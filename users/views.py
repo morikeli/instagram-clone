@@ -53,7 +53,7 @@ class HomepageView(View):
             'suggested_followers': suggestion_list,
             'posted_items': news_feed,
             'comments': comments_qs,
-            'CreatePostsForm': CreatePostsForm,
+            'CreatePostsForm': form,
         }
         return render(request, self.template_name, context)
 
@@ -71,7 +71,7 @@ class HomepageView(View):
             return redirect('homepage')
         
         context = {
-            'CreatePostsForm': CreatePostsForm,
+            'CreatePostsForm': form,
         }
         return render(request, self.template_name, context)
 
