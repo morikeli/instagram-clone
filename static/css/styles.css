@@ -183,9 +183,12 @@ a {
     flex: 1 1 auto;
 }
 
+.sidebar-item .sidebar-link span{
+	margin-left: 1.2vw;
+}
+
 a.sidebar-link {
     padding: .625rem 1.375rem;
-    
     display: block;
     font-size: 0.9rem;
     white-space: nowrap;
