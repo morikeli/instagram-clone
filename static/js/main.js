@@ -61,5 +61,40 @@
 		selector: '.expolorer-posts-lightbox'
 	});
 
+	// scrolling buttons
+	document.addEventListener("DOMContentLoaded", function() {
+		const container = document.querySelector('.container');
+		const scrollLeftButton = document.querySelector('.left-button');
+		const scrollRightButton = document.querySelector('.right-button');
+	
+		// Function to check if container has overflow
+		function checkOverflow() {
+			return container.scrollWidth > container.clientWidth;
+		}
+	
+		// Function to update button visibility
+		function updateButtonVisibility() {
+			scrollLeftButton.style.display = container.scrollLeft > 0 ? 'block' : 'none';
+			scrollRightButton.style.display = container.scrollLeft < (container.scrollWidth - container.clientWidth) ? 'block' : 'none';
+		}
+	
+		// Check overflow and update button visibility initially
+		updateButtonVisibility();
+	
+		// Update button visibility on scroll
+		container.addEventListener('scroll', updateButtonVisibility);
+	
+		// Scroll left and right button click handlers
+		scrollLeftButton.addEventListener('click', function() {
+			container.scrollLeft -= 100; // Adjust scroll amount as needed
+			updateButtonVisibility();
+		});
+	
+		scrollRightButton.addEventListener('click', function() {
+			container.scrollLeft += 100; // Adjust scroll amount as needed
+			updateButtonVisibility();
+		});
+	});
+	
 	
 })();
