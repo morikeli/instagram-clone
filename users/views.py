@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.views import View
 from .models import Post, Friend, NewsFeed, Comment, Notification, SavedPost
-from .forms import CreatePostsForm
+from .forms import CreatePostsForm, PostInstagramStoryForm
 from accounts.models import User
 from itertools import chain
 import random
@@ -19,6 +19,7 @@ class HomepageView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        upload_story_form = PostInstagramStoryForm()
 
         # News feed
         # A News Feed contains posts that are posted by the current logged in user and/or the users he/she is following.
@@ -54,6 +55,7 @@ class HomepageView(View):
             'posted_items': news_feed,
             'comments': comments_qs,
             'CreatePostsForm': form,
+            'InstagramStoryForm': upload_story_form,
         }
         return render(request, self.template_name, context)
 
