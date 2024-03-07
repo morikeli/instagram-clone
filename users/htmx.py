@@ -3,6 +3,7 @@ from .models import Friend, NewsFeed, Post, Comment, Notification, SavedPost
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse
+from .forms import PostInstagramStoryForm
 
 
 def follow_or_unfollow_users_homepage(request):
@@ -235,5 +236,24 @@ def save_favorite_posts(request):
         else:
             _, created = SavedPost.objects.get_or_create(user=request.user, favorite_post=post_obj, is_saved=True)
 
+
+    return redirect('homepage')
+
+
+def upload_instagram_story(request):
+    """ This function allows a user to update his/her instagram stories. """
+
+    form = PostInstagramStoryForm()
+
+    if request.method == 'POST':
+        form = PostInstagramStoryForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            create_story = form.save(commit=False)
+            create_story.user = request.user
+            create_story.save()
+
+            messages.success(request, 'Instagram story posted successfully!')
+            return redirect('homepage')
 
     return redirect('homepage')
