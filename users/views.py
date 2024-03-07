@@ -7,7 +7,6 @@ from django.views import View
 from .models import Post, Friend, NewsFeed, Comment, Notification, SavedPost
 from .forms import CreatePostsForm, PostInstagramStoryForm
 from accounts.models import User
-from itertools import chain
 import random
 
 
