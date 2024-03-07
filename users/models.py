@@ -10,6 +10,11 @@ def user_directory_path(instance, filename):
     return f'user_{str(instance.user.id)[:5]}/posts/{filename}'
 
 
+def user_stories_directory_path(instance, filename):
+    """ Files will be uploaded to MEDIA_ROOT/user_{id}/filename """
+    return f'user_{str(instance.user.id)[:5]}/stories/{filename}'
+
+
 class Tag(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     title = models.CharField(max_length=25, verbose_name='Tag')
@@ -193,3 +198,35 @@ class Notification(models.Model):
     def get_post_image_files(self):
         """ Return only the first image if the posted image file related to this notification is 1 or more than one image file. """
         return PostedContentFiles.objects.filter(post_id=self.post.id).first()
+    
+
+class InstagramStory(models.Model):
+    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
+    story = models.ImageField(upload_to=user_stories_directory_path, null=False, blank=False)
+    caption = models.TextField()
+    is_expired = models.BooleanField(default=False, editable=False)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+
+    class Meta:
+        ordering = ['-date_posted']
+        verbose_name_plural = 'Instagram stories'
+    
+
+    def __str__(self):
+        return self.user.username
+    
+
+class StoryFeed(models.Model):
+    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
+    following = models.ForeignKey(User, on_delete=models.CASCADE, editable=False, related_name='story_following')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
+    story = models.ManyToManyField(InstagramStory, related_name='ig_stories')
+    date_created = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.following.username
+    
