@@ -61,6 +61,11 @@
 		selector: '.expolorer-posts-lightbox'
 	});
 
+	// initiate instagram stories lightbox
+	const storiesLightbox = GLightbox({
+		selector: '.stories-lightbox'
+	});
+
 	// scrolling buttons
 	document.addEventListener("DOMContentLoaded", function() {
 		const container = document.querySelector('.container');
