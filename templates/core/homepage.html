@@ -7,22 +7,25 @@
             {% include 'partials/modals/new-post.html' %}
             <div class="col-md-5 offset-sm-2">
                 {% include 'toasts.html' %}
-                {% if ig_stories %}
-                <div class="card card-body instagram-stories-card mb-3">
-                    <div class="row">
-                        {% for stories in ig_stories %}
-                        <div class="col-md-2 pb-2">
-                            <div id="instagram-stories">
-                                <img class="rounded-circle" src="{{ stories.user.profile_pic.url }}" alt="">
-                                <p id="username" class="small fw-bold text-center">{{ stories.user.username }}</p>
+                {% include 'partials/modals/new-story.html' %}
+                
+                <div class="card card-body mb-3">
+                    <div class="container">
+                        <div class="story-container">
+                            <div class="content">
+                                <div class="img-container">
+                                    <img src="{{ request.user.profile_pic.url }}" alt="">
+                                </div>
+                                <div class="text-container">
+                                    testuser
+                                </div>
                             </div>
+
+                            <button class="scroll-button left-button ms-2"><i class="bi bi-chevron-left"></i></button>
+                            <button class="scroll-button right-button me-2"><i class="bi-chevron-right"></i></button>
                         </div>
-                        {% empty %}
-                        <h4 class="text-center small fw-bold text-muted fst-italic">Instagram stories will appear here.</h4>
-                        {% endfor %}
                     </div>
                 </div>
-                {% endif %}
 
                 {% for post in posted_items %}
                 {% include 'partials/modals/delete.html' %}
