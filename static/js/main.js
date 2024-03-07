@@ -58,7 +58,7 @@
 
 	// initiate posts lightbox
 	const postsLightbox = GLightbox({
-		selector: '.expolorer-posts-lightbox'
+		selector: '.explorer-posts-lightbox'
 	});
 
 	// initiate instagram stories lightbox
