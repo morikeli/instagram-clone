@@ -22,6 +22,7 @@ htmx_urlpatterns = [
     path('comment/like/', htmx.like_or_unlike_comment, name='like_or_unlike_comment'),
     path('comment/', htmx.add_comment, name='post_comment'),
     path('comment/delete/', htmx.delete_comment, name='delete_comment'),
+    path('story/add', htmx.upload_instagram_story, name='upload_story'),
 
 ]
 
