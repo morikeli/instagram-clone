@@ -461,21 +461,93 @@ a.sidebar-link:hover {
 	width: 50px;
 }
 
-.homepage-container #instagram-stories #username {
-	font-size: 11px;
+/* instagram stories */
+.homepage-container .card-body .container {
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scrollbar-width: none;
+	border: 1px solid rgb(255, 255, 255, 0.8);
+	background-color: #fff;
+	padding-bottom: 15px;
+	width: 100%;
 }
 
-.homepage-container #instagram-stories {
-    height: 73px;
-    width: 73px;
-    background: url('../img/gradient.jpg') center;
-    border-radius: 60%;
+.homepage-container .card-body .story-container {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 5rem;
+	gap: .8rem;
 }
 
-.homepage-container .instagram-stories-card #instagram-stories img {
-    height: 70px;
-    width: 70px;
-    padding: 3px 0 0 3px;
+.homepage-container .card-body .story-container .content {
+	display: grid;
+	margin: 0;
+	text-align: center;
+	position: relative;
+	cursor: pointer;
+	user-select: none;
+	transition: all 0.2s ease-in;
+}
+
+.homepage-container .card-body .story-container .content:hover {
+	transform: scale(1.1);
+}
+
+.homepage-container .card-body .story-container .content .img-container {
+	display: inline-block;
+	width: 5rem;
+	height: 5rem;
+	border-radius: 50%;
+	background: 
+	radial-gradient(#00000026 60%, transparent 0),
+	radial-gradient(#fff 65%, transparent 0),
+	linear-gradient(to top right, orange, deeppink);
+}
+
+.homepage-container .card-body .story-container .content .img-container img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	clip-path: circle(42%);
+}
+
+.homepage-container .card-body .story-container .content:last-child::after {
+	content: "";
+	position: absolute;
+	width: 2rem;
+	height: 100%;
+	right: -2rem;
+}
+
+.homepage-container .card-body .story-container .content .text-container {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 0.9rem;
+}
+
+/* instagram stories scroll buttons */
+.scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: rgb(219, 218, 218);
+    color: black;
+    border: none;
+    cursor: pointer;
+    outline: none;
+	border-radius: 50%;
+}
+
+.left-button {
+    left: 0;
+}
+
+.right-button {
+    right: 0;
 }
 
 .homepage-container .posts-card {
