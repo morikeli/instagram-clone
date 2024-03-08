@@ -1,0 +1,20 @@
+{% load crispy_forms_tags %}
+    <div class="modal fade" id="add-story-modal" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true" aria-labelledby="InstagramStoryLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="InstagramStoryLabel">Add caption</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form hx-post="{% url 'upload_story' %}" hx-trigger="submit" hx-push-url="{% url 'homepage' %}" hx-swap="outerHTML" hx-target="#wrapper" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ InstagramStoryForm|crispy }}
+                        <div class="mt-3 text-end">
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Upload post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
