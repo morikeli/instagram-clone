@@ -12,21 +12,37 @@
                 <div class="card card-body mb-3">
                     <div class="container">
                         <div class="story-container">
+                            {% if user_has_story is False %}
                             <div class="content">
                                 <div class="img-container">
-                                    <img src="{{ request.user.profile_pic.url }}" alt="">
+                                    <a href="{% url 'homepage' %}" data-bs-toggle="modal" data-bs-target="#add-story-modal">
+                                        <img src="{{ request.user.profile_pic.url }}" alt="profile-img">
+                                    </a>
                                 </div>
-                                <div class="text-container">
-                                    testuser
+                                <div class="text-container text-muted">Your story</div>
+                            </div>
+                            {% endif %}
+                            {% for user_id, data in user_profiles.items %}
+                            <div class="content">
+                                <div id="has-story" class="img-container">
+                                    <a href="{{ data.stories.0.story.url }}" data-gallery="storiesGallery" class="stories-lightbox">
+                                        <img id="author-img" src="{{ data.profile_pic }}" alt="profile-img">
+                                    </a>
+                                    {% for story in data.stories|slice:"1:" %}
+                                    <a href="{{ story.story.url }}" data-gallery="storiesGallery" class="stories-lightbox"></a>
+                                    {% endfor %}
+                                </div>
+                                <div class="text-container fw-bold">
+                                    {{ data.story_author }}
                                 </div>
                             </div>
-
+                            {% endfor %}
                             <button class="scroll-button left-button ms-2"><i class="bi bi-chevron-left"></i></button>
                             <button class="scroll-button right-button me-2"><i class="bi-chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
-
+                
                 {% for post in posted_items %}
                 {% include 'partials/modals/delete.html' %}
                 <div class="posts-card card card-body">
