@@ -493,7 +493,7 @@ a.sidebar-link:hover {
 	transform: scale(1.1);
 }
 
-.homepage-container .card-body .story-container .content .img-container {
+.homepage-container .card-body .story-container .content #has-story {
 	display: inline-block;
 	width: 5rem;
 	height: 5rem;
