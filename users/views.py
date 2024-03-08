@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db.models import Q
 from django.views import View
-from .models import Post, Friend, NewsFeed, Comment, Notification, SavedPost
-from .forms import CreatePostsForm
+from django.http import JsonResponse
+from .models import Post, Friend, NewsFeed, Comment, Notification, SavedPost, StoryFeed, InstagramStory
+from .forms import CreatePostsForm, PostInstagramStoryForm
 from accounts.models import User
-from itertools import chain
 import random
 
 
@@ -19,7 +19,25 @@ class HomepageView(View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
+        upload_story_form = PostInstagramStoryForm()
 
+        # instagram stories
+        user_has_story = InstagramStory.objects.filter(user_id=request.user, is_expired=False).exists() # check if request.user has any non-expired stories
+        users_with_stories = InstagramStory.objects.values('user_id').distinct()    # a user can post multiple stories. To avoid 
+        # duplicate values, use ".values().distinct()" to fetch unique items.
+
+        # Retrieve profile pictures for each user
+        user_profiles = {}
+        for user_info in users_with_stories:
+            user_id = user_info['user_id']
+            story_author = User.objects.get(id=user_id)     # user who posted the story
+            user_profiles[user_id] = {
+                'profile_pic': story_author.profile_pic.url if story_author.profile_pic else None,
+                'stories': InstagramStory.objects.filter(user_id=user_id, is_expired=False),
+                'story_author': story_author.username,
+            }
+        
+        
         # News feed
         # A News Feed contains posts that are posted by the current logged in user and/or the users he/she is following.
         # use Q to filter all posts.
@@ -53,7 +71,11 @@ class HomepageView(View):
             'suggested_followers': suggestion_list,
             'posted_items': news_feed,
             'comments': comments_qs,
-            'CreatePostsForm': CreatePostsForm,
+            'CreatePostsForm': form,
+            'InstagramStoryForm': upload_story_form,
+            'user_profiles': user_profiles,
+            'user_has_story': user_has_story,
+
         }
         return render(request, self.template_name, context)
 
@@ -71,10 +93,19 @@ class HomepageView(View):
             return redirect('homepage')
         
         context = {
-            'CreatePostsForm': CreatePostsForm,
+            'CreatePostsForm': form,
         }
         return render(request, self.template_name, context)
 
+
+@method_decorator(login_required(login_url='login'), name='get')
+class InstagramStoriesView(View):
+    template_name = ''
+
+
+    def get(self, request, *args, **kwargs):
+
+        return JsonResponse()
 
 @method_decorator(login_required(login_url='login'), name='get')
 class SuggestedUserProfileView(View):

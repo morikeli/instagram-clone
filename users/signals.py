@@ -1,4 +1,7 @@
-from .models import Post, Comment, Friend, Tag, NewsFeed, Notification, SavedPost
+from .models import (
+    Post, Comment, Friend, Tag, NewsFeed, 
+    Notification, SavedPost, InstagramStory, StoryFeed
+)
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 import uuid
@@ -42,6 +45,18 @@ def generate_notification_id(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=SavedPost)
 def generate_saved_post_id(sender, instance, **kwargs):
+    if instance.id == "":
+        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
+
+
+@receiver(pre_save, sender=InstagramStory)
+def generate_stories_id(sender, instance, **kwargs):
+    if instance.id == "":
+        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
+
+
+@receiver(pre_save, sender=StoryFeed)
+def generate_stories_feed_id(sender, instance, **kwargs):
     if instance.id == "":
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
 
@@ -99,3 +114,16 @@ def delete_comment_notification(sender, instance, **kwargs):
     )
     _notify.delete()
 
+
+@receiver(post_save, sender=InstagramStory)
+def add_story(sender, instance, **kwargs):
+    new_story = instance
+    user = new_story.user
+    followers = Friend.objects.filter(following=user)
+
+    for follower in followers:
+        StoryFeed.objects.get_or_create(
+            user=follower.follower,
+            following=user,
+            date_created=new_story.date_posted,
+        )

@@ -7,23 +7,42 @@
             {% include 'partials/modals/new-post.html' %}
             <div class="col-md-5 offset-sm-2">
                 {% include 'toasts.html' %}
-                {% if ig_stories %}
-                <div class="card card-body instagram-stories-card mb-3">
-                    <div class="row">
-                        {% for stories in ig_stories %}
-                        <div class="col-md-2 pb-2">
-                            <div id="instagram-stories">
-                                <img class="rounded-circle" src="{{ stories.user.profile_pic.url }}" alt="">
-                                <p id="username" class="small fw-bold text-center">{{ stories.user.username }}</p>
+                {% include 'partials/modals/new-story.html' %}
+                
+                <div class="card card-body mb-3">
+                    <div class="container">
+                        <div class="story-container">
+                            {% if user_has_story is False %}
+                            <div class="content">
+                                <div class="img-container">
+                                    <a href="{% url 'homepage' %}" data-bs-toggle="modal" data-bs-target="#add-story-modal">
+                                        <img src="{{ request.user.profile_pic.url }}" alt="profile-img">
+                                    </a>
+                                </div>
+                                <div class="text-container text-muted">Your story</div>
                             </div>
+                            {% endif %}
+                            {% for user_id, data in user_profiles.items %}
+                            <div class="content">
+                                <div id="has-story" class="img-container">
+                                    <a href="{{ data.stories.0.story.url }}" data-gallery="storiesGallery" class="stories-lightbox">
+                                        <img id="author-img" src="{{ data.profile_pic }}" alt="profile-img">
+                                    </a>
+                                    {% for story in data.stories|slice:"1:" %}
+                                    <a href="{{ story.story.url }}" data-gallery="storiesGallery" class="stories-lightbox"></a>
+                                    {% endfor %}
+                                </div>
+                                <div class="text-container fw-bold">
+                                    {{ data.story_author }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <button class="scroll-button left-button ms-2"><i class="bi bi-chevron-left"></i></button>
+                            <button class="scroll-button right-button me-2"><i class="bi-chevron-right"></i></button>
                         </div>
-                        {% empty %}
-                        <h4 class="text-center small fw-bold text-muted fst-italic">Instagram stories will appear here.</h4>
-                        {% endfor %}
                     </div>
                 </div>
-                {% endif %}
-
+                
                 {% for post in posted_items %}
                 {% include 'partials/modals/delete.html' %}
                 <div class="posts-card card card-body">
@@ -50,7 +69,7 @@
                             {% include 'partials/modals/comments.html' %}
                             <div class="d-flex align-items-center justify-content-between mt-1 mx-2">
                                 <div class="d-flex">
-                                    {% if post.is_liked and post.liked_by_user == request.user %}
+                                    {% if post.is_liked is True and post.liked_by_user == request.user %}
                                     <a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="mx-1 fs-4"><i class="bi-heart-fill"></i></a>
                                     {% else %}
                                     <a hx-post="{% url 'like_or_unlike' %}" hx-trigger="click" hx-target="#wrapper" hx-swap="outerHTML" hx-vals='{"like-unlike": "{{ post.id }}"}' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="mx-1 fs-4"><i class="bi-heart"></i></a>
@@ -115,7 +134,7 @@
             <div class="col-md-4 d-none d-lg-block">
                 <div class="row px-4">
                     <div class="col-md-3">
-                        <img src="{{ request.user.profile_pic.url }}" class="rounded-circle ms-3 mt-2" height="60px" alt="user-img">                       
+                        <img src="{{ request.user.profile_pic.url }}" class="rounded-circle ms-3 mt-2" height="60px" width="60px" alt="user-img">                       
                     </div>
                     <div class="col-md-6">
                         <h6 class="mt-3 fw-bold"><a href="{% url 'user_profile' %}">{{ request.user }}</a></h6>
