@@ -8,7 +8,8 @@
 
 2. Homepage
 
-![Screenshot from 2024-02-26 13-55-21](https://github.com/morikeli/Instagram_clone/assets/78599959/8818beea-75fc-448e-8a2b-c437045816ff)
+![Screenshot from 2024-03-08 22-09-45](https://github.com/morikeli/Instagram_clone/assets/78599959/285542a1-a1fa-4c23-ad34-9ec91dc4161f)
+
 
 
 This is an Instagram clone that has most of the features available in Instagram. These features include:
