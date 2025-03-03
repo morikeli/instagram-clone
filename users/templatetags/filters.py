@@ -46,7 +46,7 @@ def custom_timesince_filter(value):
         return time_elapsed
     
     elif 'month' in time_diff:
-        time_elapsed = f"{time_diff[:2]}m"
+        time_elapsed = f"{time_diff[:2]}mos"
         return time_elapsed
     
     elif 'year' in time_diff:
