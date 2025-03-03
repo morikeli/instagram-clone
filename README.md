@@ -37,7 +37,7 @@ Installation instructions
 
 ```(bash)
   $ cd Desktop
-  $ git clone https://github.com/morikeli/Instagram_clone.git
+  $ git clone https://github.com/morikeli/instagram-clone.git
   $ python3 -m venv .ig-venv
   $ source .ig-venv/bin/activate
   $ pip install -r requirements.txt
