@@ -29,29 +29,29 @@
                         <div class="col-md-12">
                             <label>{{ SignupForm.username.label_tag }}&ast;</label>
                             {{ SignupForm.username.errors }}
-                            {% render_field SignupForm.username class="form-control" hx-post="/accounts/validate-username/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#username-error" %}
+                            {% render_field SignupForm.username class="form-control" hx-post="/auth/validate-username/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#username-error" %}
                             {{ SignupForm.username.help_text }}
                             <div id="username-error" class="mt-1"></div>
 
                             <label>{{ SignupForm.email.label_tag }}&ast;</label>
                             {{ SignupForm.email.errors }}
-                            {% render_field SignupForm.email class="form-control" hx-post="/accounts/validate-email/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#email-error" %}
+                            {% render_field SignupForm.email class="form-control" hx-post="/auth/validate-email/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#email-error" %}
                             <div id="email-error" class="mt-1"></div>
 
                             <label>{{ SignupForm.phone_no.label_tag }}&ast;</label>
                             {{ SignupForm.phone_no.errors }}
-                            {% render_field SignupForm.phone_no class="form-control mb-0" hx-post="/accounts/validate-mobile/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#mobile-number-error" %}
+                            {% render_field SignupForm.phone_no class="form-control mb-0" hx-post="/auth/validate-mobile/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#mobile-number-error" %}
                             <p class="small text-muted">{{ SignupForm.phone_no.help_text }}</p>
                             <div id="mobile-number-error" class="mt-n3"></div>
 
                             <label>{{ SignupForm.password1.label_tag }}&ast;</label>
                             {{ SignupForm.password1.errors }}
-                            {% render_field SignupForm.password1 class="form-control" hx-post="/accounts/check-password/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#password-1-error" %}
+                            {% render_field SignupForm.password1 class="form-control" hx-post="/auth/check-password/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#password-1-error" %}
                             <div id="password-1-error" class="mt-1"></div>
 
                             <label>{{ SignupForm.password2.label_tag }}&ast;</label>
                             {{ SignupForm.password2.errors }}
-                            {% render_field SignupForm.password2 class="form-control" hx-post="/accounts/check-password/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#password-2-error"  %}
+                            {% render_field SignupForm.password2 class="form-control" hx-post="/auth/check-password/" hx-swap="outerhtml" hx-trigger="keyup delay:.5s" hx-target="#password-2-error"  %}
                             <p class="small text-muted">{{ SignupForm.password2.help_text }}</p>
                             <div id="password-2-error" class="mt-1"></div>
                         </div>
