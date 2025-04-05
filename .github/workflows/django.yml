@@ -29,6 +29,7 @@ jobs:
       run: |
         python manage.py test
     - name: Fetch environment variables
+      uses: |
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         WEB_DOMAIN: ${{ secretS.WEB_DOMAIN }}
