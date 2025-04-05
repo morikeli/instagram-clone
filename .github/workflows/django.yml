@@ -26,10 +26,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
-      run: |
-        python manage.py test
-    - name: Fetch environment variables
-      uses: |
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         WEB_DOMAIN: ${{ secretS.WEB_DOMAIN }}
+      run: |
+        python manage.py test
