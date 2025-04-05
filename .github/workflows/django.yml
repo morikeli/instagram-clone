@@ -28,3 +28,7 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+    - name: Environment variables
+      env:
+      	SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      	WEB_DOMAIN: ${{ secrets.WEB_DOMAIN }}
