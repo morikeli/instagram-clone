@@ -46,7 +46,7 @@ Installation instructions
   python3 -m venv .ig-venv
 
   # activate virtual environment
-  source .ig-venv/bin/activate
+  source .ig-venv/bin/activate    # On Windows use venv\Scripts\activate
 
   # install python packages
   pip install -r requirements.txt
@@ -55,7 +55,7 @@ Installation instructions
   python manage.py runserver
 ```
 
-Once the server is running, open your default browser and navigate to `127.0.0.1:8000/auth/login`.
+Once the server is running, open your default browser and navigate to `127.0.0.1:8000/auth/login/`.
 
 ## Known issues
 Incase of an error or bug create an issue using the `Issues` tab or create a new branch using Git and make a pull request.
