@@ -1,8 +1,11 @@
-from django.forms import ClearableFileInput
+from django.forms.widgets import ClearableFileInput
 from django import forms
 from .models import Post, InstagramStory
 from .utils import is_valid_media_file
 
+
+class MultiFileInput(ClearableFileInput):
+    allow_multiple_selected = True
 
 class CreatePostsForm(forms.ModelForm):
     """ This form allows a user to post photos or videos on his/her news feed. """
@@ -14,7 +17,7 @@ class CreatePostsForm(forms.ModelForm):
     )
 
     image = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={
+        widget=MultiFileInput(attrs={
             'type': 'file',
             'class': 'form-control mb-2',
             'accept': '.3gpp, .jpg, .jpeg, .mp4, .mpeg, .ogg, .opus, .png, .wav',
