@@ -1,5 +1,6 @@
 asgiref==3.10.0
 Django==5.2.7
+django-cors-headers==4.9.0
 django-crispy-forms==1.14.0
 django-environ==0.11.2
 django-phonenumber-field==7.3.0
