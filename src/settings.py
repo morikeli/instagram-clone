@@ -24,6 +24,7 @@ ALLOWED_HOSTS = [env('WEB_DOMAIN')]
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'accounts.apps.AccountsConfig',
     'users.apps.UsersConfig',
     'dm.apps.DmConfig',
