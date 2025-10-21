@@ -11,6 +11,7 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+    path('api/', include('api.urls')),
     path('auth/', include('accounts.urls')),
     path('users/', include('users.urls')),
     path('messages/', include('dm.urls')),
